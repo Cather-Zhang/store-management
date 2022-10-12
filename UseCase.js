@@ -30,14 +30,16 @@ const assignItemLocationResponse = {
 const createStoreRequest = {
     "latitude": "double", 
     "longitude": "double",
-    "manager": "string"
+    "manager": "string",
+    "password": "string"
 }
 
 const createStoreResponse = {
     "status": "integer", //200 or 400
     "error": "string",
+    "storeId": "integer",
     "stores":[
-        {"storeId": "integer", "latitude": "double", "longitude": "double" },
+        {"storeId": "integer", "latitude": "double", "longitude": "double", "manager": "string" },
         // ...
     ]
 }
@@ -49,7 +51,11 @@ const removeStoreRequest = {
 
 const removeStoreResponse = {
     "status": "integer", //200 or 400
-    "error": "string"
+    "error": "string",
+    "stores":[
+        {"storeId": "integer", "latitude": "double", "longitude": "double", "manager": "string" },
+        // ...
+    ]
 }
 
 
@@ -58,7 +64,9 @@ const generateTotalReportResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stocks": [
-        {"itemName": "string", "quantity": "integer", "value": "double"},
+        {"itemName": "string", "quantity": "integer", "cost": "double", "description": "string","maxQuantity": "integer",
+            "locations": [{"aisles": "integer", "shelves":"integer"},]
+        },
         //...
     ],
     "totalValue": "double"
@@ -66,14 +74,17 @@ const generateTotalReportResponse = {
 
 //Generate Inventory Report: GET
 const generateIndividualReportRequest = {
-    "storeId": "integer"
+    "storeId": "integer",
+    "option": "string"
 }
 
 const generateIndividualReportResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stocks": [
-        {"itemName": "string", "quantity": "integer", "value": "double"},
+        {"itemName": "string", "quantity": "integer", "cost": "double", "description": "string", "maxQuantity": "integer",
+            "locations": [{"aisles": "integer", "shelves":"integer"},]
+        },
         //...
     ],
     "totalValue": "double"
@@ -84,7 +95,6 @@ const generateIndividualReportResponse = {
 ////////////////////////////////////////////////////////////
 
 //Manager Use Case
-
 //Process Shipment: POST
 
 const processShipmentRequest = {
@@ -109,7 +119,9 @@ const generateInventoryReportResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stocks": [
-        {"itemName": "string", "quantity": "integer", "value": "double"},
+        {"itemName": "string", "quantity": "integer", "cost": "double", "description": "string","maxQuantity": "integer",
+            "locations": [{"aisles": "integer", "shelves":"integer"},]
+        },
         //...
     ],
     "totalValue": "double"
@@ -125,7 +137,9 @@ const generateOverstockReportResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stocks": [
-        {"itemName": "string", "quantity": "integer", "value": "double"},
+        {"itemName": "string", "quantity": "integer", "price": "double", "description": "string", "maxQuantity": "integer",
+            "locations": [{"aisles": "integer", "shelves":"integer"},]
+        },
         //...
     ],
     "totalValue": "double"
@@ -151,7 +165,7 @@ const showMissingItemsResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "missingItems": [
-        {"itemName": "string", "price": "double", 
+        {"itemName": "string", "price": "double", "description": "string", "maxQuantity": "integer",
         "locations": [{"aisles": "integer", "shelves":"integer"},
                         //...
                     ]       
@@ -176,7 +190,7 @@ const listStoreResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stores":[
-        {"storeId": "integer", "latitude": "double", "longitude": "double" },
+        {"storeId": "integer", "latitude": "double", "longitude": "double", "distance": "double" },
         // ...
     ]
 }
@@ -192,7 +206,7 @@ const itemsOnShelfResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stocks": [
-        {"itemName": "string", "quantity": "integer", "price": "double"},
+        {"itemName": "string", "quantity": "integer", "price": "double", "description": "string", "maxQuantity": "integer"},
         //...
     ]
 }
@@ -207,7 +221,7 @@ const findItemInAllStoreResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stores":[
-        {"storeId": "integer", "latitude": "double", "longitude": "double",
+        {"storeId": "integer", "quantity": "integer", "price": "double",
         "locations": [{"aisles": "integer", "shelves":"integer"},
                         //...
                     ]
@@ -227,7 +241,7 @@ const findItemInOneStoreResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stocks": [
-        {"itemName": "string", "quantity": "integer", "price": "double",
+        {"itemName": "string", "quantity": "integer", "price": "double", "description": "string", "maxQuantity": "integer",
         "locations": [{"aisles": "integer", "shelves":"integer"},
                         //...
                     ]
