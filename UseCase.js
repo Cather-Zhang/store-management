@@ -1,6 +1,7 @@
 //Corporate Use Case
 //Create Item: POST  (ItemSku is primary key, auto-generated and -incremented)
 const createItemRequest = {
+    "sku": "String",
     "name": "string",
     "price": "double",
     "description": "string",
@@ -15,7 +16,7 @@ const createItemResponse = {
 
 //Assign Item Location: POST
 const assignItemLocationRequest = {
-    "itemSku": "integer",
+    "itemSku": "string",
     "locations": [{"aisles": "integer", "shelves":"integer"},
     //...
 ]
@@ -28,6 +29,7 @@ const assignItemLocationResponse = {
 
 //Create Store: POST (storeId is primary key, auto-generated and -incremented)
 const createStoreRequest = {
+    "name": "string",
     "latitude": "double", 
     "longitude": "double",
     "manager": "string",
