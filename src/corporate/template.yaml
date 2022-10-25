@@ -14,7 +14,7 @@ Resources:
   addStore:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: corporate/addStore/
+      CodeUri: addStore/
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
@@ -23,13 +23,13 @@ Resources:
         addStore:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /corporate/addStore
+            Path: /addStore
             Method: post
 
   removeStore:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: corporate/removeStore/
+      CodeUri: removeStore/
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
@@ -38,5 +38,5 @@ Resources:
         removeStore:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /corporate/removeStore
+            Path: /removeStore
             Method: get

@@ -49,19 +49,21 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
     }; // response
     
-    //let actual_event = event.body;
-    let info = JSON.parse(event);
+    console.log(event);
+    let actual_event = event.body;
+    let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
     
     // create store
-    let createStore = (latitude, longitude) => {
+    let createStore = (name, latitude, longitude) => {
+        let store_name = name;
         let latitude_value = parseFloat(latitude);
         let longitude_value = parseFloat(longitude);
         if (isNaN(latitude_value) || isNaN(longitude_value)) {
             return new Promise((reject) => {return reject("unable to create store, please enter valid location")});
         } else {
             return new Promise((resolve, reject) => {
-                pool.query("INSERT INTO Stores (latitude, longitude) VALUES (?, ?)", [latitude_value, longitude_value], (error, rows) => {
+                pool.query("INSERT INTO Stores (name, latitude, longitude) VALUES (?, ?, ?)", [store_name, latitude_value, longitude_value], (error, rows) => {
                     if (error) { return reject(error); }
                     else {return resolve(true);}
                 });
@@ -71,7 +73,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     
     try {
-        const success = await createStore(info.latitude, info.longitude);
+        const success = await createStore(info.name, info.latitude, info.longitude);
         // const ret = await axios(url);
         if (success) {
             response.status = 200;

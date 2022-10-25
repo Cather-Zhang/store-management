@@ -21,7 +21,7 @@ Resources:
         addStore:
           Type: Api
           Properties:
-            Path: /corporate/addStore
+            Path: /addStore
             Method: post
     Metadata:
       SamResourceId: addStore
@@ -37,7 +37,7 @@ Resources:
         removeStore:
           Type: Api
           Properties:
-            Path: /corporate/removeStore
+            Path: /removeStore
             Method: get
     Metadata:
       SamResourceId: removeStore

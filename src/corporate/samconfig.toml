@@ -2,9 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "store-management"
+stack_name = "store-corporate"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-mkhq11z33ya2"
-s3_prefix = "store-management"
+s3_prefix = "store-corporate"
 region = "us-east-2"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
