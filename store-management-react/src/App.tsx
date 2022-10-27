@@ -25,7 +25,7 @@ function App() {
   return (
       <ThemeProvider theme={theme}>
           <div className="App">
-            <MenuBar></MenuBar>
+            <MenuBar/>
             <br />
             <Button variant="contained">Hello World</Button>
           </div>
