@@ -39,7 +39,6 @@ const createStoreRequest = {
 const createStoreResponse = {
     "status": "integer", //200 or 400
     "error": "string",
-    "storeId": "integer",
     "stores":[
         {"storeId": "integer", "latitude": "double", "longitude": "double", "manager": "string" },
         // ...

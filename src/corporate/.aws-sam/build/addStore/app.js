@@ -5,6 +5,10 @@ const mysql = require('mysql');
 
 var config = require('./config.json');
 var pool = mysql.createPool({
+    connectionLimit : 1000,
+    connectTimeout  : 60 * 60 * 1000,
+    acquireTimeout  : 60 * 60 * 1000,
+    timeout         : 60 * 60 * 1000,
     host: config.host,
     user: config.user,
     password: config.password,
@@ -14,11 +18,13 @@ var pool = mysql.createPool({
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
+        //console.log("connecting to db"); 
         conx.query(sql, params, function(err, rows) {
             if (err) {
                 // reject because there was an error
                 reject(err);
             } else {
+                //console.log("rows resolved"); 
                 // resolve because we have result(s) from the query. it may be an empty rowset or contain multiple values
                 resolve(rows);
             }
@@ -55,17 +61,25 @@ exports.lambdaHandler = async (event, context, callback) => {
     console.log("info:" + JSON.stringify(info)); 
     
     // create store
-    let createStore = (name, latitude, longitude) => {
-        let store_name = name;
+    let createStore = (name, latitude, longitude, manager, password) => {
+        //console.log("in creating store"); 
         let latitude_value = parseFloat(latitude);
         let longitude_value = parseFloat(longitude);
+        //console.log("parsing completed"); 
         if (isNaN(latitude_value) || isNaN(longitude_value)) {
             return new Promise((reject) => {return reject("unable to create store, please enter valid location")});
         } else {
+            //console.log("starting pool query"); 
             return new Promise((resolve, reject) => {
-                pool.query("INSERT INTO Stores (name, latitude, longitude) VALUES (?, ?, ?)", [store_name, latitude_value, longitude_value], (error, rows) => {
-                    if (error) { return reject(error); }
-                    else {return resolve(true);}
+                pool.query("INSERT INTO Stores (name, latitude, longitude, manager, password) VALUES (?, ?, ?, ?, ?)", [name, latitude_value, longitude_value, manager, password], (error, rows) => {
+                    if (error) { 
+                        //console.log("reject"); 
+                        return reject(error); }
+                    else {
+                        //console.log("resolved"); 
+                        return resolve(true);
+                        
+                    }
                 });
             });
         }
@@ -73,7 +87,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     
     try {
-        const success = await createStore(info.name, info.latitude, info.longitude);
+        const success = await createStore(info.name, info.latitude, info.longitude, info.manager, info.password);
         // const ret = await axios(url);
         if (success) {
             response.status = 200;
