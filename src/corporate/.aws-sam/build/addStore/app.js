@@ -5,16 +5,25 @@ const mysql = require('mysql');
 
 var config = require('./config.json');
 var pool = mysql.createPool({
-    connectionLimit : 1000,
-    connectTimeout  : 60 * 60 * 1000,
-    acquireTimeout  : 60 * 60 * 1000,
-    timeout         : 60 * 60 * 1000,
     host: config.host,
     user: config.user,
     password: config.password,
     database: config.database
 });
 
+class Store {
+    constructor(id, name, latitude, longitude) {
+        this.idStores = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+    
+    assignManager(managername, password) {
+        this.manager = managername;
+        this.password = password;
+    }
+}
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
@@ -85,17 +94,49 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
     }
     
+    let listAllStores = () => {
+        return new Promise((resolve, reject) => {
+                pool.query("SELECT * FROM Stores", [], (error, rows) => {
+                    if (error) { return reject(error); }
+                    if (rows) {
+                        let stores = [];
+                        for (let r of rows) {
+                            let id = r.idStores;
+                            let name = r.name;
+                            let latitude = r.latitude;
+                            let longitude = r.longitude;
+                            let store = new Store(id, name, latitude, longitude);
+                            stores.push(store);
+                        }
+                        return resolve(stores);
+                    } else {
+                        return reject("no store in database");
+                    }
+                });
+            });
+    }
+    
     
     try {
         const success = await createStore(info.name, info.latitude, info.longitude, info.manager, info.password);
         // const ret = await axios(url);
         if (success) {
             response.status = 200;
+            //returns the list of all stores
+            const stores = await listAllStores();
+            if (stores) {
+                response.stores = JSON.parse(JSON.stringify(stores));
+            }
+            else {
+                response.status = 400;
+                response.error = "store created but failed to list all stores"
+            }
         }
         else {
             response.status = 400;
             response.error = "unable to create store"
         }
+
     } catch (error) {
         console.log("ERROR: " + error);
         response.status = 400;

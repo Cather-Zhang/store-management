@@ -1,16 +1,6 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
-const mysql = require('mysql');
-
-var config = require('./config.json');
-var pool = mysql.createPool({
-    host: config.host,
-    user: config.user,
-    password: config.password,
-    database: config.database
-});
-
 class Store {
     constructor(id, name, latitude, longitude) {
         this.idStores = id;
@@ -24,6 +14,17 @@ class Store {
         this.password = password;
     }
 }
+const mysql = require('mysql');
+
+
+var config = require('./config.json');
+var pool = mysql.createPool({
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    database: config.database
+});
+
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
@@ -116,13 +117,13 @@ exports.lambdaHandler = async (event, context, callback) => {
             });
     }
     
-    
     try {
         const success = await createStore(info.name, info.latitude, info.longitude, info.manager, info.password);
         // const ret = await axios(url);
         if (success) {
             response.status = 200;
-            //returns the list of all stores
+            
+            //TODO: add list all stores
             const stores = await listAllStores();
             if (stores) {
                 response.stores = JSON.parse(JSON.stringify(stores));
@@ -136,7 +137,6 @@ exports.lambdaHandler = async (event, context, callback) => {
             response.status = 400;
             response.error = "unable to create store"
         }
-
     } catch (error) {
         console.log("ERROR: " + error);
         response.status = 400;

@@ -19,13 +19,4 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["removeStore"]
 
-[function_build_definitions.a3692af9-26f6-4ecb-a120-b16f59208a23]
-codeuri = "/home/ec2-user/environment/store-management/src/corporate/listAllStores"
-runtime = "nodejs14.x"
-architecture = "x86_64"
-handler = "app.lambdaHandler"
-manifest_hash = ""
-packagetype = "Zip"
-functions = ["listAllStores"]
-
 [layer_build_definitions]

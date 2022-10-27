@@ -118,6 +118,27 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
     }
     
+    let listAllStores = () => {
+        return new Promise((resolve, reject) => {
+                pool.query("SELECT * FROM Stores", [], (error, rows) => {
+                    if (error) { return reject(error); }
+                    if (rows) {
+                        let stores = [];
+                        for (let r of rows) {
+                            let id = r.idStores;
+                            let name = r.name;
+                            let latitude = r.latitude;
+                            let longitude = r.longitude;
+                            let store = new Store(id, name, latitude, longitude);
+                            stores.push(store);
+                        }
+                        return resolve(stores);
+                    } else {
+                        return reject("no store in database");
+                    }
+                });
+            });
+    }
     
     try {
         const store = await getStore(info.storeId);
@@ -127,7 +148,16 @@ exports.lambdaHandler = async (event, context, callback) => {
                 const success = await removeStore(info.storeId);
                 if (success) {
                     response.status = 200;
-                    //TODO: add list all stores
+                    
+                    //returns the list of all stores
+                    const stores = await listAllStores();
+                    if (stores) {
+                        response.stores = JSON.parse(JSON.stringify(stores));
+                    }
+                    else {
+                        response.status = 400;
+                        response.error = "store created but failed to list all stores"
+                    }
                 }
                 else {
                     response.status = 400;
