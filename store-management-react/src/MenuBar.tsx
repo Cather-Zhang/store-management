@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import AddLocationTwoToneIcon from '@mui/icons-material/AddLocationTwoTone';
+import {Save} from "@mui/icons-material";
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function MenuBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -86,11 +87,15 @@ function MenuBar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem key={0} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Stores Near Me</Typography>
+                            </MenuItem>
+                            <MenuItem key={1} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Search Items</Typography>
+                            </MenuItem>
+                            <MenuItem key={2} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Manage Store</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -113,15 +118,30 @@ function MenuBar() {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        <Button
+                            startIcon={<Save/>}
+                            key={0}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Stores Near Me
+                        </Button>
+                        <Button
+                            startIcon={<AddLocationTwoToneIcon/>}
+                            key={1}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Search Items
+                        </Button>
+                        <Button
+                            startIcon={<AddLocationTwoToneIcon/>}
+                            key={2}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Manage Store
+                        </Button>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
