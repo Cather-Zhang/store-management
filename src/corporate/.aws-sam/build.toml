@@ -19,4 +19,22 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["removeStore"]
 
+[function_build_definitions.7b08bae8-65ae-4fa8-ba45-d3a6c7a2aa49]
+codeuri = "/home/ec2-user/environment/store-management/src/corporate/addItem"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["addItem"]
+
+[function_build_definitions.6b75212f-374c-4975-80d1-d87019a6f6c5]
+codeuri = "/home/ec2-user/environment/store-management/src/corporate/assignItem"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["assignItem"]
+
 [layer_build_definitions]

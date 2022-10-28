@@ -142,11 +142,12 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     try {
         const store = await getStore(info.storeId);
+        
         // const ret = await axios(url);
         if (store) {
             try {
                 const success = await removeStore(info.storeId);
-                if (success) {
+                if (success === true) {
                     response.status = 200;
                     
                     //returns the list of all stores

@@ -5,7 +5,7 @@ const createItemRequest = {
     "name": "string",
     "price": "double",
     "description": "string",
-    "maxQuantity": "integer"
+    "max": "integer"
 };
 
 const createItemResponse = {
@@ -16,7 +16,7 @@ const createItemResponse = {
 
 //Assign Item Location: POST
 const assignItemLocationRequest = {
-    "itemSku": "string",
+    "sku": "string",
     "locations": [{"aisles": "integer", "shelves":"integer"},
     //...
 ]
