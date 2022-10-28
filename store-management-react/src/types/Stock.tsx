@@ -1,4 +1,6 @@
-class Stock{
+import {Item} from "./Item";
+
+export class Stock{
     item: Item;
     quantity: number;
 

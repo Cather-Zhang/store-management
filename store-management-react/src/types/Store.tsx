@@ -1,4 +1,9 @@
-class Store {
+import {Aisle} from "./Aisle";
+import {AuthorizedUser} from "./AuthorizedUser";
+import {GPS} from "./GPS";
+import {Stock} from "./Stock";
+
+export class Store {
     number: number;
     aisles: Aisle[];
     manager: AuthorizedUser;

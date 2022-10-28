@@ -3,6 +3,11 @@ import './App.css';
 import Button from '@mui/material/Button';
 import MenuBar from './MenuBar';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {Corporate} from "./types/Corporate";
+import {Item} from "./types/Item";
+import {AuthorizedUser} from "./types/AuthorizedUser";
+import {GPS} from "./types/GPS";
+import {Store} from "./types/Store";
 
 const theme = createTheme({
     palette: {
@@ -20,6 +25,10 @@ const theme = createTheme({
     }
 });
 
+
+let corporate = new Corporate([new Item("123", "name", "desc", 8, 1, 2, 10)],
+    [new Store(0, [], new AuthorizedUser("", "", ""), [], new GPS(0,0))]);
+console.log(corporate.stores)
 
 function App() {
   return (
