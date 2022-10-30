@@ -39,11 +39,11 @@ function query(conx, sql, params) {
 
 // Take in as input a payload.
 //
-// {  body: '{    "latitude" : "12.1",   "longitude" : "81.2",  "manager": "John Smith",  "password": "12345678"}'
+// {  body: '{    "latitude" : "12.1",   "longitude" : "81.2"    }'
 //
 // }
 //
-// ===>  { "storeId" : "2" }
+// ===>  { "stores": [{"storeId": "4", "name": "Worcester Store", "latitude": "23.412", "longitude": "-12.342", "distance": "12"}, ...] }
 //
 
 
@@ -65,32 +65,11 @@ exports.lambdaHandler = async (event, context, callback) => {
     let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
     
-    // create store
-    let createStore = (name, latitude, longitude, manager, password) => {
-        //console.log("in creating store"); 
-        let latitude_value = parseFloat(latitude);
-        let longitude_value = parseFloat(longitude);
-        //console.log("parsing completed"); 
-        if (isNaN(latitude_value) || isNaN(longitude_value)) {
-            return new Promise((reject) => {return reject("unable to create store, please enter valid location")});
-        } else {
-            //console.log("starting pool query"); 
-            return new Promise((resolve, reject) => {
-                pool.query("INSERT INTO Stores (name, latitude, longitude, manager, password) VALUES (?, ?, ?, ?, ?)", [name, latitude_value, longitude_value, manager, password], (error, rows) => {
-                    if (error) { 
-                        //console.log("reject"); 
-                        return reject(error); }
-                    else {
-                        //console.log("resolved"); 
-                        return resolve(true);
                         
-                    }
-                });
-            });
-        }
-    }
-    
-    let listAllStores = () => {
+    //list stores from closest to fartest
+    let listAllStores = (latitude, longitude) => {
+        let user_latitude = parseFloat(latitude);
+        let user_longitude = parseFloat(longitude);
         return new Promise((resolve, reject) => {
                 pool.query("SELECT * FROM Stores", [], (error, rows) => {
                     if (error) { return reject(error); }
@@ -99,12 +78,17 @@ exports.lambdaHandler = async (event, context, callback) => {
                         for (let r of rows) {
                             let id = r.idStores;
                             let name = r.name;
-                            let latitude = r.latitude;
-                            let longitude = r.longitude;
+                            let store_latitude = r.latitude;
+                            let store_longitude = r.longitude;
                             let manager = r.manager;
-                            let store = new Store(id, name, latitude, longitude, manager);
+                            let store = new Store(id, name, store_latitude, store_longitude, manager);
+                            let distance = Math.sqrt(Math.pow((user_latitude - store_latitude), 2) + Math.pow((user_longitude - store_longitude), 2))
+                            console.log(distance);
+                            store.distance = distance;
                             stores.push(store);
                         }
+
+                        stores.sort((a, b) => (a.distance > b.distance) ? 1 : -1)
                         return resolve(stores);
                     } else {
                         return reject("no store in database");
@@ -115,24 +99,17 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     
     try {
-        const success = await createStore(info.name, info.latitude, info.longitude, info.manager, info.password);
-        // const ret = await axios(url);
-        if (success) {
-            response.status = 200;
             //returns the list of all stores
-            const stores = await listAllStores();
-            if (stores) {
-                response.stores = JSON.parse(JSON.stringify(stores));
-            }
-            else {
-                response.status = 400;
-                response.error = "store created but failed to list all stores"
-            }
+        const stores = await listAllStores(info.latitude, info.longitude);
+        if (stores) {
+            response.status = 200;
+            response.stores = JSON.parse(JSON.stringify(stores));
         }
         else {
             response.status = 400;
-            response.error = "unable to create store"
+            response.error = "no stores in database"
         }
+
 
     } catch (error) {
         console.log("ERROR: " + error);

@@ -94,6 +94,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     }
     
     // remove store
+    //TODO remove stock information as well
     let removeStore = (storeId) => {
         //console.log("in creating store"); 
         let index = parseInt(storeId);

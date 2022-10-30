@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'listStores
+
+  Sample SAM Template for listStores
+
+  '
+Globals:
+  Function:
+    Timeout: 5
+  Api:
+    Cors:
+      AllowMethods: '''GET,POST,OPTIONS'''
+      AllowHeaders: '''content-type'''
+      AllowOrigin: '''*'''
+Resources:
+  listStores:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: listStores
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - arm64
+      Events:
+        listStores:
+          Type: Api
+          Properties:
+            Path: /listStores
+            Method: get
+    Metadata:
+      SamResourceId: listStores
