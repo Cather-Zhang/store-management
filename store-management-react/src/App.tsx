@@ -25,19 +25,18 @@ const theme = createTheme({
     }
 });
 
-const [corporate, setCorporate] = useState(new Corporate([new Item("123", "name", "desc", 8, 1, 2, 10)],
-    [new Store(0, [], new AuthorizedUser("", "", ""), [], new GPS(0,0))]));
-
 function App() {
-  return (
+    const [corporate, setCorporate] = useState(new Corporate([new Item("123", "name", "desc", 8, 1, 2, 10)],
+        [new Store(0, [], new AuthorizedUser("", "", ""), [], new GPS(0,0))]));
+
+    return (
       <ThemeProvider theme={theme}>
           <div className="App">
-            <MenuBar currentUser={"manager"}/> {/*refactor this to tell the menu bar who the current user is, need a system for this*/}
-            <br />
-            <Button variant="contained">Hello World</Button>
+              <MenuBar currentUser={"manager"}/> {/*refactor this to tell the menu bar who the current user is, need a system for this*/}
+              <br />
           </div>
       </ThemeProvider>
-  );
+    );
 }
 
 export default App;

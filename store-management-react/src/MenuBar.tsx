@@ -103,7 +103,7 @@ function MenuBar(props: any) { //want to specify type eventually probably
                         variant="h5"
                         noWrap
                         component="a"
-                        href=""
+                        href={"/"}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -119,6 +119,7 @@ function MenuBar(props: any) { //want to specify type eventually probably
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <Button
+                            href={"/stores"}
                             startIcon={<Save/>}
                             key={0}
                             onClick={handleCloseNavMenu}
@@ -127,6 +128,7 @@ function MenuBar(props: any) { //want to specify type eventually probably
                             Stores Near Me
                         </Button>
                         <Button
+                            href={"/search"}
                             startIcon={<AddLocationTwoToneIcon/>}
                             key={1}
                             onClick={handleCloseNavMenu}
@@ -135,6 +137,7 @@ function MenuBar(props: any) { //want to specify type eventually probably
                             Search Items
                         </Button>
                         <Button
+                            href={"/manage"}
                             startIcon={<AddLocationTwoToneIcon/>}
                             key={2}
                             onClick={handleCloseNavMenu}
