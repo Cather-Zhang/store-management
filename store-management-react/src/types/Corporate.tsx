@@ -9,4 +9,10 @@ export class Corporate {
         this.items = items;
         this.stores = stores;
     }
+
+    copy() {
+        let items = this.items.map(i => i.copy());
+        let stores = this.stores.map(s => s.copy());
+        return new Corporate(items, stores);
+    }
 }

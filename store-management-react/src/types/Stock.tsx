@@ -9,4 +9,7 @@ export class Stock{
         this.quantity = quantity;
     }
 
+    copy() {
+        return new Stock(this.item.copy(), this.quantity);
+    }
 }

@@ -7,4 +7,7 @@ export class GPS {
         this.latitude = latitude;
     }
 
+    copy() {
+        return new GPS(this.longitude, this.latitude);
+    }
 }

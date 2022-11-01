@@ -6,4 +6,9 @@ export class Shelf{
     constructor(stocks: Stock[]){
         this.stocks = stocks;
     }
+
+    copy() {
+        let stocks = this.stocks.map(s => s.copy())
+        return new Shelf(stocks);
+    }
 }

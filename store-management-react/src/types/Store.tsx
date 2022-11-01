@@ -18,4 +18,9 @@ export class Store {
         this.gps = gps;
     }
 
+    copy() {
+        let aisles = this.aisles.map(a => a.copy())
+        let overstock = this.overstock.map(o => o.copy())
+        return new Store(this.number, aisles, this.manager.copy(), overstock, this.gps.copy());
+    }
 }

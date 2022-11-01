@@ -8,4 +8,8 @@ export class AuthorizedUser {
         this.userID = userID;
         this.password = password;
     }
+
+    copy() {
+        return new AuthorizedUser(this.role, this.userID, this.password);
+    }
 }

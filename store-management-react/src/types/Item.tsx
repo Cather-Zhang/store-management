@@ -16,4 +16,8 @@ export class Item {
        this.shelf = shelf;
        this.max = max;
     }
+
+    copy() {
+        return new Item(this.sku, this.name, this.description, this.price, this.aisle, this.shelf, this.max);
+    }
 }
