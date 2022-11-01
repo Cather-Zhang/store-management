@@ -1,7 +1,7 @@
 corporate lambda fucntions:
-add store
-delete store
-create item
-assign item
-generate total report
-generate individual report
+add store (done)
+delete store (TODO: need to delete store stocks in db)
+create item (done)
+assign item (done) 
+generate total report (TODO)
+generate individual report (TODO)

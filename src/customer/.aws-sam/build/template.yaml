@@ -27,6 +27,6 @@ Resources:
           Type: Api
           Properties:
             Path: /listStores
-            Method: get
+            Method: post
     Metadata:
       SamResourceId: listStores

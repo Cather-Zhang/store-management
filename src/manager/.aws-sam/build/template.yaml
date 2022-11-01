@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'processShipment
+
+  Sample SAM Template for processShipment
+
+  '
+Globals:
+  Function:
+    Timeout: 5
+  Api:
+    Cors:
+      AllowMethods: '''GET,POST,OPTIONS'''
+      AllowHeaders: '''content-type'''
+      AllowOrigin: '''*'''
+Resources:
+  processShipment:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: processShipment
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        processShipment:
+          Type: Api
+          Properties:
+            Path: /processShipment
+            Method: post
+    Metadata:
+      SamResourceId: processShipment

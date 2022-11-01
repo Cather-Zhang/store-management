@@ -70,6 +70,9 @@ exports.lambdaHandler = async (event, context, callback) => {
     let listAllStores = (latitude, longitude) => {
         let user_latitude = parseFloat(latitude);
         let user_longitude = parseFloat(longitude);
+        if (NaN(user_latitude) || NaN(user_longitude)) {
+            return new Promise((reject) => { return reject("no store in database")});
+        }
         return new Promise((resolve, reject) => {
                 pool.query("SELECT * FROM Stores", [], (error, rows) => {
                     if (error) { return reject(error); }
@@ -107,7 +110,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
         else {
             response.status = 400;
-            response.error = "no stores in database"
+            response.error = "can not list all stores";
         }
 
 

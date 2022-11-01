@@ -12,16 +12,12 @@ var pool = mysql.createPool({
 });
 
 class Store {
-    constructor(id, name, latitude, longitude) {
+    constructor(id, name, latitude, longitude, managername) {
         this.idStores = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-    }
-    
-    assignManager(managername, password) {
         this.manager = managername;
-        this.password = password;
     }
 }
 
@@ -105,7 +101,8 @@ exports.lambdaHandler = async (event, context, callback) => {
                             let name = r.name;
                             let latitude = r.latitude;
                             let longitude = r.longitude;
-                            let store = new Store(id, name, latitude, longitude);
+                            let manager = r.manager;
+                            let store = new Store(id, name, latitude, longitude, manager);
                             stores.push(store);
                         }
                         return resolve(stores);
