@@ -16,7 +16,7 @@ import AddLocationTwoToneIcon from '@mui/icons-material/AddLocationTwoTone';
 import {Save} from "@mui/icons-material";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-function MenuBar() {
+function MenuBar(props: any) { //want to specify type eventually probably
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 

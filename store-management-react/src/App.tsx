@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Button from '@mui/material/Button';
 import MenuBar from './MenuBar';
@@ -25,19 +25,14 @@ const theme = createTheme({
     }
 });
 
-
-let corporate = new Corporate([new Item("123", "name", "desc", 8, 1, 2, 10)],
-    [new Store(0, [], new AuthorizedUser("", "", ""), [], new GPS(0,0))]);
-let corporate2 = corporate.copy();
-corporate2.items[0].aisle = 5;
-console.log(corporate)
-console.log(corporate2)
+const [corporate, setCorporate] = useState(new Corporate([new Item("123", "name", "desc", 8, 1, 2, 10)],
+    [new Store(0, [], new AuthorizedUser("", "", ""), [], new GPS(0,0))]));
 
 function App() {
   return (
       <ThemeProvider theme={theme}>
           <div className="App">
-            <MenuBar/>
+            <MenuBar currentUser={"manager"}/> {/*refactor this to tell the menu bar who the current user is, need a system for this*/}
             <br />
             <Button variant="contained">Hello World</Button>
           </div>
