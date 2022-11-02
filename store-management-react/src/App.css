@@ -34,3 +34,36 @@
 .MuiSvgIcon-root {
   vertical-align: middle !important;
 }
+
+.page {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  height: 100vh;
+}
+
+.pageLayout {
+  height: 100%;
+  display: flex;
+  align-content: flex-start;
+  flex-direction: column;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+}
+
+.buttonMenu {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+  margin: auto;
+}
+
+.storeTable {
+  width: 50% !important;
+  margin: auto;
+}

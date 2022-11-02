@@ -4,14 +4,14 @@ import {GPS} from "./GPS";
 import {Stock} from "./Stock";
 
 export class Store {
-    number: number;
+    id: number;
     aisles: Aisle[];
     manager: AuthorizedUser;
     overstock: Stock[];
     gps: GPS;
 
     constructor(number: number, aisles: Aisle[], manager: AuthorizedUser, overstock: Stock[], gps: GPS) {
-        this.number = number;
+        this.id = number;
         this.aisles = aisles;
         this.manager = manager;
         this.overstock = overstock;
@@ -21,6 +21,6 @@ export class Store {
     copy() {
         let aisles = this.aisles.map(a => a.copy())
         let overstock = this.overstock.map(o => o.copy())
-        return new Store(this.number, aisles, this.manager.copy(), overstock, this.gps.copy());
+        return new Store(this.id, aisles, this.manager.copy(), overstock, this.gps.copy());
     }
 }

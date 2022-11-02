@@ -1,18 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {PageRouter} from "./PageRouter";
+import App from "./App";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#663399",
+            light: "#8241C3",
+            dark: "#4A256E",
+            contrastText: "#fff"
+        },
+        secondary: {
+            main: "#993352",
+            light: "#CC6685",
+            dark: "#73263e"
+        }
+    }
+});
+
 root.render(
   <React.StrictMode>
-      <PageRouter>
+      <ThemeProvider theme={theme}>
           <App />
-      </PageRouter>
+      </ThemeProvider>
   </React.StrictMode>
 );
 
