@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AddLocationTwoToneIcon from '@mui/icons-material/AddLocationTwoTone';
 import {Save} from "@mui/icons-material";
+import AssignmentTwoToneIcon from '@mui/icons-material/AssignmentTwoTone';
+import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function MenuBar(props: any) { //want to specify type eventually probably
@@ -39,7 +41,7 @@ function MenuBar(props: any) { //want to specify type eventually probably
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <LocalGroceryStoreTwoToneIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -48,14 +50,14 @@ function MenuBar(props: any) { //want to specify type eventually probably
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
+                            fontFamily: 'Arial',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '0',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Defensibilities
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -123,6 +125,7 @@ function MenuBar(props: any) { //want to specify type eventually probably
                             startIcon={<Save/>}
                             key={0}
                             onClick={handleCloseNavMenu}
+                            className={"menuButton"}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
                             Stores Near Me
@@ -132,18 +135,20 @@ function MenuBar(props: any) { //want to specify type eventually probably
                             startIcon={<AddLocationTwoToneIcon/>}
                             key={1}
                             onClick={handleCloseNavMenu}
+                            className={"menuButton"}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
                             Search Items
                         </Button>
                         <Button
-                            href={"/manage"}
-                            startIcon={<AddLocationTwoToneIcon/>}
+                            href={props.currentUser == "manager" ? "/manageStore" : "/manageCorporate"}
+                            startIcon={<AssignmentTwoToneIcon/>}
                             key={2}
                             onClick={handleCloseNavMenu}
+                            className={"menuButton"}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            Manage Store
+                            Manage {props.currentUser == "manager" ? "Store" : "Corporate"}
                         </Button>
                     </Box>
 

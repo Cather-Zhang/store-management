@@ -4,6 +4,7 @@ import SearchItems from "./pages/SearchItems";
 import StoresNearMe from "./pages/StoresNearMe";
 import React from "react";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import ManageCorporate from "./pages/ManageCorporate";
 
 export const PageRouter = ({children}: {children: React.ReactNode}) => {
     return (
@@ -12,7 +13,8 @@ export const PageRouter = ({children}: {children: React.ReactNode}) => {
                 {children}
                 <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/manage" element={<ManageStore/>}/>
+                    <Route path="/manageStore" element={<ManageStore/>}/>
+                    <Route path="/manageCorporate" element={<ManageCorporate/>}/>
                     <Route path="/search" element={<SearchItems/>}/>
                     <Route path="/stores" element={<StoresNearMe/>}/>
                 </Routes>

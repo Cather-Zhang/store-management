@@ -32,7 +32,7 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
           <div className="App">
-              <MenuBar currentUser={"manager"}/> {/*refactor this to tell the menu bar who the current user is, need a system for this*/}
+              <MenuBar currentUser={"corporate"}/> {/*refactor this to tell the menu bar who the current user is, need a system for this*/}
               <br />
           </div>
       </ThemeProvider>
