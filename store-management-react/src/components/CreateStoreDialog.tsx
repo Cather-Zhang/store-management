@@ -6,8 +6,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {Corporate} from "../types/Corporate";
+import {createStoreController} from "../Controllers";
 
-export default function CreateStoreDialog(props: {open: boolean, handleClose: () => void}) {
+export default function CreateStoreDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
+    setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {
     return (
         <Dialog open={props.open} fullWidth maxWidth="xs" onClose={props.handleClose}>
             <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"} align={"center"}>Create Store</DialogTitle>
@@ -46,7 +49,22 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={props.handleClose}>Create Store</Button>
+                <Button onClick={() => {
+                    function getById(id: string) {
+                        return (document.getElementById(id) as HTMLInputElement)?.value;
+                    }
+
+                    let password = getById("password");
+                    let passwordConfirm = getById("passwordConfirm");
+
+                    if(password === passwordConfirm) {
+                        props.setCorporate(createStoreController(props.corporate, +getById("latitude"),
+                            +getById("longitude"), getById("manager"), getById("password")))
+                        props.handleClose()
+                    }
+                }}>
+                    Create Store
+                </Button>
             </DialogActions>
         </Dialog>
     );

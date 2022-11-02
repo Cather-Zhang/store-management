@@ -23,7 +23,8 @@ function ManageCorporate(props: {corporate: Corporate, setCorporate: React.Dispa
     return (
         <div className={"page"}>
             <CreateItemDialog open={itemOpen} handleClose={handleItemClose}/>
-            <CreateStoreDialog open={storeOpen} handleClose={handleStoreClose}/>
+            <CreateStoreDialog open={storeOpen} handleClose={handleStoreClose} corporate={props.corporate}
+                               setCorporate={props.setCorporate}/>
             <h1>Manage Stores and Items</h1>
             <div className={"buttonMenu"}>
                 <Button variant="contained">Generate Report</Button>
