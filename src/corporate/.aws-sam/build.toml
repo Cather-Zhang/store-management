@@ -37,4 +37,13 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["assignItem"]
 
+[function_build_definitions.6801bef4-f89f-4f18-88e7-dc370a7e019c]
+codeuri = "/home/ec2-user/environment/store-management/src/corporate/listItems"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["listItems"]
+
 [layer_build_definitions]
