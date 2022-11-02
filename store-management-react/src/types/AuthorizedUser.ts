@@ -1,15 +1,15 @@
 export class AuthorizedUser {
-    role: string;
+    isManager: boolean;
     userID: string;
     password: string;
 
-    constructor(role: string, userID: string, password: string) {
-        this.role = role;
+    constructor(isManager: boolean, userID: string, password: string) {
+        this.isManager = isManager;
         this.userID = userID;
         this.password = password;
     }
 
     copy() {
-        return new AuthorizedUser(this.role, this.userID, this.password);
+        return new AuthorizedUser(this.isManager, this.userID, this.password);
     }
 }
