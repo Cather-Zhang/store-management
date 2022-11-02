@@ -100,7 +100,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                     }
                     return resolve(locations);
                 } else {
-                    console.log("item has not yet been assigned to locations");
+                    //console.log("item has not yet been assigned to locations");
                     return resolve(locations);
                 }
             });
@@ -126,7 +126,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     //find if items are already stored on shelf
     let updateStockShelf = (idStore, sku, location, quantity) => {
-        console.log("update shelf stock for " + sku);
+        //console.log("update shelf stock for " + sku);
         let aisle = location.aisle;
         let shelf = location.shelf;
         return new Promise((resolve, reject) => {
@@ -134,7 +134,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                 if (error) { 
                     return reject(error); }
                 else {
-                    console.log("update shelf success");
+                    //console.log("update shelf success");
                     return resolve(true);
                     
                 }
@@ -144,7 +144,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     //fill up a shelf
     let insertStockShelf = (sku, quantity, location, idStore) => {
-        console.log("insert shelf stock for " + sku);
+        //console.log("insert shelf stock for " + sku);
         let aisle = location.aisle;
         let shelf = location.shelf;
         return new Promise((resolve, reject) => {
@@ -152,7 +152,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                 if (error) { 
                     return reject(error); }
                 else {
-                    console.log("insert shelf success");
+                    //console.log("insert shelf success");
                     return resolve(true);
                     
                 }
@@ -166,10 +166,10 @@ exports.lambdaHandler = async (event, context, callback) => {
             pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=false", [idStore, sku], (error, rows) => {
                 if (error) { return reject(error); }
                 if (rows.length > 0) {
-                    console.log("item " + sku + " in overstock");
+                    //console.log("item " + sku + " in overstock");
                     return resolve(rows[0].quantity);
                 } else {
-                    console.log("item " + sku + " not in overstock");
+                    //console.log("item " + sku + " not in overstock");
                     return resolve(false);
                 }
             });
@@ -178,13 +178,13 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     // insert a new overstock row
     let insertOverstock = (idStore, sku, quantity) => {
-        console.log("insert over stock for " + sku);
+        //console.log("insert over stock for " + sku);
         return new Promise((resolve, reject) => {
             pool.query("INSERT INTO Stocks (quantity, onShelf, idStores, sku) VALUES (?, false, ?, ?)", [quantity, idStore, sku], (error, rows) => {
                 if (error) { 
                     return reject(error); }
                 else {
-                    console.log("insert overstock success");
+                    //console.log("insert overstock success");
                     return resolve(true);
                     
                 }
@@ -194,13 +194,13 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     //update over stock row
     let updateOverstock = (idStore, sku, quantity) => {
-        console.log("update over stock for " + sku);
+        //console.log("update over stock for " + sku);
         return new Promise((resolve, reject) => {
             pool.query("UPDATE Stocks SET quantity=? WHERE onShelf=false AND idStores=? AND sku=?", [quantity, idStore, sku], (error, rows) => {
                 if (error) { 
                     return reject(error); }
                 else {
-                    console.log("update overstock success");
+                    //console.log("update overstock success");
                     return resolve(true);
                     
                 }
@@ -228,11 +228,11 @@ exports.lambdaHandler = async (event, context, callback) => {
             let max = await doesItemExist(shipment.sku);
             let sku = shipment.sku;
             let locations = await getLocations(sku);
-            console.log("process shipment "+ sku);
+            //console.log("process shipment "+ sku);
             
             //When item is not assigned a location
             if (locations.length == 0) {
-                console.log(sku + " is not assigned to a location");
+                //console.log(sku + " is not assigned to a location");
                 let overstock = await findOverstock(idStore, sku);
                 if (overstock == false) {
                     let insertOverstockSuccess = await insertOverstock(idStore, sku, newQuantity);
@@ -258,12 +258,12 @@ exports.lambdaHandler = async (event, context, callback) => {
             
             //When item is already assigned to a location
             else {
-                console.log(sku + " is assigned to a location");
-                console.log("item max on shelf is: " + max);
+                //console.log(sku + " is assigned to a location");
+                //console.log("item max on shelf is: " + max);
                 let remainingQuantity = newQuantity;
                 for (let location of locations) {
                     if (remainingQuantity > 0) {
-                        console.log("on location aisle "+ location.aisle + " shelf " + location.shelf);
+                        //console.log("on location aisle "+ location.aisle + " shelf " + location.shelf);
                         let stock = await findStockShelf(idStore, sku, location);
                         let addQuantity;
                         if (stock == false) {
@@ -281,7 +281,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                                 remainingQuantity = remainingQuantity - (max - stock);
                             }
                         }
-                        console.log("remaining quantity is: " + remainingQuantity);
+                        //console.log("remaining quantity is: " + remainingQuantity);
                     }
                 }
                 
