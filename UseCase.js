@@ -119,13 +119,15 @@ const generateInventoryReportRequest = {
 const generateInventoryReportResponse = {
     "status": "integer", //200 or 400
     "error": "string",
-    "stocks": [
-        {"itemName": "string", "quantity": "integer", "cost": "double", "description": "string","maxQuantity": "integer",
-            "locations": [{"aisles": "integer", "shelves":"integer"},]
-        },
-        //...
-    ],
-    "totalValue": "double"
+    "stocks":[{"item":{"sku":"string", "name":"string","description":"string","price":"float","max":"integer"},
+                "inventorys":[{"location":{"aisle":"integer", "shelf":"integer"}, 
+                               "quantity":"integer"},
+                                //...
+                            ]},
+            
+            ],
+
+    "totalValue": "float"
 }
 
 
@@ -137,12 +139,12 @@ const generateOverstockReportRequest = {
 const generateOverstockReportResponse = {
     "status": "integer", //200 or 400
     "error": "string",
-    "stocks": [
-        {"itemName": "string", "quantity": "integer", "price": "double", "description": "string", "maxQuantity": "integer",
-            "locations": [{"aisles": "integer", "shelves":"integer"},]
-        },
-        //...
-    ],
+    "stocks":[{"item":
+                {"sku":"string", "name":"string", "description":"string", "price":"float","max":"integer"},
+                "quantity":"integer"},
+                //...
+            ],
+
     "totalValue": "double"
 }
 
