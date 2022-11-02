@@ -8,15 +8,27 @@ import TableRow from '@mui/material/TableRow';
 import {Corporate} from "../types/Corporate";
 import {Store} from "../types/Store";
 import {deleteStoreController} from "../Controllers";
+import CreateItemDialog from "../components/CreateItemDialog";
+import CreateStoreDialog from "../components/CreateStoreDialog";
 
 function ManageCorporate(props: {corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {
+    const [itemOpen, setItemOpen] = React.useState(false);
+    const handleItemClickOpen = () => { setItemOpen(true); };
+    const handleItemClose = () => { setItemOpen(false); };
+
+    const [storeOpen, setStoreOpen] = React.useState(false);
+    const handleStoreClickOpen = () => { setStoreOpen(true); };
+    const handleStoreClose = () => { setStoreOpen(false); };
+
     return (
         <div className={"page"}>
+            <CreateItemDialog open={itemOpen} handleClose={handleItemClose}/>
+            <CreateStoreDialog open={storeOpen} handleClose={handleStoreClose}/>
             <h1>Manage Stores and Items</h1>
             <div className={"buttonMenu"}>
                 <Button variant="contained">Generate Report</Button>
-                <Button variant="contained">Add Item</Button>
-                <Button variant="contained">Add Store</Button>
+                <Button variant="contained" onClick={handleItemClickOpen}>Create Item</Button>
+                <Button variant="contained" onClick={handleStoreClickOpen}>Create Store</Button>
             </div>
             <br/>
             <Table className="storeTable" aria-label="simple table">
@@ -47,6 +59,6 @@ function ManageCorporate(props: {corporate: Corporate, setCorporate: React.Dispa
             </Table>
         </div>
     );
-}
+};
 
 export default ManageCorporate;
