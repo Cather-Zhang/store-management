@@ -129,7 +129,6 @@ exports.lambdaHandler = async (event, context, callback) => {
             pool.query("SELECT * FROM Locations WHERE sku=?", [sku], (error, rows) => {
                 if (error) { return reject(error); }
                 let locations = [];
-                console.log(rows)
                 if (rows) {
                     for (let r of rows) {
                         let shelf = r.shelf;
