@@ -101,7 +101,7 @@ const generateIndividualReportResponse = {
 const processShipmentRequest = {
     "storeId": "integer",
     "shipments": [
-        {"itemName": "string", "quantity": "integer"},
+        {"sku": "string", "quantity": "integer"},
         //...
     ]
 }
@@ -191,7 +191,7 @@ const listStoreResponse = {
     "status": "integer", //200 or 400
     "error": "string",
     "stores":[
-        {"storeId": "integer", "latitude": "double", "longitude": "double", "distance": "double" },
+        {"storeId": "integer", "name": "string", "latitude": "double", "longitude": "double", "distance": "double" },
         // ...
     ]
 }

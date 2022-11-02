@@ -30,3 +30,35 @@ Resources:
             Method: post
     Metadata:
       SamResourceId: processShipment
+  generateInventoryReport:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: generateInventoryReport
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        generateInventoryReport:
+          Type: Api
+          Properties:
+            Path: /generateInventoryReport
+            Method: post
+    Metadata:
+      SamResourceId: generateInventoryReport
+  generateOverstockReport:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: generateOverstockReport
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        generateOverstockReport:
+          Type: Api
+          Properties:
+            Path: /generateOverstockReport
+            Method: post
+    Metadata:
+      SamResourceId: generateOverstockReport

@@ -10,4 +10,22 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["processShipment"]
 
+[function_build_definitions.b86b4e88-82f8-42c6-918c-ba15951bafdb]
+codeuri = "/home/ec2-user/environment/store-management/src/manager/generateInventoryReport"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["generateInventoryReport"]
+
+[function_build_definitions.0dcbdaec-e2f1-4585-a00e-a655d71d23f6]
+codeuri = "/home/ec2-user/environment/store-management/src/manager/generateOverstockReport"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["generateOverstockReport"]
+
 [layer_build_definitions]

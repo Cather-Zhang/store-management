@@ -1,0 +1,6 @@
+{
+    "host"      : "storemanagementdb.cnga6kvsl5a7.us-east-2.rds.amazonaws.com",
+    "user"      : "admin",
+    "password"  : "defensibilities",
+    "database"  : "info"
+}

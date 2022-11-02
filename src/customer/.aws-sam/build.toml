@@ -10,4 +10,13 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["listStores"]
 
+[function_build_definitions.0dd8399c-bacd-4618-b677-38cc760925ea]
+codeuri = "/home/ec2-user/environment/store-management/src/customer/login"
+runtime = "nodejs14.x"
+architecture = "arm64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["login"]
+
 [layer_build_definitions]
