@@ -12,9 +12,12 @@ import {AuthorizedUser} from "./types/AuthorizedUser";
 import {GPS} from "./types/GPS";
 import MenuBar from "./MenuBar";
 import './App.css';
+import {ItemLocation} from "./types/Location";
 
 function App() {
-    const [corporate, setCorporate] = useState(new Corporate([new Item("123", "name", "desc", 8, 1, 2, 10)],
+    const [corporate, setCorporate] = useState(new Corporate([
+            new Item("123", "name", "desc", 8, [new ItemLocation(0,1)], 10)
+        ],
         [
             new Store(0, [], new AuthorizedUser("", "Larry Brown", ""), [], new GPS(-42.26259, -71.80229)),
             new Store(1, [], new AuthorizedUser("", "Sarah Resley", ""), [], new GPS(42.361145, -71.057083))
@@ -27,7 +30,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/manageStore" element={<ManageStore/>}/>
-                    <Route path="/manageCorporate" element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>
+                    <Route path="/manageCorporate"
+                           element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>
                     <Route path="/search" element={<SearchItems/>}/>
                     <Route path="/stores" element={<StoresNearMe/>}/>
                 </Routes>

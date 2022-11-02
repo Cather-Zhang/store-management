@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../types/Corporate";
 import {createStoreController} from "../Controllers";
@@ -42,7 +41,7 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
                 /><br/>
                 <TextField
                     id="passwordConfirm"
-                    label="Confirm Manager Password"
+                    label="Confirm Password"
                     type="password"
                     variant="standard"
                 />
@@ -59,8 +58,8 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
 
                     if(password === passwordConfirm) {
                         props.setCorporate(createStoreController(props.corporate, +getById("latitude"),
-                            +getById("longitude"), getById("manager"), getById("password")))
-                        props.handleClose()
+                            +getById("longitude"), getById("manager"), getById("password")));
+                        props.handleClose();
                     }
                 }}>
                     Create Store
