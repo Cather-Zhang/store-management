@@ -79,12 +79,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                 pool.query("SELECT * FROM Stores WHERE idStores=?", [index], (error, rows) => {
                     if (error) { return reject(error); }
                     if ((rows) && (rows.length == 1)) {
-                        let id = rows[0].idStores;
-                        let name = rows[0].name;
-                        let latitude = rows[0].latitude;
-                        let longitude = rows[0].longitude;
-                        let s = new Store(id, name, latitude, longitude);
-                        return resolve(s);
+                        return resolve(true);
                     } else {
                         return reject("unable to find store '" + index + "'");
                     }
@@ -93,8 +88,32 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
     }
     
+    // remove stocks first because of foreign key
+    let removeStocks = (storeId) => {
+        //console.log("in creating store"); 
+        let index = parseInt(storeId);
+
+        //console.log("parsing completed"); 
+        if (isNaN(index)) {
+            return new Promise((reject) => {return reject("invalid store id")});
+        } else {
+            //console.log("starting pool query"); 
+            return new Promise((resolve, reject) => {
+                pool.query("DELETE FROM Stocks WHERE idStores=?", [index], (error, rows) => {
+                    if (error) { 
+                        //console.log("reject"); 
+                        return reject(error); }
+                    else {
+                        //console.log("resolved"); 
+                        return resolve(true);
+                        
+                    }
+                });
+            });
+        }
+    }
+    
     // remove store
-    //TODO remove stock information as well
     let removeStore = (storeId) => {
         //console.log("in creating store"); 
         let index = parseInt(storeId);
@@ -145,9 +164,10 @@ exports.lambdaHandler = async (event, context, callback) => {
         const store = await getStore(info.storeId);
         
         // const ret = await axios(url);
-        if (store) {
+        if (store == true) {
             try {
-                const success = await removeStore(info.storeId);
+                let success = await removeStocks(info.storeId);
+                success = await removeStore(info.storeId);
                 if (success === true) {
                     response.status = 200;
                     
@@ -158,7 +178,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                     }
                     else {
                         response.status = 400;
-                        response.error = "store created but failed to list all stores"
+                        response.error = "store removed but failed to list all stores"
                     }
                 }
                 else {

@@ -70,13 +70,14 @@ exports.lambdaHandler = async (event, context, callback) => {
         //console.log("in creating store"); 
         let latitude_value = parseFloat(latitude);
         let longitude_value = parseFloat(longitude);
+        let password_hashed = password.hash();
         //console.log("parsing completed"); 
         if (isNaN(latitude_value) || isNaN(longitude_value)) {
             return new Promise((reject) => {return reject("unable to create store, please enter valid location")});
         } else {
             //console.log("starting pool query"); 
             return new Promise((resolve, reject) => {
-                pool.query("INSERT INTO Stores (name, latitude, longitude, manager, password) VALUES (?, ?, ?, ?, ?)", [name, latitude_value, longitude_value, manager, password], (error, rows) => {
+                pool.query("INSERT INTO Stores (name, latitude, longitude, manager, password) VALUES (?, ?, ?, ?, ?)", [name, latitude_value, longitude_value, manager, password_hashed], (error, rows) => {
                     if (error) { 
                         //console.log("reject"); 
                         return reject(error); }
