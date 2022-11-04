@@ -61,6 +61,18 @@ h2 {
   font-size: 40px;
 }
 
+.totalValueLabel {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.totalValue {
+  text-align: center;
+  font-size: 30px;
+}
+
 .buttonMenu {
   display: flex;
   width: 50%;
@@ -68,16 +80,34 @@ h2 {
   margin: auto;
 }
 
+.storeTable, .itemTable, .itemInStoreTable {
+  margin: auto;
+}
+
 .storeTable {
   width: 50% !important;
-  margin: auto;
 }
 
 .itemTable {
   width: 40% !important;
-  margin: auto;
+}
+
+.itemInStoreTable {
+  width: 40% !important;
 }
 
 .MuiDialogContentText-root {
   margin: 0 20px !important;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 20px;
+  margin-top: -15px;
+  font-weight: 500;
+  color: gray;
+}
+
+p {
+  text-align: center;
 }

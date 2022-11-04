@@ -12,7 +12,6 @@ export default function PickReportTypeDialog(props: {
     store: Store | null, open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
 }) {
-
     return (
         <Dialog open={props.open} onClose={props.handleClose}>
             <DialogActions>
@@ -22,7 +21,7 @@ export default function PickReportTypeDialog(props: {
                          align={"center"}>Pick a Report Type</DialogTitle>
             <DialogContent style={{textAlign: "center", margin: "0 50px"}}>
                 <br/>
-                <Button size={"large"} variant="contained">Inventory Report</Button>
+                <Button size={"large"} variant="contained" href={"/inventoryReport?id=" + props.store?.id}>Inventory Report</Button>
                 <br/><br/>
                 <Button size={"large"} variant="contained">Overstock Report</Button>
                 <br/><br/>
