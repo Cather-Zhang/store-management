@@ -7,24 +7,30 @@ import AssignItemLocationDialog from "./AssignItemLocationDialog";
 
 export default function ItemTable(props: { corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [assignLocOpen, setAssignLocOpen] = React.useState(false);
-    const handleAssignLocClickOpen = () => {
-        setAssignLocOpen(true);
+    const [modalItem, setModalItem] = React.useState<Item | null>(null);
+
+    const handleAssignLocClickOpen = (item: Item) => {
+        return function () {
+            setModalItem(item);
+            setAssignLocOpen(true);
+        };
     };
     const handleAssignLocClose = () => {
         setAssignLocOpen(false);
     };
 
     return <>
-        <AssignItemLocationDialog open={assignLocOpen} handleClose={handleAssignLocClose} corporate={props.corporate}
+        <AssignItemLocationDialog item={modalItem} open={assignLocOpen} handleClose={handleAssignLocClose}
+                                  corporate={props.corporate}
                                   setCorporate={props.setCorporate}/>
-        <BaseTable className={"itemTable"} headers={["SKU", "Name", "Price ($)", "Max", ""]}
+        <BaseTable className={"itemTable"} headers={["Name", "Price ($)", "Max", "Locations", ""]}
                    data={props.corporate.items.map((item: Item, i: number) => {
                        return {
                            id: i,
-                           columns: [item.sku, item.name, item.price, item.max,
+                           columns: [item.name, item.price, item.max, item.getLocationString(),
                                <div style={{display: "flex", justifyContent: "center"}}>
-                                   <Button color="secondary" variant="contained"
-                                           onClick={handleAssignLocClickOpen}>Assign Locations</Button>
+                                   <Button color="secondary" variant="contained" disabled={item.locations.length > 0}
+                                           onClick={handleAssignLocClickOpen(item)}>Assign Locations</Button>
                                </div>
                            ]
                        };

@@ -10,4 +10,8 @@ export class ItemLocation {
     copy() {
         return new ItemLocation(this.aisle, this.shelf);
     }
+
+    toString() {
+        return this.aisle + "," + this.shelf
+    }
 }

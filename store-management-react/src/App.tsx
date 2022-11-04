@@ -12,12 +12,12 @@ import {AuthorizedUser} from "./types/AuthorizedUser";
 import {GPS} from "./types/GPS";
 import MenuBar from "./MenuBar";
 import './App.css';
-import {ItemLocation} from "./types/Location";
+import {ItemLocation} from "./types/ItemLocation";
 
 function App() {
-    const [corporate, setCorporate] = useState(new Corporate([
-            new Item("123", "name", "desc", 8, [new ItemLocation(0,1)], 10)
-        ],
+    const item = new Item("123", "name", "desc", 8, 10);
+    item.assignLocations([new ItemLocation(0,1)]);
+    const [corporate, setCorporate] = useState(new Corporate([item],
         [
             new Store(0, [], new AuthorizedUser("", "Larry Brown", ""), [], new GPS(-42.26259, -71.80229)),
             new Store(1, [], new AuthorizedUser("", "Sarah Resley", ""), [], new GPS(42.361145, -71.057083))

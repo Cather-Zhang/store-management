@@ -1,4 +1,4 @@
-import {ItemLocation} from "./Location";
+import {ItemLocation} from "./ItemLocation";
 
 export class Item {
     sku: string;
@@ -8,16 +8,26 @@ export class Item {
     locations: ItemLocation[];
     max: number;
 
-    constructor(sku: string, name: string, description: string, price: number, locations: ItemLocation[], max: number) {
+    constructor(sku: string, name: string, description: string, price: number, max: number) {
        this.sku = sku;
        this.name = name;
        this.description = description;
        this.price = price;
-       this.locations = locations;
+       this.locations = [];
        this.max = max;
     }
 
+    assignLocations(locations: ItemLocation[]) {
+        this.locations = locations;
+    }
+
+    getLocationString() {
+        return this.locations.length > 0 ? this.locations.join("; ") : "None"
+    }
+
     copy() {
-        return new Item(this.sku, this.name, this.description, this.price, this.locations.map(l => l.copy()), this.max);
+        let item = new Item(this.sku, this.name, this.description, this.price, this.max);
+        item.assignLocations(this.locations.map(l => l.copy()));
+        return item;
     }
 }

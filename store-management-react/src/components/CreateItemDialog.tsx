@@ -32,12 +32,6 @@ export default function CreateItemDialog(props: {open: boolean, handleClose: () 
                     label="Max Quantity"
                     type="number"
                     variant="standard"
-                /><br />
-                <TextField
-                    id="locations"
-                    label="Aisle/Shelf"
-                    type="text"
-                    variant="standard"
                 /><br/><br/>
                 <TextField
                     id="desc"
@@ -55,7 +49,7 @@ export default function CreateItemDialog(props: {open: boolean, handleClose: () 
                     }
 
                     props.setCorporate(createItemController(props.corporate, getById("name"), getById("desc"),
-                        +getById("price"), +getById("maxQuantity"), getById("locations")));
+                        +getById("price"), +getById("maxQuantity")));
                     props.handleClose();
                 }}>
                     Create Item

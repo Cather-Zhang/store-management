@@ -7,8 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../types/Corporate";
 import {DialogContentText} from "@mui/material";
+import {Item} from "../types/Item";
+import {assignItemLocationController} from "../Controllers";
 
 export default function AssignItemLocationDialog(props: {
+    item: Item | null,
     open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
 }) {
@@ -16,7 +19,7 @@ export default function AssignItemLocationDialog(props: {
         <Dialog open={props.open} fullWidth maxWidth="xs" onClose={props.handleClose}>
             <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"} align={"center"}>Create
                 Item</DialogTitle>
-            <br />
+            <br/>
             <DialogContentText>Once you assign an item's location it will be fixed permanently, so choose wisely!
                 Separate aisle and row with a comma (ex. 3,4). To add multiple aisle / shelf pairs, add a semicolon
                 between entries (ex. 3,4;5,6)</DialogContentText>
@@ -35,9 +38,10 @@ export default function AssignItemLocationDialog(props: {
                         return (document.getElementById(id) as HTMLInputElement)?.value;
                     }
 
-                    console.log(getById("locations"))
-
-                    props.handleClose();
+                    if (props.item) {
+                        props.setCorporate(assignItemLocationController(props.corporate, props.item.sku, getById("locations")))
+                        props.handleClose();
+                    }
                 }}>
                     Assign Item Location
                 </Button>
