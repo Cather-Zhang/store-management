@@ -3,13 +3,20 @@ import Button from '@mui/material/Button';
 
 function ManageStore() {
     return (
-        <div>
+        <div className={"page"}>
             <h1>Manage Store #</h1>
-            <br />
-            <h2>Input Shipment</h2>
-            <Button variant="contained">Fill To Max</Button>
-            <Button variant="contained">Generate Report</Button>
-            <br />
+            <div className={"buttonMenu"}>
+                <h3>Input Shipment</h3>
+                <Button variant="contained">Fill To Max</Button>
+                <Button variant="contained">Generate Report</Button>
+            </div>
+            <select name="items" id="items">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="opel">Opel</option>
+                <option value="audi">Audi</option>
+            </select>
+
             <Button variant="contained">Process Shipment</Button>
         </div>
 
