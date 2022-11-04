@@ -5,8 +5,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {Corporate} from "../types/Corporate";
-import {createItemController} from "../Controllers";
+import {Corporate} from "../../types/Corporate";
+import {createItemController} from "../../Controllers";
 
 export default function CreateItemDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {

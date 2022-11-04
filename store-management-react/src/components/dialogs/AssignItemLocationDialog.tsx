@@ -5,10 +5,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {Corporate} from "../types/Corporate";
+import {Corporate} from "../../types/Corporate";
 import {DialogContentText} from "@mui/material";
-import {Item} from "../types/Item";
-import {assignItemLocationController} from "../Controllers";
+import {Item} from "../../types/Item";
+import {assignItemLocationController} from "../../Controllers";
 
 export default function AssignItemLocationDialog(props: {
     item: Item | null,

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {Button} from "@mui/material";
-import {Corporate} from "../types/Corporate";
+import {Corporate} from "../../types/Corporate";
 import BaseTable from "./BaseTable";
-import {Item} from "../types/Item";
-import AssignItemLocationDialog from "./AssignItemLocationDialog";
+import {Item} from "../../types/Item";
+import AssignItemLocationDialog from "../dialogs/AssignItemLocationDialog";
 
 export default function ItemTable(props: { corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [assignLocOpen, setAssignLocOpen] = React.useState(false);
