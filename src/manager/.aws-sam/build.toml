@@ -28,4 +28,22 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["generateOverstockReport"]
 
+[function_build_definitions.a5ffaf44-1524-44dc-8a8b-1307fcbf2798]
+codeuri = "/home/ec2-user/environment/store-management/src/manager/showMissingItems"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["showMissingItems"]
+
+[function_build_definitions.48ce6891-a7a9-4296-99fa-8b2aef38f819]
+codeuri = "/home/ec2-user/environment/store-management/src/manager/fillShelves"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["fillShelves"]
+
 [layer_build_definitions]

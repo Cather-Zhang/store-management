@@ -62,3 +62,35 @@ Resources:
             Method: post
     Metadata:
       SamResourceId: generateOverstockReport
+  showMissingItems:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: showMissingItems
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        showMissingItems:
+          Type: Api
+          Properties:
+            Path: /showMissingItems
+            Method: post
+    Metadata:
+      SamResourceId: showMissingItems
+  fillShelves:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: fillShelves
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        fillShelves:
+          Type: Api
+          Properties:
+            Path: /fillShelves
+            Method: post
+    Metadata:
+      SamResourceId: fillShelves

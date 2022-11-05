@@ -65,13 +65,37 @@ exports.lambdaHandler = async (event, context, callback) => {
     let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
     
+    function getDistance(latitude_1, latitude_2, longitude_1, longitude_2) {
+        const R = 6373.0
+        
+        // Convert from degrees to radians.
+        Math.radians = function(degrees) {
+        	return degrees * Math.PI / 180;
+
+        }
+        
+        let lat1 = Math.radians(latitude_1);
+        let lon1 = Math.radians(longitude_1);
+        let lat2 = Math.radians(latitude_2);
+        let lon2 = Math.radians(longitude_2);
+        
+        let dlon = lon2 - lon1;
+        let dlat = lat2 - lat1;
+
+        let a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * (Math.pow(Math.sin(dlon / 2), 2));
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        
+        let distance = R * c
+        return distance;
+
+    }
                         
     //list stores from closest to fartest
     let listAllStores = (latitude, longitude) => {
         let user_latitude = parseFloat(latitude);
         let user_longitude = parseFloat(longitude);
-        if (NaN(user_latitude) || NaN(user_longitude)) {
-            return new Promise((reject) => { return reject("no store in database")});
+        if (isNaN(user_latitude) || isNaN(user_longitude)) {
+            return new Promise((reject) => { return reject("invalid location input")});
         }
         return new Promise((resolve, reject) => {
                 pool.query("SELECT * FROM Stores", [], (error, rows) => {
@@ -85,8 +109,8 @@ exports.lambdaHandler = async (event, context, callback) => {
                             let store_longitude = r.longitude;
                             let manager = r.manager;
                             let store = new Store(id, name, store_latitude, store_longitude, manager);
-                            let distance = Math.sqrt(Math.pow((user_latitude - store_latitude), 2) + Math.pow((user_longitude - store_longitude), 2))
-                            //console.log(distance)
+                            let distance = getDistance(store_latitude, user_latitude, store_longitude, user_longitude);
+                            //console.log(distance);
                             store.distance = distance.toFixed(2);
                             stores.push(store);
                         }
@@ -100,6 +124,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             });
     }
     
+
     
     try {
             //returns the list of all stores
