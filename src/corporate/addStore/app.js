@@ -65,12 +65,26 @@ exports.lambdaHandler = async (event, context, callback) => {
     let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
     
+    function hash(string) {
+        //set variable hash as 0
+        var hash = 0;
+        // if the length of the string is 0, return 0
+        if (string.length == 0) return hash;
+        for (let i = 0 ;i<string.length ; i++)
+        {
+        let ch = string.charCodeAt(i);
+        hash = ((hash << 5) - hash) + ch;
+        hash = hash & hash;
+        }
+        return hash;
+    }
+
     // create store
     let createStore = (name, latitude, longitude, manager, password) => {
         //console.log("in creating store"); 
         let latitude_value = parseFloat(latitude);
         let longitude_value = parseFloat(longitude);
-        let password_hashed = password.hash();
+        let password_hashed = hash(password);
         //console.log("parsing completed"); 
         if (isNaN(latitude_value) || isNaN(longitude_value)) {
             return new Promise((reject) => {return reject("unable to create store, please enter valid location")});
