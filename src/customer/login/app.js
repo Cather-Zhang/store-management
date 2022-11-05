@@ -56,73 +56,72 @@ exports.lambdaHandler = async (event, context, callback) => {
     let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
     
-    // create store
-    let createStore = (name, latitude, longitude, manager, password) => {
-        //console.log("in creating store"); 
-        let latitude_value = parseFloat(latitude);
-        let longitude_value = parseFloat(longitude);
-        //console.log("parsing completed"); 
-        if (isNaN(latitude_value) || isNaN(longitude_value)) {
-            return new Promise((reject) => {return reject("unable to create store, please enter valid location")});
-        } else {
-            //console.log("starting pool query"); 
-            return new Promise((resolve, reject) => {
-                pool.query("INSERT INTO Stores (name, latitude, longitude, manager, password) VALUES (?, ?, ?, ?, ?)", [name, latitude_value, longitude_value, manager, password], (error, rows) => {
-                    if (error) { 
-                        //console.log("reject"); 
-                        return reject(error); }
-                    else {
-                        //console.log("resolved"); 
-                        return resolve(true);
-                        
-                    }
-                });
-            });
+    function hash(string) {
+        //set variable hash as 0
+        var hash = 0;
+        // if the length of the string is 0, return 0
+        if (string.length == 0) return hash;
+        for (let i = 0 ;i<string.length ; i++)
+        {
+        let ch = string.charCodeAt(i);
+        hash = ((hash << 5) - hash) + ch;
+        hash = hash & hash;
         }
+        return hash;
     }
     
-    let listAllStores = () => {
+    let password_hashed = hash(info.password)
+    
+    // check corporate, if yes return true, else return false
+    let isCorporate = (username, password) => {
         return new Promise((resolve, reject) => {
-                pool.query("SELECT * FROM Stores", [], (error, rows) => {
-                    if (error) { return reject(error); }
-                    if (rows) {
-                        let stores = [];
-                        for (let r of rows) {
-                            let id = r.idStores;
-                            let name = r.name;
-                            let latitude = r.latitude;
-                            let longitude = r.longitude;
-                            let manager = r.manager;
-                            let store = new Store(id, name, latitude, longitude, manager);
-                            stores.push(store);
-                        }
-                        return resolve(stores);
-                    } else {
-                        return reject("no store in database");
-                    }
-                });
+            pool.query("SELECT * FROM Users WHERE username=? AND password=?", [username, password], (error, rows) => {
+                if (error) { return reject(error); }
+                if ((rows) && (rows.length == 1)) {
+                    return resolve(true);
+                } else {
+                    return resolve(false);
+                }
             });
+        });
+    }
+    
+    // check manager, if is return store id, if not return false
+    let isManager = (username, password) => {
+        return new Promise((resolve, reject) => {
+            pool.query("SELECT * FROM Stores WHERE manager=? AND password=?", [username, password], (error, rows) => {
+                if (error) { return reject(error); }
+                if ((rows) && (rows.length == 1)) {
+                    return resolve(rows[0].idStores);
+                } else {
+                    return resolve(false);
+                }
+            });
+        });
     }
     
     
     try {
-        const success = await createStore(info.name, info.latitude, info.longitude, info.manager, info.password);
+        
+        const isCorporateReturn = await isCorporate(info.username, password_hashed);
         // const ret = await axios(url);
-        if (success) {
+        if (isCorporateReturn == true) {
             response.status = 200;
-            //returns the list of all stores
-            const stores = await listAllStores();
-            if (stores) {
-                response.stores = JSON.parse(JSON.stringify(stores));
-            }
-            else {
-                response.status = 400;
-                response.error = "store created but failed to list all stores"
-            }
+            response.role = "corporate"
+
         }
         else {
-            response.status = 400;
-            response.error = "unable to create store"
+            const isManagerReturn = await isManager(info.username, password_hashed);
+            if (isManagerReturn == false) {
+                response.status = 400;
+                response.error = "invalid username and password"
+                
+            }
+            else {
+                response.status = 200;
+                response.role = "manager";
+                response.storeId = isManagerReturn;
+            }
         }
 
     } catch (error) {
