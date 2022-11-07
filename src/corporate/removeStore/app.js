@@ -1,17 +1,14 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 class Store {
-    constructor(id, name, latitude, longitude) {
+    constructor(id, name, latitude, longitude, manager) {
         this.idStores = id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.manager = manager;
     }
     
-    assignManager(managername, password) {
-        this.manager = managername;
-        this.password = password;
-    }
 }
 
 let response;
@@ -142,19 +139,20 @@ exports.lambdaHandler = async (event, context, callback) => {
         return new Promise((resolve, reject) => {
                 pool.query("SELECT * FROM Stores", [], (error, rows) => {
                     if (error) { return reject(error); }
+                    let stores = [];
                     if (rows) {
-                        let stores = [];
                         for (let r of rows) {
                             let id = r.idStores;
                             let name = r.name;
                             let latitude = r.latitude;
                             let longitude = r.longitude;
-                            let store = new Store(id, name, latitude, longitude);
+                            let manager = r.manager;
+                            let store = new Store(id, name, latitude, longitude, manager);
                             stores.push(store);
                         }
                         return resolve(stores);
                     } else {
-                        return reject("no store in database");
+                        return resolve(stores);
                     }
                 });
             });
