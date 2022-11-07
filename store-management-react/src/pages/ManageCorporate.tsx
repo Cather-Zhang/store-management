@@ -5,8 +5,6 @@ import CreateItemDialog from "../components/dialogs/CreateItemDialog";
 import CreateStoreDialog from "../components/dialogs/CreateStoreDialog";
 import StoreTable from "../components/tables/StoreTable";
 import ItemTable from "../components/tables/ItemTable";
-import PickReportTypeDialog from "../components/dialogs/PickReportTypeDialog";
-import {Item} from "../types/Item";
 
 function ManageCorporate(props: { corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [itemOpen, setItemOpen] = React.useState(false);

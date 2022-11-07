@@ -1,38 +1,55 @@
-import Home from "./pages/Home";
 import ManageStore from "./pages/ManageStore";
 import SearchItems from "./pages/SearchItems";
 import StoresNearMe from "./pages/StoresNearMe";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import ManageCorporate from "./pages/ManageCorporate";
 import {Corporate} from "./types/Corporate";
-import {Item} from "./types/Item";
-import {Store} from "./types/Store";
-import {AuthorizedUser} from "./types/AuthorizedUser";
-import {GPS} from "./types/GPS";
 import MenuBar from "./MenuBar";
 import './App.css';
-import {ItemLocation} from "./types/ItemLocation";
 import InventoryReport from "./pages/reports/InventoryReport";
-import {Aisle} from "./types/Aisle";
-import {Shelf} from "./types/Shelf";
-import {Stock} from "./types/Stock";
+import {APINamespace, sendRequest} from "./Utilities";
+import {updateStateController} from "./Controllers";
 
 function App() {
-    const item = new Item("123", "name", "desc", 8, 10);
-    item.assignLocations([new ItemLocation(0,1)]);
-    const [corporate, setCorporate] = useState(new Corporate([item],
-        [
-            new Store(0, [new Aisle(1, [new Shelf(5, [new Stock(item, 3)])]), new Aisle(2, [new Shelf(1, [new Stock(item, 9)]), new Shelf(7, [new Stock(item, 10)])])], new AuthorizedUser("", "Larry Brown", ""), [], new GPS(-42.26259, -71.80229)),
-            new Store(1, [], new AuthorizedUser("", "Sarah Resley", ""), [], new GPS(42.361145, -71.057083))
-        ]));
+    const [corporate, setCorporate] = useState(new Corporate([], []));
+    const [currentUser, setCurrentUser] = useState<any>({});
+
+    useEffect(() => {
+        sendRequest(APINamespace.Customer, "/login", {"username": "CorporateUser", "password": "defensibilities"}).then(
+            r => {
+                if (r.status === 200) {
+                    setCurrentUser(r);
+                }
+            }
+        );
+    }, []);
+
+    useEffect(() => {
+        const loadCorporateState = async () => {
+            let storeResponse = await sendRequest(APINamespace.Corporate, "/listStores", null);
+            let itemResponse = await sendRequest(APINamespace.Corporate, "/listItems", null);
+            setCorporate(updateStateController(corporate, storeResponse, itemResponse));
+        }
+        loadCorporateState().then();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    let homePage;
+    if (currentUser.role === "corporate") {
+        homePage = <ManageCorporate corporate={corporate} setCorporate={setCorporate}/>
+    } else if (currentUser.role === "manager") {
+        homePage = <ManageStore/>
+    } else {
+        homePage = <StoresNearMe/>
+    }
 
     return (
         <Router>
             <div className={"pageLayout"}>
-                <MenuBar currentUser={"corporate"}/>
+                <MenuBar currentUser={currentUser.role}/>
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
+                    <Route path="/" element={homePage}/>
                     <Route path="/manageStore" element={<ManageStore/>}/>
                     <Route path="/manageCorporate"
                            element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>

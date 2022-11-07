@@ -8,11 +8,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../../types/Corporate";
 import {createItemController} from "../../Controllers";
 
-export default function CreateItemDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
-    setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {
+export default function CreateItemDialog(props: {
+    open: boolean, handleClose: () => void, corporate: Corporate,
+    setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
+}) {
     return (
         <Dialog open={props.open} fullWidth maxWidth="xs" onClose={props.handleClose}>
-            <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"} align={"center"}>Create Item</DialogTitle>
+            <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"} align={"center"}>Create
+                Item</DialogTitle>
             <DialogContent style={{textAlign: "center"}}>
                 <TextField
                     autoFocus
@@ -20,13 +23,13 @@ export default function CreateItemDialog(props: {open: boolean, handleClose: () 
                     label="Name"
                     type="text"
                     variant="standard"
-                /><br />
+                /><br/>
                 <TextField
-                id="price"
-                label="Price ($)"
-                type="number"
-                variant="standard"
-                /><br />
+                    id="price"
+                    label="Price ($)"
+                    type="number"
+                    variant="standard"
+                /><br/>
                 <TextField
                     id="maxQuantity"
                     label="Max Quantity"
@@ -43,14 +46,15 @@ export default function CreateItemDialog(props: {open: boolean, handleClose: () 
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={() => {
+                <Button onClick={async () => {
                     function getById(id: string) {
                         return (document.getElementById(id) as HTMLInputElement)?.value;
                     }
 
-                    props.setCorporate(createItemController(props.corporate, getById("name"), getById("desc"),
-                        +getById("price"), +getById("maxQuantity")));
-                    props.handleClose();
+                    createItemController(props.corporate, getById("name"), getById("desc"),
+                        +getById("price"), +getById("maxQuantity"), props.handleClose).then(c => {
+                        props.setCorporate(c);
+                    });
                 }}>
                     Create Item
                 </Button>

@@ -31,11 +31,13 @@ export default function StoreTable(props: { corporate: Corporate, setCorporate: 
                            columns: [store.id, store.gps.latitude + ", " + store.gps.longitude, store.manager.userID,
                                <>
                                    <Button color="secondary" variant="contained"
-                                           onClick={() => props.setCorporate(deleteStoreController(props.corporate, i))}>Delete</Button>
-                                   <Button style={{marginLeft: 20}} color="secondary" variant="contained" onClick={handleReportClickOpen(store)}>Generate
+                                           onClick={() => deleteStoreController(props.corporate, store.id).then(c => props.setCorporate(c))}>Delete</Button>
+                                   <Button style={{marginLeft: 20}} color="secondary" variant="contained"
+                                           onClick={handleReportClickOpen(store)}>Generate
                                        Report</Button>
                                </>
                            ]
                        };
-                   })}/></>;
+                   })}/>
+    </>;
 }

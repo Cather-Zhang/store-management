@@ -6,7 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../../types/Corporate";
-import {createStoreController} from "../../Controllers";
+import {updateStoresController} from "../../Controllers";
+import {APINamespace, sendRequest} from "../../Utilities";
 
 export default function CreateStoreDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {
@@ -48,7 +49,7 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={() => {
+                <Button onClick={async () => {
                     function getById(id: string) {
                         return (document.getElementById(id) as HTMLInputElement)?.value;
                     }
@@ -57,9 +58,17 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
                     let passwordConfirm = getById("passwordConfirm");
 
                     if(password === passwordConfirm) {
-                        props.setCorporate(createStoreController(props.corporate, +getById("latitude"),
-                            +getById("longitude"), getById("manager"), getById("password")));
-                        props.handleClose();
+                        let response = await sendRequest(APINamespace.Corporate, "/addStore", {
+                            "name": "",
+                            "latitude": +getById("latitude"),
+                            "longitude": +getById("longitude"),
+                            "manager": getById("manager"),
+                            "password": getById("password")
+                        });
+                        if (response.status === 200) {
+                            props.setCorporate(updateStoresController(props.corporate, response));
+                            props.handleClose();
+                        }
                     }
                 }}>
                     Create Store

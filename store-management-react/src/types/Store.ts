@@ -1,7 +1,7 @@
 import {Aisle} from "./Aisle";
-import {AuthorizedUser} from "./AuthorizedUser";
 import {GPS} from "./GPS";
 import {Stock} from "./Stock";
+import {AuthorizedUser} from "./AuthorizedUser";
 
 export class Store {
     id: number;
@@ -21,6 +21,6 @@ export class Store {
     copy() {
         let aisles = this.aisles.map(a => a.copy())
         let overstock = this.overstock.map(o => o.copy())
-        return new Store(this.id, aisles, this.manager.copy(), overstock, this.gps.copy());
+        return new Store(this.id, aisles, this.manager, overstock, this.gps.copy());
     }
 }
