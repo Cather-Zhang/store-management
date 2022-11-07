@@ -1,6 +1,5 @@
 import {Corporate} from "./types/Corporate";
 import {Store} from "./types/Store";
-import {AuthorizedUser} from "./types/AuthorizedUser";
 import {GPS} from "./types/GPS";
 import {Item} from "./types/Item";
 import {ItemLocation} from "./types/ItemLocation";
@@ -8,7 +7,7 @@ import {APINamespace, makeSKU, sendRequest} from "./Utilities";
 
 export async function deleteStoreController(corporate: Corporate, id: number) {
     let c = corporate.copy();
-    let response = await sendRequest(APINamespace.Corporate, "/removeStore", { "storeId": id });
+    let response = await sendRequest(APINamespace.Corporate, "/removeStore", {"storeId": id});
     console.log("Response", response);
     c = updateStoresController(c, response);
     console.log(response)
@@ -28,7 +27,7 @@ export async function createStoreController(corporate: Corporate, name: string, 
 
     if (response.status === 200) {
         handleClose();
-        c.stores.push(new Store(corporate.stores.length, name, [], new AuthorizedUser("manager", manager, password), [],
+        c.stores.push(new Store(corporate.stores.length, name, [], manager, [],
             new GPS(long, lat)));
     }
 
@@ -63,15 +62,10 @@ export async function assignItemLocationController(corporate: Corporate, sku: st
         return item.sku === sku;
     });
 
-    console.log({
-        "sku": corporate.items[itemIndex].sku,
-        "locations": "[" + parsedLocations.map((loc: ItemLocation) => loc.toJSONString()).join(", ") + "]"
-    })
     let response = await sendRequest(APINamespace.Corporate, "/assignItem", {
         "sku": corporate.items[itemIndex].sku,
         "locations": "[" + parsedLocations.map((loc: ItemLocation) => loc.toJSONString()).join(", ") + "]"
     });
-    console.log(response)
     if (response.status === 200) {
         handleClose();
         c.items[itemIndex].assignLocations(parsedLocations);
@@ -82,7 +76,7 @@ export async function assignItemLocationController(corporate: Corporate, sku: st
 
 function assignStores(corporate: Corporate, stores: any) {
     corporate.stores = stores.stores.map((s: any) =>
-        new Store(s.idStores, s.name, [], new AuthorizedUser("manager", s.manager, ""), [],
+        new Store(s.idStores, s.name, [], s.manager, [],
             new GPS(s.longitude, s.latitude))
     );
 }

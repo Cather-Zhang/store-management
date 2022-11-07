@@ -28,7 +28,7 @@ export default function StoreTable(props: { corporate: Corporate, setCorporate: 
                    data={props.corporate.stores.map((store: Store, i: number) => {
                        return {
                            id: i,
-                           columns: [store.id, store.name, store.gps.latitude + ", " + store.gps.longitude, store.manager.userID,
+                           columns: [store.id, store.name, store.gps.latitude + ", " + store.gps.longitude, store.manager,
                                <>
                                    <Button color="secondary" variant="contained"
                                            onClick={() => deleteStoreController(props.corporate, store.id).then(c => props.setCorporate(c))}>Delete</Button>

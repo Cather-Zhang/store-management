@@ -1,17 +1,16 @@
 import {Aisle} from "./Aisle";
 import {GPS} from "./GPS";
 import {Stock} from "./Stock";
-import {AuthorizedUser} from "./AuthorizedUser";
 
 export class Store {
     id: number;
     aisles: Aisle[];
-    manager: AuthorizedUser;
+    manager: string;
     overstock: Stock[];
     gps: GPS;
     name: string;
 
-    constructor(number: number, name: string, aisles: Aisle[], manager: AuthorizedUser, overstock: Stock[], gps: GPS) {
+    constructor(number: number, name: string, aisles: Aisle[], manager: string, overstock: Stock[], gps: GPS) {
         this.id = number;
         this.aisles = aisles;
         this.manager = manager;
