@@ -46,4 +46,13 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["fillShelves"]
 
+[function_build_definitions.c424491e-1ae4-4090-b737-2f13d4708871]
+codeuri = "/home/ec2-user/environment/store-management/src/manager/listAssignedItems"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["listAssignedItems"]
+
 [layer_build_definitions]

@@ -94,3 +94,19 @@ Resources:
             Method: post
     Metadata:
       SamResourceId: fillShelves
+  listAssignedItems:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: listAssignedItems
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        listAssignedItems:
+          Type: Api
+          Properties:
+            Path: /listAssignedItems
+            Method: get
+    Metadata:
+      SamResourceId: listAssignedItems
