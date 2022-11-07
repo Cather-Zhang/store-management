@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../../types/Corporate";
-import {updateStoresController} from "../../Controllers";
+import {createStoreController, updateStoresController} from "../../Controllers";
 import {APINamespace, sendRequest} from "../../Utilities";
 
 export default function CreateStoreDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
@@ -17,6 +17,12 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
             <DialogContent style={{textAlign: "center"}}>
                 <TextField
                     autoFocus
+                    id="name"
+                    label="Name"
+                    type="text"
+                    variant="standard"
+                /><br />
+                <TextField
                     id="latitude"
                     label="Latitude"
                     type="number"
@@ -58,17 +64,7 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
                     let passwordConfirm = getById("passwordConfirm");
 
                     if(password === passwordConfirm) {
-                        let response = await sendRequest(APINamespace.Corporate, "/addStore", {
-                            "name": "",
-                            "latitude": +getById("latitude"),
-                            "longitude": +getById("longitude"),
-                            "manager": getById("manager"),
-                            "password": getById("password")
-                        });
-                        if (response.status === 200) {
-                            props.setCorporate(updateStoresController(props.corporate, response));
-                            props.handleClose();
-                        }
+                        createStoreController(props.corporate, getById("name"), +getById("latitude"), +getById("longitude"), getById("manager"), getById("password"), props.handleClose).then(c => props.setCorporate(c))
                     }
                 }}>
                     Create Store

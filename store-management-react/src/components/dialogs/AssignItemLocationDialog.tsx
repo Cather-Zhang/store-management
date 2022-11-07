@@ -27,7 +27,8 @@ export default function AssignItemLocationDialog(props: {
                     variant="standard"
                 />
             </DialogContent>
-            <DialogContentText align={"center"}>Once you assign an item's locations you cannot reassign them, so choose wisely!
+            <DialogContentText align={"center"}>Once you assign an item's locations you cannot reassign them, so choose
+                wisely!
                 Separate aisle and row with a comma (ex. 3,4). To add multiple aisle / shelf pairs, add a semicolon
                 between entries (ex. 3,4;5,6)</DialogContentText>
             <br/>
@@ -39,8 +40,8 @@ export default function AssignItemLocationDialog(props: {
                     }
 
                     if (props.item) {
-                        props.setCorporate(assignItemLocationController(props.corporate, props.item.sku, getById("locations")))
-                        props.handleClose();
+                        assignItemLocationController(props.corporate, props.item.sku, getById("locations"),
+                            props.handleClose).then(c => props.setCorporate(c))
                     }
                 }}>
                     Assign Item Locations

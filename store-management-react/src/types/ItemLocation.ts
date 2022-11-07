@@ -14,4 +14,8 @@ export class ItemLocation {
     toString() {
         return this.aisle + "," + this.shelf
     }
+
+    toJSONString() {
+        return '{"aisle": ' + this.aisle + ', "shelf": ' + this.shelf + "}"
+    }
 }

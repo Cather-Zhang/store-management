@@ -24,11 +24,11 @@ export default function StoreTable(props: { corporate: Corporate, setCorporate: 
         <PickReportTypeDialog store={reportStore} open={reportOpen} handleClose={handleReportClose}
                               corporate={props.corporate}
                               setCorporate={props.setCorporate}/>
-        <BaseTable className={"storeTable"} headers={["Store ID", "Location", "Manager", ""]}
+        <BaseTable className={"storeTable"} headers={["Store ID", "Name", "Location", "Manager", ""]}
                    data={props.corporate.stores.map((store: Store, i: number) => {
                        return {
                            id: i,
-                           columns: [store.id, store.gps.latitude + ", " + store.gps.longitude, store.manager.userID,
+                           columns: [store.id, store.name, store.gps.latitude + ", " + store.gps.longitude, store.manager.userID,
                                <>
                                    <Button color="secondary" variant="contained"
                                            onClick={() => deleteStoreController(props.corporate, store.id).then(c => props.setCorporate(c))}>Delete</Button>

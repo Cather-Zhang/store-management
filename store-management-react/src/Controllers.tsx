@@ -9,15 +9,29 @@ import {APINamespace, makeSKU, sendRequest} from "./Utilities";
 export async function deleteStoreController(corporate: Corporate, id: number) {
     let c = corporate.copy();
     let response = await sendRequest(APINamespace.Corporate, "/removeStore", { "storeId": id });
+    console.log("Response", response);
     c = updateStoresController(c, response);
     console.log(response)
     return c;
 }
 
-export function createStoreController(corporate: Corporate, lat: number, long: number, manager: string, password: string) {
+export async function createStoreController(corporate: Corporate, name: string, lat: number, long: number, manager: string, password: string, handleClose: any) {
     let c = corporate.copy();
-    c.stores.push(new Store(corporate.stores.length, [], new AuthorizedUser("manager", manager, password), [],
-        new GPS(long, lat)));
+
+    let response = await sendRequest(APINamespace.Corporate, "/addStore", {
+        "name": name,
+        "latitude": lat,
+        "longitude": long,
+        "manager": manager,
+        "password": password
+    });
+
+    if (response.status === 200) {
+        handleClose();
+        c.stores.push(new Store(corporate.stores.length, name, [], new AuthorizedUser("manager", manager, password), [],
+            new GPS(long, lat)));
+    }
+
     return c;
 }
 
@@ -38,7 +52,7 @@ export async function createItemController(corporate: Corporate, name: string, d
     return c;
 }
 
-export function assignItemLocationController(corporate: Corporate, sku: string, location: string) {
+export async function assignItemLocationController(corporate: Corporate, sku: string, location: string, handleClose: any) {
     let c = corporate.copy();
     let locations = location.split(";");
     let parsedLocations = locations.map(l => {
@@ -48,13 +62,27 @@ export function assignItemLocationController(corporate: Corporate, sku: string, 
     const itemIndex = corporate.items.findIndex(item => {
         return item.sku === sku;
     });
-    c.items[itemIndex].assignLocations(parsedLocations);
+
+    console.log({
+        "sku": corporate.items[itemIndex].sku,
+        "locations": "[" + parsedLocations.map((loc: ItemLocation) => loc.toJSONString()).join(", ") + "]"
+    })
+    let response = await sendRequest(APINamespace.Corporate, "/assignItem", {
+        "sku": corporate.items[itemIndex].sku,
+        "locations": "[" + parsedLocations.map((loc: ItemLocation) => loc.toJSONString()).join(", ") + "]"
+    });
+    console.log(response)
+    if (response.status === 200) {
+        handleClose();
+        c.items[itemIndex].assignLocations(parsedLocations);
+    }
+
     return c;
 }
 
 function assignStores(corporate: Corporate, stores: any) {
     corporate.stores = stores.stores.map((s: any) =>
-        new Store(s.idStores, [], new AuthorizedUser("manager", s.manager, ""), [],
+        new Store(s.idStores, s.name, [], new AuthorizedUser("manager", s.manager, ""), [],
             new GPS(s.longitude, s.latitude))
     );
 }
