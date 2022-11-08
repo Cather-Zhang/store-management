@@ -16,7 +16,7 @@ function App() {
     const [currentUser, setCurrentUser] = useState<any>({});
 
     useEffect(() => {
-        sendRequest(APINamespace.Customer, "/login", {"username": "Nicole", "password": "password"}).then(
+        sendRequest(APINamespace.Customer, "/login", {"username": "CorporateUser", "password": "defensibilities"}).then(
             r => {
                 if (r.status === 200) {
                     setCurrentUser(r);
