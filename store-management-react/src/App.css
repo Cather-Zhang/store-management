@@ -126,3 +126,12 @@ p {
   padding-left: 15px;
   padding-right: 5px;
 }
+
+.linkText {
+  color: white;
+  display: inline-block;
+}
+
+.MuiButton-iconSizeMedium {
+  display: inline-block !important;
+}

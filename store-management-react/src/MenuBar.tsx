@@ -55,7 +55,7 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href="#/"
                         sx={{
                             mr: 2,
                             display: {xs: 'none', md: 'flex'},
@@ -98,27 +98,26 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            <Link to="/stores" style={{textDecoration: 'none'}}>
+                            <Button href="#/stores">
                                 <MenuItem key={0} onClick={handleCloseNavMenu}>
                                     <AddLocationTwoToneIcon color="primary" style={{marginRight: 10}}/>
                                     <Typography color="primary" textAlign="center">Stores Near Me</Typography>
                                 </MenuItem>
-                            </Link>
-                            <Link to="/search" style={{textDecoration: 'none'}}>
+                            </Button>
+                            <Button href="#/search">
                                 <MenuItem key={1} onClick={handleCloseNavMenu}>
                                     <SearchTwoToneIcon color="primary" style={{marginRight: 10}}/>
                                     <Typography color="primary" textAlign="center">Search Items</Typography>
                                 </MenuItem>
-                            </Link>
+                            </Button>
                             {!props.currentUser ? <></> :
-                                <Link to={props.currentUser == "manager" ? "/manageStore" : "/manageCorporate"}
-                                      style={{textDecoration: 'none'}}>
+                                <Button href={props.currentUser == "manager" ? "#/manageStore" : "#/manageCorporate"}>
                                     <MenuItem key={2} onClick={handleCloseNavMenu}>
                                         <AssignmentTwoToneIcon color="primary" style={{marginRight: 10}}/>
                                         <Typography color="primary"
                                                     textAlign="center">Manage {props.currentUser == "manager" ? "Store" : "Corporate"}</Typography>
                                     </MenuItem>
-                                </Link>
+                                </Button>
                             }
                         </Menu>
                     </Box>
@@ -127,7 +126,7 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                         variant="h5"
                         noWrap
                         component="a"
-                        href={"/"}
+                        href={"#/"}
                         sx={{
                             mr: 2,
                             display: {xs: 'flex', md: 'none'},
@@ -143,7 +142,7 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         <Button
-                            href={"/stores"}
+                            href={"#/stores"}
                             startIcon={<AddLocationTwoToneIcon/>}
                             key={0}
                             onClick={handleCloseNavMenu}
@@ -153,7 +152,7 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                             Stores Near Me
                         </Button>
                         <Button
-                            href={"/search"}
+                            href={"#/search"}
                             startIcon={<SearchTwoToneIcon/>}
                             key={1}
                             onClick={handleCloseNavMenu}
@@ -164,7 +163,7 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                         </Button>
                         {!props.currentUser ? <></> :
                             <Button
-                                href={props.currentUser == "manager" ? "/manageStore" : "/manageCorporate"}
+                                href={props.currentUser == "manager" ? "#/manageStore" : "#/manageCorporate"}
                                 startIcon={<AssignmentTwoToneIcon/>}
                                 key={2}
                                 onClick={handleCloseNavMenu}

@@ -2,7 +2,7 @@ import ManageStore from "./pages/ManageStore";
 import SearchItems from "./pages/SearchItems";
 import StoresNearMe from "./pages/StoresNearMe";
 import React, {useEffect, useState} from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {HashRouter as Router, Route, Routes} from "react-router-dom";
 import ManageCorporate from "./pages/ManageCorporate";
 import {Corporate} from "./types/Corporate";
 import MenuBar from "./MenuBar";
