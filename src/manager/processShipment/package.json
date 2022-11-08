@@ -1,7 +1,7 @@
 {
-  "name": "hello_world",
+  "name": "processShipment",
   "version": "1.0.0",
-  "description": "hello world sample for NodeJS",
+  "description": "process shipment, put on shelves or to overstock",
   "main": "app.js",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
   "author": "SAM CLI",

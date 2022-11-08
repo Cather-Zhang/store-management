@@ -1,7 +1,7 @@
 {
-  "name": "add store",
+  "name": "assignItem",
   "version": "1.0.0",
-  "description": "create a new store",
+  "description": "assign an item to a location",
   "main": "app.js",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
   "author": "SAM CLI",
