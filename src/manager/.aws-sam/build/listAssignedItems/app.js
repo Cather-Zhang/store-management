@@ -113,7 +113,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             for (let item of items) {
                 let assigned = await isAssignedLocation(item.sku);
                 if (assigned == true) {
-                    validItems.add(item);
+                    validItems.push(item);
                 }
 
             }

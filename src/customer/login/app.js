@@ -107,7 +107,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         // const ret = await axios(url);
         if (isCorporateReturn == true) {
             response.status = 200;
-            response.role = "corporate"
+            response.role = "corporate";
 
         }
         else {

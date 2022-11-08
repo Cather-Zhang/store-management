@@ -1,6 +1,7 @@
 customer lambda functions:
 list all stores (done)
-list items on shelf 
-find item in all stores
-find item in one store
-buy item
+login (done)
+list items on shelf (TODO:Bao)
+find item in all stores (TODO:Bao) 
+find item in one store (TODO:Bao)
+buy item (TODO:Bao)

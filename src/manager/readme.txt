@@ -1,6 +1,6 @@
 manager lambda functions:
-process shipment
-generate inventory report
-generate overstock report
-fill shelves
-show missing items
+process shipment (done) 
+generate inventory report (done)
+generate overstock report (done)
+fill shelves (done)
+show missing items (done)
