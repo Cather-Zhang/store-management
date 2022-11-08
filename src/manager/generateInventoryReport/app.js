@@ -19,13 +19,15 @@ class Item {
         this.price = price;
         this.max = max;
     }
+    assignLocations (locations) {
+        this.locations = locations;
+    }
 }
 
 class Stock {
-    constructor(item, location, quantity) {
+    constructor(item, inventorys) {
         this.item = item;
-        this.location = location;
-        this.quantity = quantity;
+        this.inventorys = inventorys;
     }
 }
 
@@ -42,6 +44,7 @@ class Inventory {
         this.quantity = quantity;
     }
 }
+
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
@@ -151,29 +154,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND shelf=? AND aisle=?", [idStore, sku, shelf, aisle], (error, rows) => {
                 if (error) { return reject(error); }
                 if (rows.length > 0) {
-                    if (rows[0].quantity != 0) 
-                        return resolve(rows[0].quantity);
-                    else return resolve(false);
-                } else {
-                    return resolve(false);
-                }
-            });
-        });
-    }
-    
-    
-    let getStocks = (idStore, sku) => {
-        return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true AND quantity>0", [idStore, sku], (error, rows) => {
-                if (error) { return reject(error); }
-                let inventories = [];
-                if (rows.length > 0) {
-                    for (let r of rows) {
-                        let newInventory = new Inventory(new Location(r.aisle, r.shelf), r.quantity)
-                        inventories.push(newInventory);
-                    }
-                    return resolve(inventories);
-                    
+                    return resolve(rows[0].quantity);
                 } else {
                     return resolve(false);
                 }
@@ -185,9 +166,10 @@ exports.lambdaHandler = async (event, context, callback) => {
         let total = 0;
         for (let stock of stocks) {
             let price = stock.item.price;
-            let quantity = stock.quantity;
-            total = total + price * quantity;
-           
+            for (let inventory of stock.inventorys) {
+                let quantity = inventory.quantity;
+                total = total + price * quantity;
+            }
         }
         return total;
     }
@@ -198,15 +180,22 @@ exports.lambdaHandler = async (event, context, callback) => {
         
         const items = await listAllItems();
         if (!(items == false)) {
-            let stocks = [];
+        let stocks = [];
             for (let item of items) {
-                let inventoriesOnShelf = await getStocks(idStore, item.sku);
-                if (!(inventoriesOnShelf == false)) {
-                    for (let i of inventoriesOnShelf) {
-                        let stock = new Stock(item, i.location, i.quantity);
-                        stocks.push(stock);
+                let locations = await getLocations(item.sku);
+                let inventorys = [];
+                
+                for (let location of locations) {
+                    let newInventory = new Inventory(location, 0);
+                    let findStockShelfReturn = await findStockShelf(idStore, item.sku, location);
+                    if (!(findStockShelfReturn == false)) {
+                        newInventory.quantity = findStockShelfReturn;
                     }
+                    inventorys.push(newInventory);
+                    
                 }
+                let stock = new Stock(item, inventorys);
+                stocks.push(stock);
             }
             response.status = 200;
             response.stocks = JSON.parse(JSON.stringify(stocks));
@@ -214,7 +203,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
         else {
             response.status = 400;
-            response.error = "can not generate inventory report";
+            response.error = "can not generate report";
         }
 
 
