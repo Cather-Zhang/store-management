@@ -9,6 +9,7 @@ import {Corporate} from "../../types/Corporate";
 import {DialogContentText} from "@mui/material";
 import {Item} from "../../types/Item";
 import {assignItemLocationController} from "../../Controllers";
+import {getById} from "../../Utilities";
 
 export default function AssignItemLocationDialog(props: {
     item: Item | null,
@@ -35,10 +36,6 @@ export default function AssignItemLocationDialog(props: {
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
                 <Button onClick={() => {
-                    function getById(id: string) {
-                        return (document.getElementById(id) as HTMLInputElement)?.value;
-                    }
-
                     if (props.item) {
                         assignItemLocationController(props.corporate, props.item.sku, getById("locations"),
                             props.handleClose).then(c => props.setCorporate(c))

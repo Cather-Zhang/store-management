@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../../types/Corporate";
 import {createItemController} from "../../Controllers";
+import {getById} from "../../Utilities";
 
 export default function CreateItemDialog(props: {
     open: boolean, handleClose: () => void, corporate: Corporate,
@@ -47,10 +48,6 @@ export default function CreateItemDialog(props: {
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
                 <Button onClick={async () => {
-                    function getById(id: string) {
-                        return (document.getElementById(id) as HTMLInputElement)?.value;
-                    }
-
                     createItemController(props.corporate, getById("name"), getById("desc"),
                         +getById("price"), +getById("maxQuantity"), props.handleClose).then(c => {
                         props.setCorporate(c);

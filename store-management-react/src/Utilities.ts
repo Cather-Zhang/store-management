@@ -35,3 +35,7 @@ export async function sendRequest(namespace: APINamespace, endpoint: string, dat
     let output = await response.json();
     return output.errorType ? null : output;
 }
+
+export function getById(id: string) {
+    return (document.getElementById(id) as HTMLInputElement)?.value;
+}

@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../../types/Corporate";
 import {createStoreController, updateStoresController} from "../../Controllers";
-import {APINamespace, sendRequest} from "../../Utilities";
+import {APINamespace, getById, sendRequest} from "../../Utilities";
 
 export default function CreateStoreDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {
@@ -56,10 +56,6 @@ export default function CreateStoreDialog(props: {open: boolean, handleClose: ()
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
                 <Button onClick={async () => {
-                    function getById(id: string) {
-                        return (document.getElementById(id) as HTMLInputElement)?.value;
-                    }
-
                     let password = getById("password");
                     let passwordConfirm = getById("passwordConfirm");
 
