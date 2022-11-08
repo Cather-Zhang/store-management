@@ -6,8 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {Corporate} from "../../types/Corporate";
-import {createStoreController, updateStoresController} from "../../Controllers";
-import {APINamespace, getById, sendRequest} from "../../Utilities";
+import {createStoreController} from "../../Controllers";
+import {getById} from "../../Utilities";
 
 export default function CreateStoreDialog(props: {open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>}) {

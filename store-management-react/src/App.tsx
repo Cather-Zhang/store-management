@@ -12,18 +12,12 @@ import {APINamespace, sendRequest} from "./Utilities";
 import {updateStateController} from "./Controllers";
 
 function App() {
+    console.log("resetting")
+    console.log(JSON.parse(window.localStorage.getItem('currentUser') ?? "{}"))
+    console.log(window.localStorage.getItem('username') != null ? JSON.parse(window.localStorage.getItem('username') ?? "{}") : "")
     const [corporate, setCorporate] = useState(new Corporate([], []));
-    const [currentUser, setCurrentUser] = useState<any>({});
-
-    useEffect(() => {
-        sendRequest(APINamespace.Customer, "/login", {"username": "CorporateUser", "password": "defensibilities"}).then(
-            r => {
-                if (r.status === 200) {
-                    setCurrentUser(r);
-                }
-            }
-        );
-    }, []);
+    const [currentUser, setCurrentUser] = useState<any>(JSON.parse(window.localStorage.getItem('currentUser') ?? "{}"));
+    const [username, setUsername] = React.useState(window.localStorage.getItem('username') != null ? JSON.parse(window.localStorage.getItem('username') ?? "{}") : "");
 
     useEffect(() => {
         const loadCorporateState = async () => {
@@ -47,10 +41,12 @@ function App() {
     return (
         <Router>
             <div className={"pageLayout"}>
-                <MenuBar currentUser={currentUser.role}/>
+                <MenuBar currentUser={currentUser.role} setCurrentUser={setCurrentUser} username={username}
+                         setUsername={setUsername}/>
                 <Routes>
                     <Route path="/" element={homePage}/>
-                    <Route path="/manageStore" element={<ManageStore corporate={corporate} setCorporate={setCorporate}/>}/>
+                    <Route path="/manageStore"
+                           element={<ManageStore corporate={corporate} setCorporate={setCorporate}/>}/>
                     <Route path="/manageCorporate"
                            element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>
                     <Route path="/search" element={<SearchItems/>}/>
