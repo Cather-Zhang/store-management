@@ -1,3 +1,6 @@
+import {Item} from "./types/Item";
+import {ItemLocation} from "./types/ItemLocation";
+
 let baseURLs = ["https://vek78vup05.execute-api.us-east-2.amazonaws.com/Prod", "https://243g1cmra7.execute-api.us-east-2.amazonaws.com/Prod", "https://errouju1tk.execute-api.us-east-2.amazonaws.com/Prod"];
 
 export enum APINamespace {
@@ -34,6 +37,14 @@ export async function sendRequest(namespace: APINamespace, endpoint: string, dat
     }
     let output = await response.json();
     return output.errorType ? null : output;
+}
+
+export function itemJSONToTS(items: any) {
+    return items.items.map((i: any) => {
+        let item = new Item(i.sku, i.name, i.description, i.price, i.max);
+        item.assignLocations(i.locations.map((l: { aisle: number, shelf: number }) => new ItemLocation(l.aisle, l.shelf)));
+        return item;
+    });
 }
 
 export function getById(id: string) {

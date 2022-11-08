@@ -23,6 +23,9 @@ function App() {
         const loadCorporateState = async () => {
             let storeResponse = await sendRequest(APINamespace.Corporate, "/listStores", null);
             let itemResponse = await sendRequest(APINamespace.Corporate, "/listItems", null);
+            let other = await sendRequest(APINamespace.Manager, "/listAssignedItems", null);
+            console.log("Hello", other)
+
             setCorporate(updateStateController(corporate, storeResponse, itemResponse));
         }
         loadCorporateState().then();

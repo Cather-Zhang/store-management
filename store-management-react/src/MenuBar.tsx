@@ -103,13 +103,13 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                                     <AddLocationTwoToneIcon color="primary" style={{marginRight: 10}}/>
                                     <Typography color="primary" textAlign="center">Stores Near Me</Typography>
                                 </MenuItem>
-                            </Button>
+                            </Button><br/>
                             <Button href="#/search">
                                 <MenuItem key={1} onClick={handleCloseNavMenu}>
                                     <SearchTwoToneIcon color="primary" style={{marginRight: 10}}/>
                                     <Typography color="primary" textAlign="center">Search Items</Typography>
                                 </MenuItem>
-                            </Button>
+                            </Button><br/>
                             {!props.currentUser ? <></> :
                                 <Button href={props.currentUser == "manager" ? "#/manageStore" : "#/manageCorporate"}>
                                     <MenuItem key={2} onClick={handleCloseNavMenu}>

@@ -3,7 +3,7 @@ import {Store} from "./types/Store";
 import {GPS} from "./types/GPS";
 import {Item} from "./types/Item";
 import {ItemLocation} from "./types/ItemLocation";
-import {APINamespace, makeSKU, sendRequest} from "./Utilities";
+import {APINamespace, itemJSONToTS, makeSKU, sendRequest} from "./Utilities";
 
 export async function deleteStoreController(corporate: Corporate, id: number) {
     let c = corporate.copy();
@@ -82,11 +82,7 @@ function assignStores(corporate: Corporate, stores: any) {
 }
 
 function assignItems(corporate: Corporate, items: any) {
-    corporate.items = items.items.map((i: any) => {
-        let item = new Item(i.sku, i.name, i.description, i.price, i.max);
-        item.assignLocations(i.locations.map((l: { aisle: number, shelf: number }) => new ItemLocation(l.aisle, l.shelf)));
-        return item;
-    });
+    corporate.items = itemJSONToTS(items);
 }
 
 export function updateItemsController(corporate: Corporate, items: any) {
