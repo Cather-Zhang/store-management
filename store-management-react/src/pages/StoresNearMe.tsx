@@ -2,7 +2,9 @@ import React from "react";
 
 function StoresNearMe() {
     return (
-        <div>This is Stores Near Me</div>
+        <div className={"page"}>
+            <h1>Stores Near Me</h1>
+        </div>
     );
 }
 
