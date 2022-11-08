@@ -115,3 +115,12 @@ p {
 .MuiLink-root {
   cursor: pointer;
 }
+
+.shipmentItem {
+  background-color: purple;
+  width: fit-content;
+  height: 100px;
+  border-radius: 20px;
+  padding: 2px 10px;
+  display: flex;
+}

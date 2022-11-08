@@ -16,7 +16,7 @@ function App() {
     const [currentUser, setCurrentUser] = useState<any>({});
 
     useEffect(() => {
-        sendRequest(APINamespace.Customer, "/login", {"username": "CorporateUser", "password": "defensibilities"}).then(
+        sendRequest(APINamespace.Customer, "/login", {"username": "Nicole", "password": "password"}).then(
             r => {
                 if (r.status === 200) {
                     setCurrentUser(r);
@@ -39,7 +39,7 @@ function App() {
     if (currentUser.role === "corporate") {
         homePage = <ManageCorporate corporate={corporate} setCorporate={setCorporate}/>
     } else if (currentUser.role === "manager") {
-        homePage = <ManageStore/>
+        homePage = <ManageStore corporate={corporate} setCorporate={setCorporate}/>
     } else {
         homePage = <StoresNearMe/>
     }
@@ -50,7 +50,7 @@ function App() {
                 <MenuBar currentUser={currentUser.role}/>
                 <Routes>
                     <Route path="/" element={homePage}/>
-                    <Route path="/manageStore" element={<ManageStore/>}/>
+                    <Route path="/manageStore" element={<ManageStore corporate={corporate} setCorporate={setCorporate}/>}/>
                     <Route path="/manageCorporate"
                            element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>
                     <Route path="/search" element={<SearchItems/>}/>
