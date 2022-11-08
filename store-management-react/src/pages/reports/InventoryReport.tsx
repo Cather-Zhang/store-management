@@ -4,7 +4,6 @@ import {Corporate} from "../../types/Corporate";
 import {APINamespace, sendRequest} from "../../Utilities";
 import ItemInStoreTable from "../../components/tables/ItemInStoreTable";
 import {ItemLocation} from "../../types/ItemLocation";
-import {Item} from "../../types/Item";
 import {Stock} from "../../types/Stock";
 
 function InventoryReport(props: { corporate: Corporate }) {
@@ -19,7 +18,8 @@ function InventoryReport(props: { corporate: Corporate }) {
             r => {
                 if (r.status === 200) {
                     setInventoryReport(r.stocks);
-                    setTotalValue(r.totalValue);
+                    setTotalValue(Math.round(r.totalValue * 100) / 100);
+                    console.log(r);
                 }
             }
         );
@@ -30,12 +30,12 @@ function InventoryReport(props: { corporate: Corporate }) {
             <h1>Inventory Report</h1>
             <p className={"subtitle"}>Store #{storeId}</p>
             <br/>
-            <ItemInStoreTable stockWithLocation={inventoryReport.map(r => r.inventorys.map((i: { quantity: any; location: ItemLocation; }) => {
+            <ItemInStoreTable stockWithLocation={inventoryReport.map(s => {
                 return {
-                    stock: new Stock(r.item, i.quantity),
-                    location: new ItemLocation(i.location.aisle, i.location.shelf)
+                    location: new ItemLocation(s.location.aisle, s.location.shelf),
+                    stock: new Stock(s.item, s.quantity)
                 };
-            })).flat(1)}/>
+            })}/>
             <br/>
             <div style={{margin: "auto", display: "flex", justifyContent: "center"}}>
                 <p className={"totalValueLabel"}>Total Value:</p>
