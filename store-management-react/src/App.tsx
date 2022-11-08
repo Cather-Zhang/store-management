@@ -12,9 +12,6 @@ import {APINamespace, sendRequest} from "./Utilities";
 import {updateStateController} from "./Controllers";
 
 function App() {
-    console.log("resetting")
-    console.log(JSON.parse(window.localStorage.getItem('currentUser') ?? "{}"))
-    console.log(window.localStorage.getItem('username') != null ? JSON.parse(window.localStorage.getItem('username') ?? "{}") : "")
     const [corporate, setCorporate] = useState(new Corporate([], []));
     const [currentUser, setCurrentUser] = useState<any>(JSON.parse(window.localStorage.getItem('currentUser') ?? "{}"));
     const [username, setUsername] = React.useState(window.localStorage.getItem('username') != null ? JSON.parse(window.localStorage.getItem('username') ?? "{}") : "");

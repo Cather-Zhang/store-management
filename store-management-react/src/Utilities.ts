@@ -42,7 +42,9 @@ export async function sendRequest(namespace: APINamespace, endpoint: string, dat
 export function itemJSONToTS(items: any) {
     return items.items.map((i: any) => {
         let item = new Item(i.sku, i.name, i.description, i.price, i.max);
-        item.assignLocations(i.locations.map((l: { aisle: number, shelf: number }) => new ItemLocation(l.aisle, l.shelf)));
+        if (i.locations != null) {
+            item.assignLocations(i.locations.map((l: { aisle: number, shelf: number }) => new ItemLocation(l.aisle, l.shelf)));
+        }
         return item;
     });
 }

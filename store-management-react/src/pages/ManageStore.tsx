@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Button from '@mui/material/Button';
 import MenuItem from "@mui/material/MenuItem";
 import {FormControl, InputLabel, Select} from "@mui/material";
@@ -8,15 +8,15 @@ import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 import IconButton from "@mui/material/IconButton";
 import ShipmentItem from "../components/ShipmentItem";
 import {APINamespace, getById, itemJSONToTS, sendRequest} from "../Utilities";
-import {updateStateController} from "../Controllers";
+import {Item} from "../types/Item";
 
 function ManageStore(props: { corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
-    console.log(props.corporate.items)
+    const [assignedItems, setAssignedItems] = useState<Item[]>([]);
+
     useEffect(() => {
         const loadCorporateState = async () => {
             let storeResponse = await sendRequest(APINamespace.Manager, "/listAssignedItems", null);
-            console.log(storeResponse)
-            console.log("dn", itemJSONToTS(storeResponse))
+            setAssignedItems(itemJSONToTS(storeResponse));
         }
         loadCorporateState().then();
     }, []);
@@ -33,8 +33,8 @@ function ManageStore(props: { corporate: Corporate, setCorporate: React.Dispatch
             <div>
                 <IconButton color={"primary"}><AddCircleTwoToneIcon onClick={() => {
                     let selectedItem = getById("selectedItem");
-                let quantity = getById("quantity");
-                }}></AddCircleTwoToneIcon></IconButton>
+                    let quantity = getById("quantity");
+                }}/></IconButton>
 
                 <FormControl style={{minWidth: 120}}>
                     <InputLabel id="selectedItemLabel">Item Name</InputLabel>
@@ -44,7 +44,7 @@ function ManageStore(props: { corporate: Corporate, setCorporate: React.Dispatch
                         label="Item"
                     >
 
-                        {props.corporate.items.map(i => (<MenuItem value={i.sku}>{i.name}</MenuItem>))}
+                        {assignedItems.map(i => (<MenuItem value={i.sku}>{i.name}</MenuItem>))}
 
                     </Select>
                 </FormControl>
