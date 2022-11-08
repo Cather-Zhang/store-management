@@ -146,9 +146,9 @@ exports.lambdaHandler = async (event, context, callback) => {
                     let findOverstockReturn = await findOverstock(idStore, item.sku);
                     if (!(findOverstockReturn == false)) {
                         quantity = findOverstockReturn;
+                        let stock = new Stock(item, quantity);
+                        stocks.push(stock);
                     }
-                let stock = new Stock(item, quantity);
-                stocks.push(stock);
             }
             response.status = 200;
             response.stocks = JSON.parse(JSON.stringify(stocks));
@@ -166,5 +166,5 @@ exports.lambdaHandler = async (event, context, callback) => {
         response.error = error;
     }
 
-    return response
+    return response;
 };

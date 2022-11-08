@@ -43,6 +43,13 @@ class Inventory {
     }
 }
 
+class Overstock {
+    constructor(item, quantity) {
+        this.item = item;
+        this.quantity = quantity;
+    }
+}
+
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
         //console.log("connecting to db"); 
@@ -181,13 +188,35 @@ exports.lambdaHandler = async (event, context, callback) => {
         });
     }
     
-    let totalValue = (stocks) => {
+            //store item in overstock that can not be fit on shelves
+    let getOverstock = (idStore, sku) => {
+        return new Promise((resolve, reject) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=false", [idStore, sku], (error, rows) => {
+                if (error) { return reject(error); }
+                if (rows.length > 0) {
+                    //console.log("item " + sku + " in overstock");
+                    return resolve(rows[0].quantity);
+                } else {
+                    //console.log("item " + sku + " not in overstock");
+                    return resolve(false);
+                }
+            });
+        });
+    }
+    
+    
+    let totalValue = (stocks, overstocks) => {
         let total = 0;
         for (let stock of stocks) {
             let price = stock.item.price;
             let quantity = stock.quantity;
             total = total + price * quantity;
            
+        }
+        for (let os of overstocks) {
+            let price = os.item.price;
+            let quantity = os.quantity;
+            total = total + price * quantity;
         }
         return total;
     }
@@ -199,6 +228,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         const items = await listAllItems();
         if (!(items == false)) {
             let stocks = [];
+            let overstocks = [];
             for (let item of items) {
                 let inventoriesOnShelf = await getStocks(idStore, item.sku);
                 if (!(inventoriesOnShelf == false)) {
@@ -207,10 +237,16 @@ exports.lambdaHandler = async (event, context, callback) => {
                         stocks.push(stock);
                     }
                 }
+                let overstockReturn = await getOverstock(idStore, item.sku);
+                if (!(overstockReturn == false)) {
+                    let overstock = new Overstock(item, overstockReturn);
+                    overstocks.push(overstock);
+                }
             }
             response.status = 200;
             response.stocks = JSON.parse(JSON.stringify(stocks));
-            response.totalValue = totalValue(stocks);
+            response.overstocks = JSON.parse(JSON.stringify(overstocks));
+            response.totalValue = totalValue(stocks, overstocks);
         }
         else {
             response.status = 400;
