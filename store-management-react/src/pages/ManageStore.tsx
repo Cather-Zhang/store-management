@@ -33,7 +33,7 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                 <Button variant="contained" href={"#/inventoryReport?id=" + props.currentUser.storeId}>Generate
                     Report</Button>
             </div>
-            <div>
+            <div className={"centered"}>
                 <IconButton color={"primary"}><AddCircleTwoToneIcon onClick={() => {
                     let quantity = getById("quantity");
                     let newShipment = JSON.parse(JSON.stringify(shipment));
@@ -42,7 +42,7 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                     }
                     setShipment(newShipment);
                 }}/></IconButton>
-                <FormControl style={{minWidth: 120}}>
+                <FormControl style={{minWidth: 120, paddingRight: "5px"}}>
                     <InputLabel id="selectedItemLabel">Item Name</InputLabel>
                     <Select
                         labelId="selectedItemLabel"
@@ -60,16 +60,19 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                     variant="standard"
                 />
             </div>
-            <div>
+            <div style={{justifyContent:"center", display:"flex"}}>
                 {shipment.map((ship, i) => <ShipmentItem setShipment={setShipment} shipment={shipment} stockId={i}
                                                          label={ship.quantity + " " + props.corporate.items.filter(i => i.sku === ship.sku)[0].name}/>)}
             </div>
-            <Button variant="contained" onClick={() => {
-                sendRequest(APINamespace.Manager, "/processShipment", {
-                    "storeId": 28,
-                    "shipments": "[" + shipment.map(i => JSON.stringify(i)).join(", ") + "]"
-                }).then(r => console.log(r));
-            }}>Process Shipment</Button>
+            <div style={{justifyContent:"center", display:"flex"}}>
+                <Button variant="contained" onClick={() => {
+                    sendRequest(APINamespace.Manager, "/processShipment", {
+                        "storeId": 28,
+                        "shipments": "[" + shipment.map(i => JSON.stringify(i)).join(", ") + "]"
+                    }).then(r => console.log(r));
+                }}>Process Shipment</Button>
+            </div>
+
         </div>
     );
 }

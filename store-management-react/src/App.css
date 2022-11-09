@@ -85,6 +85,12 @@ h3 {
   margin: auto;
 }
 
+.centered {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-top: 50px;
+}
 .storeTable, .itemTable, .itemInStoreTable {
   margin: auto;
 }
