@@ -137,8 +137,7 @@ p {
   align-items: center;
   padding-left: 15px;
   padding-right: 5px;
-  margin: auto;
-  margin-top: 10px
+  margin: 10px auto auto;
 }
 
 .linkText {

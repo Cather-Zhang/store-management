@@ -8,9 +8,7 @@ import {APINamespace, itemJSONToTS, makeSKU, sendRequest} from "./Utilities";
 export async function deleteStoreController(corporate: Corporate, id: number) {
     let c = corporate.copy();
     let response = await sendRequest(APINamespace.Corporate, "/removeStore", {"storeId": id});
-    console.log("Response", response);
     c = updateStoresController(c, response);
-    console.log(response)
     return c;
 }
 
@@ -27,8 +25,7 @@ export async function createStoreController(corporate: Corporate, name: string, 
 
     if (response.status === 200) {
         handleClose();
-        c.stores.push(new Store(corporate.stores.length, name, [], manager, [],
-            new GPS(long, lat)));
+        updateStoresController(corporate, response);
     }
 
     return c;
