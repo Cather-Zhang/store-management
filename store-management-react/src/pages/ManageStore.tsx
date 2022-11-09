@@ -10,7 +10,7 @@ import ShipmentItem from "../components/ShipmentItem";
 import {APINamespace, getById, itemJSONToTS, sendRequest} from "../Utilities";
 import {Item} from "../types/Item";
 
-function ManageStore(props: { corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
+function ManageStore(props: { corporate: Corporate, currentUser: any, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [assignedItems, setAssignedItems] = useState<Item[]>([]);
 
     useEffect(() => {
@@ -21,13 +21,14 @@ function ManageStore(props: { corporate: Corporate, setCorporate: React.Dispatch
         loadCorporateState().then();
     }, []);
 
+
     return (
         <div className={"page"}>
-            <h1>Manage Store #</h1>
+            <h1>Manage Store #{props.currentUser.storeId}</h1>
             <div className={"buttonMenu"}>
                 <h3>Input Shipment</h3>
                 <Button variant="contained">Fill To Max</Button>
-                <Button variant="contained">Generate Report</Button>
+                <Button variant="contained" href={"#/inventoryReport?id=" + props.currentUser.storeId}>Generate Report</Button>
             </div>
 
             <div>

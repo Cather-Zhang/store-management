@@ -33,7 +33,7 @@ function App() {
     if (currentUser.role === "corporate") {
         homePage = <ManageCorporate corporate={corporate} setCorporate={setCorporate}/>
     } else if (currentUser.role === "manager") {
-        homePage = <ManageStore corporate={corporate} setCorporate={setCorporate}/>
+        homePage = <ManageStore corporate={corporate} currentUser={currentUser} setCorporate={setCorporate} />
     } else {
         homePage = <StoresNearMe/>
     }
@@ -46,7 +46,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={homePage}/>
                     <Route path="/manageStore"
-                           element={<ManageStore corporate={corporate} setCorporate={setCorporate}/>}/>
+                           element={<ManageStore corporate={corporate} currentUser={currentUser} setCorporate={setCorporate}/>}/>
                     <Route path="/manageCorporate"
                            element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>
                     <Route path="/search" element={<SearchItems/>}/>
