@@ -20,6 +20,12 @@ export default function CreateItemDialog(props: {
             <DialogContent style={{textAlign: "center"}}>
                 <TextField
                     autoFocus
+                    id="sku"
+                    label="SKU"
+                    type="text"
+                    variant="standard"
+                /><br/>
+                <TextField
                     id="name"
                     label="Name"
                     type="text"
@@ -48,7 +54,7 @@ export default function CreateItemDialog(props: {
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
                 <Button onClick={async () => {
-                    createItemController(props.corporate, getById("name"), getById("desc"),
+                    createItemController(props.corporate, getById("sku"), getById("name"), getById("desc"),
                         +getById("price"), +getById("maxQuantity"), props.handleClose).then(c => {
                         props.setCorporate(c);
                     });

@@ -31,9 +31,8 @@ export async function createStoreController(corporate: Corporate, name: string, 
     return c;
 }
 
-export async function createItemController(corporate: Corporate, name: string, desc: string, price: number, maxQuantity: number, handleClose: any) {
+export async function createItemController(corporate: Corporate, sku: string, name: string, desc: string, price: number, maxQuantity: number, handleClose: any) {
     let c = corporate.copy();
-    let sku = makeSKU();
     let response = await sendRequest(APINamespace.Corporate, "/addItem", {
         "sku": sku,
         "name": name,
