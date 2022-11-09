@@ -213,7 +213,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         //first check if all sku are valid
         let exist;
         const idStore = info.storeId;
-        for (let shipment of info.shipments) {
+        for (let shipment of JSON.parse(info.shipments)) {
             exist = await doesItemExist(shipment.sku);
             if (isNaN(exist)) {
                 response.status = 400;
