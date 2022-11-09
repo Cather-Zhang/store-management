@@ -19,7 +19,7 @@ export default function ItemInfoDialog(props: {
                 <Button onClick={props.handleClose} style={{minWidth: 0}}><CloseIcon/></Button>
             </DialogActions>
             <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"}
-                         align={"center"}>{props.item?.name + " (SKU " + props.item?.sku + ")"}</DialogTitle>
+                         align={"center"}>{props.item?.name}</DialogTitle>
             <DialogContentText align={"center"}>
 
             </DialogContentText>
