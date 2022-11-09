@@ -12,6 +12,8 @@ import {Item} from "../types/Item";
 
 function ManageStore(props: { corporate: Corporate, currentUser: any, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [assignedItems, setAssignedItems] = useState<Item[]>([]);
+    const [selectItem, setSelectItem] = useState("");
+    const [shipment, setShipment] = useState<{ "sku": string, quantity: number }[]>([]);
 
     useEffect(() => {
         const loadCorporateState = async () => {
@@ -30,43 +32,44 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                 <Button variant="contained">Fill To Max</Button>
                 <Button variant="contained" href={"#/inventoryReport?id=" + props.currentUser.storeId}>Generate Report</Button>
             </div>
-
             <div>
                 <IconButton color={"primary"}><AddCircleTwoToneIcon onClick={() => {
-                    let selectedItem = getById("selectedItem");
                     let quantity = getById("quantity");
+                    let newShipment = JSON.parse(JSON.stringify(shipment));
+                    if (selectItem != "") {
+                        newShipment.push({"sku": selectItem, quantity: +quantity});
+                    }
+                    setShipment(newShipment);
                 }}/></IconButton>
-
                 <FormControl style={{minWidth: 120}}>
                     <InputLabel id="selectedItemLabel">Item Name</InputLabel>
                     <Select
                         labelId="selectedItemLabel"
                         id="selectedItem"
                         label="Item"
+                        onChange={(v) => setSelectItem(v.target.value as string)}
                     >
-
                         {assignedItems.map(i => (<MenuItem value={i.sku}>{i.name}</MenuItem>))}
-
                     </Select>
                 </FormControl>
-
                 <TextField
                     id="quantity"
                     label="Quantity"
                     type="number"
                     variant="standard"
                 />
-
             </div>
             <div>
-                <ShipmentItem label={"11 green beans"}></ShipmentItem>
+                {shipment.map(ship => <ShipmentItem
+                    label={ship.quantity + " " + props.corporate.items.filter(i => i.sku === ship.sku)[0].name}/>)}
             </div>
-
-
-            <Button variant="contained">Process Shipment</Button>
+            <Button variant="contained" onClick={() => {
+                sendRequest(APINamespace.Manager, "/processShipment", {
+                    "storeId": 28,
+                    "shipments": "[" + shipment.map(i => JSON.stringify(i)).join(", ") + "]"
+                }).then(r => console.log(r));
+            }}>Process Shipment</Button>
         </div>
-
-
     );
 }
 
