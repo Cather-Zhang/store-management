@@ -18,11 +18,18 @@ export default function ItemInfoDialog(props: {
             <DialogActions>
                 <Button onClick={props.handleClose} style={{minWidth: 0}}><CloseIcon/></Button>
             </DialogActions>
-            <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"}
+            <DialogTitle paddingBottom={"10px !important"} fontSize={"30px !important"}
                          align={"center"}>{props.item?.name}</DialogTitle>
-            <DialogContentText align={"center"}>
-
+        <DialogContentText align={"left"} margin={"0 75px !important"}>
+                <b>SKU</b>: {props.item?.sku}
+                <br/>
+                <b>Cost</b>: {props.item?.price}
+                <br/>
+                <b>Locations</b>: {props.item?.getLocationString()}
+                <br/>
+                <b>Description</b>: {props.item?.description}
             </DialogContentText>
+            <br/>
             <br/>
         </Dialog>
     );
