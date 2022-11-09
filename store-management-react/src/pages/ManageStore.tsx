@@ -30,7 +30,8 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
             <div className={"buttonMenu"}>
                 <h3>Input Shipment</h3>
                 <Button variant="contained">Fill To Max</Button>
-                <Button variant="contained" href={"#/inventoryReport?id=" + props.currentUser.storeId}>Generate Report</Button>
+                <Button variant="contained" href={"#/inventoryReport?id=" + props.currentUser.storeId}>Generate
+                    Report</Button>
             </div>
             <div>
                 <IconButton color={"primary"}><AddCircleTwoToneIcon onClick={() => {
@@ -60,8 +61,8 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                 />
             </div>
             <div>
-                {shipment.map(ship => <ShipmentItem
-                    label={ship.quantity + " " + props.corporate.items.filter(i => i.sku === ship.sku)[0].name}/>)}
+                {shipment.map((ship, i) => <ShipmentItem setShipment={setShipment} shipment={shipment} stockId={i}
+                                                         label={ship.quantity + " " + props.corporate.items.filter(i => i.sku === ship.sku)[0].name}/>)}
             </div>
             <Button variant="contained" onClick={() => {
                 sendRequest(APINamespace.Manager, "/processShipment", {
