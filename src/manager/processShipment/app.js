@@ -223,7 +223,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         }
         
         
-        for (let shipment of info.shipments) {
+        for (let shipment of JSON.parse(info.shipments)) {
             let newQuantity = parseInt(shipment.quantity)
             let max = await doesItemExist(shipment.sku);
             let sku = shipment.sku;
