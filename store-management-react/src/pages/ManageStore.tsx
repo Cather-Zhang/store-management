@@ -70,7 +70,7 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
             <div style={{justifyContent: "center", display: "flex"}}>
                 <Button variant="contained" onClick={() => {
                     sendRequest(APINamespace.Manager, "/processShipment", {
-                        "storeId": 28,
+                        "storeId": props.currentUser.storeId,
                         "shipments": "[" + shipment.map(i => JSON.stringify(i)).join(", ") + "]"
                     }).then(() => setShipment([]));
                 }}>Process Shipment</Button>
