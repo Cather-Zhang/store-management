@@ -129,7 +129,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             if (success) {
                 
                 let successAssign;
-                for (let location  of info.locations) {
+                for (let location  of JSON.parse(info.locations)) {
                     let shelf = parseInt(location.shelf);
                     let aisle = parseInt(location.aisle);
                     if (isNaN(shelf) || isNaN(aisle)) {

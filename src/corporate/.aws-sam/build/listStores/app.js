@@ -65,8 +65,8 @@ exports.lambdaHandler = async (event, context, callback) => {
         return new Promise((resolve, reject) => {
                 pool.query("SELECT * FROM Stores", [], (error, rows) => {
                     if (error) { return reject(error); }
+                    let stores = [];
                     if (rows) {
-                        let stores = [];
                         for (let r of rows) {
                             let id = r.idStores;
                             let name = r.name;
@@ -81,7 +81,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                         
                         return resolve(stores);
                     } else {
-                        return resolve(true);
+                        return resolve(stores);
                     }
                 });
             });

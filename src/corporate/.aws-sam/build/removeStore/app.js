@@ -1,5 +1,15 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
+class Store {
+    constructor(id, name, latitude, longitude, manager) {
+        this.idStores = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.manager = manager;
+    }
+    
+}
 
 let response;
 const mysql = require('mysql');
@@ -12,16 +22,6 @@ var pool = mysql.createPool({
     database: config.database
 });
 
-class Store {
-    constructor(id, name, latitude, longitude, manager) {
-        this.idStores = id;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.manager = manager;
-    }
-    
-}
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {

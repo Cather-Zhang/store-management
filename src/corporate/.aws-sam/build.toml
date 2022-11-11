@@ -55,4 +55,13 @@ manifest_hash = ""
 packagetype = "Zip"
 functions = ["listStores"]
 
+[function_build_definitions.71f835f6-a243-46dd-9404-fd9597f5c379]
+codeuri = "/home/ec2-user/environment/store-management/src/corporate/generateTotalReport"
+runtime = "nodejs14.x"
+architecture = "x86_64"
+handler = "app.lambdaHandler"
+manifest_hash = ""
+packagetype = "Zip"
+functions = ["generateTotalReport"]
+
 [layer_build_definitions]

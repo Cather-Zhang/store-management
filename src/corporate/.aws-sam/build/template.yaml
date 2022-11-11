@@ -110,3 +110,19 @@ Resources:
             Method: get
     Metadata:
       SamResourceId: listStores
+  generateTotalReport:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: generateTotalReport
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        generateTotalReport:
+          Type: Api
+          Properties:
+            Path: /generateTotalReport
+            Method: get
+    Metadata:
+      SamResourceId: generateTotalReport

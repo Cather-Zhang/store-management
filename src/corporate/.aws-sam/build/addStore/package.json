@@ -1,5 +1,5 @@
 {
-  "name": "add store",
+  "name": "addStore",
   "version": "1.0.0",
   "description": "create a new store",
   "main": "app.js",
