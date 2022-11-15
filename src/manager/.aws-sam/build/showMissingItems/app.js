@@ -131,7 +131,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     //find if items are in store
     let findItemInStore = (idStore, sku) => {
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=?", [idStore, sku], (error, rows) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true", [idStore, sku], (error, rows) => {
                 if (error) { return reject(error); }
                 if (rows.length > 0) {
                     return resolve(true);
