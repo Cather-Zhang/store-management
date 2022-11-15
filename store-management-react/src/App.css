@@ -148,3 +148,8 @@ p {
 .MuiButton-iconSizeMedium {
   display: inline-block !important;
 }
+
+.emptyMessage {
+  color: gray;
+  font-size: 20px;
+}

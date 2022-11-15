@@ -38,6 +38,6 @@ export default function StoreTable(props: { corporate: Corporate, setCorporate: 
                                </>
                            ]
                        };
-                   })}/>
+                   })} noRowsMessage={"No stores"}/>
     </>;
 }

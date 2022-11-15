@@ -10,5 +10,5 @@ export default function ItemInOverstockTable(props: { overstock: {stock: Stock}[
                               id: i,
                               columns: [item.name, item.price, swl.stock.quantity]
                           };
-                      })}/>
+                      })} noRowsMessage={"No items in overstock"}/>
 }

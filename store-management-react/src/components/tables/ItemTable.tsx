@@ -55,6 +55,6 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
                                </div>
                            ]
                        };
-                   })}/>
+                   })} noRowsMessage={"No Items"}/>
     </>;
 }

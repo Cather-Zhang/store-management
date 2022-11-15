@@ -11,5 +11,5 @@ export default function ItemInStoreTable(props: { stockWithLocation: {location: 
                               id: i,
                               columns: [item.name, swl.location.aisle, swl.location.shelf, item.price, swl.stock.quantity]
                           };
-                      })}/>
+                      })} noRowsMessage={"No items on shelves"}/>
 }

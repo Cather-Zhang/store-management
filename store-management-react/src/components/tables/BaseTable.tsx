@@ -9,22 +9,27 @@ export default function BaseTable(props: {
     data: { id: number, columns: any[] }[];
     headers: string[];
     className: string;
+    noRowsMessage: string;
 }) {
-    return <Table className={props.className} aria-label="simple table">
-        <TableHead>
-            <TableRow>
-                {props.headers.map(h => <TableCell align="left">{h}</TableCell>)}
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {props.data.map((d: { id: number, columns: any[] }, i: number) => (
-                <TableRow
-                    key={d.id}
-                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                >
-                    {d.columns.map(c => <TableCell align="left">{c}</TableCell>)}
-                </TableRow>
-            ))}
-        </TableBody>
-    </Table>;
+    return <>
+        {props.data.length === 0 ? <p className={"emptyMessage"}>{props.noRowsMessage}</p> :
+            <Table className={props.className} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        {props.headers.map(h => <TableCell align="left">{h}</TableCell>)}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {props.data.map((d: { id: number, columns: any[] }, i: number) => (
+                        <TableRow
+                            key={d.id}
+                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                        >
+                            {d.columns.map(c => <TableCell align="left">{c}</TableCell>)}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        }
+    </>;
 }
