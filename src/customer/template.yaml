@@ -46,3 +46,48 @@ Resources:
           Properties:
             Path: /login
             Method: post
+            
+  listItems:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: listItems/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+        - arm64
+      Events:
+        listItems:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /listItems
+            Method: post
+            
+  findItem:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: findItem/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+        - arm64
+      Events:
+        findItem:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /findItem
+            Method: post
+            
+  buyItem:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: buyItem/
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+        - arm64
+      Events:
+        buyItem:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /buyItem
+            Method: post

@@ -1,0 +1,482 @@
+commit b62ddd539b6aa888effe34bcba3886b47bf3d3f3
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Wed Nov 9 00:49:03 2022 +0000
+
+    parse SKU shipment
+
+commit 1c73914a1e96f38ebdfb26538960d7a98c504206
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Wed Nov 9 00:48:06 2022 +0000
+
+    parse SKU shipment
+
+commit 02812187d9adfd03f9b129f7eee9cb91ed6839ab
+Merge: ea36407 93ad0ad
+Author: VinBHuynh <35638743+VinBHuynh@users.noreply.github.com>
+Date:   Tue Nov 8 19:09:21 2022 -0500
+
+    Merge pull request #1 from Cather-Zhang/ui-development
+    
+    UI development
+
+commit 93ad0ad3230e70462a520dfd85fad9a638a29457
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Wed Nov 9 00:07:50 2022 +0000
+
+    add overstock table
+
+commit ea3640748f6600360a28e431268ce73556d4945f
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Tue Nov 8 23:53:05 2022 +0000
+
+    updated generate report
+
+commit 12a5db2e7bfa9b1cfdfc04234788403934b71f7e
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 8 18:48:18 2022 -0500
+
+    Restricted input to assigned items for dropdown
+
+commit 90b284c86e2534e25cc8038beecf80d0f8dba5e7
+Author: nicoleburgess1 <nburgess1113@gmail.com>
+Date:   Tue Nov 8 18:40:55 2022 -0500
+
+    store response
+
+commit 6713434519049113f2218622335ea9714c9569a0
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Tue Nov 8 23:36:53 2022 +0000
+
+    fixed list assigned items
+
+commit 8ca6dbb55ede04f149bbd772be1287ba513f06f4
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 8 18:36:39 2022 -0500
+
+    Made json item to ts utility
+
+commit bd41814af4255704f589a87653f09f5e13fc78b1
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 8 18:20:03 2022 -0500
+
+    Changed routes to use hashes to allow website to run on S3
+
+commit 0c9f7408f15a26f939a710f9e77d57169340aec1
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Tue Nov 8 21:15:53 2022 +0000
+
+    show missing items done for manager
+
+commit aa2377b68d13dfcb1b876e4d7a67dde76ae32665
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Tue Nov 8 14:56:40 2022 +0000
+
+    edited package.json
+
+commit e6759901875cbb53f7a78d4cb773a90fee171647
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Tue Nov 8 14:46:09 2022 +0000
+
+    cleaned up conflicts
+
+commit 5ea01d77ef597c17e8a87fe1518a77207d96427d
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Tue Nov 8 02:13:58 2022 +0000
+
+    solving pushing issue
+
+commit 27e97a6c97f3b99f8044617c008613f8aa561f7a
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Tue Nov 8 02:01:54 2022 +0000
+
+    changed response json style to work better with front end
+
+commit b0404b0cb6c6a5c3f9c87d634cc271a5f7b745df
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 23:44:41 2022 -0500
+
+    Added proper titles for unfinished pages
+
+commit 58baaa8e4d6c3b5c23c157c803f377a69104d5eb
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 23:36:15 2022 -0500
+
+    Added login system
+
+commit 5fcff7c960343b8d0df7427ea7c9fd47ebce17e2
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 21:54:38 2022 -0500
+
+    Updated inventory report to reflect backend
+
+commit e99d699b798c6616cd0df8451b72ed7c5b3550a2
+Author: Cather-Zhang <cather0215@gmail.com>
+Date:   Mon Nov 7 21:15:48 2022 -0500
+
+    changed inventory report response json
+
+commit d9e599393c4c49ce6e51a47ac2444e2a3c4eea86
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 20:09:37 2022 -0500
+
+    Corrected Inventory report page to match current endpoint
+
+commit f8d290c14392f73121fffaae2e7c3fd7084fbd80
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 19:52:52 2022 -0500
+
+    Moved getById() to Utilities
+
+commit be1aab4fd0047bb2c17294fd700e720919b3817b
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 19:16:00 2022 -0500
+
+    Added ShipmentItem styling
+
+commit 8eaf2c66f4edac676a3016d8a2ae5bd99ef28fe1
+Author: nicoleburgess1 <nburgess1113@gmail.com>
+Date:   Mon Nov 7 19:05:05 2022 -0500
+
+    made shipment item
+
+commit a14a700b331625b9fa6719fa53030e8365db0fe9
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Mon Nov 7 22:42:42 2022 +0000
+
+    location array string parsed
+
+commit d36dbe24824bb5dbebe8e8b65ec48dab547be2d4
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 18:09:01 2022 -0500
+
+    Changed manager to string
+
+commit 8f0170230398c1071e7cfacf8e02fb27b31dc21f
+Author: nicoleburgess1 <nburgess1113@gmail.com>
+Date:   Mon Nov 7 18:02:24 2022 -0500
+
+    started managestore
+
+commit 55b9e2c3561f07783f5a8958fce9f8a12354ff8b
+Author: nicoleburgess1 <nburgess1113@gmail.com>
+Date:   Fri Nov 4 14:11:23 2022 -0400
+
+    started managestore
+
+commit f65b0ca9427f19c72003024475152e9398fc5757
+Author: nicoleburgess1 <nburgess1113@gmail.com>
+Date:   Wed Nov 2 13:53:43 2022 -0400
+
+    adjusted the authorizeduser and started managestore
+
+commit 0f8ac124e9dd469a36e4d791f15314b926701d72
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 17:42:03 2022 -0500
+
+    Connected API for assigning locations
+
+commit 504d39a95e6d4591bbba8ed503d7a8c4ce1a5395
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Mon Nov 7 21:28:14 2022 +0000
+
+    manager get list of items that are assigned to a location
+
+commit 8cc3095c968825c88fb36d9bd7913c808e766597
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Mon Nov 7 21:01:05 2022 +0000
+
+    edited remove store so it returns a list of stores
+
+commit 3db89014bfc82b6aba7761e8ea7365c1e34b7580
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Mon Nov 7 15:37:03 2022 -0500
+
+    Added a bunch of API endpoint integrations
+
+commit a6140d8c51f411d188b2d97226486107605f2993
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Mon Nov 7 16:52:04 2022 +0000
+
+    list all stores in corporate
+
+commit c057e5af3eadfb33961f762ff86eed2280f5775b
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Sat Nov 5 20:56:37 2022 +0000
+
+    added response sample
+
+commit b0e440181de5ea19e27a698e7e5d42e8bded67ba
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Sat Nov 5 15:17:29 2022 +0000
+
+    login done
+
+commit a500c65145845c94f96975d1a68b56db21ea9969
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Sat Nov 5 02:29:50 2022 +0000
+
+    add store hash password
+
+commit 50737f27347c5bdd57ddd0ca95c54cee61a8fd83
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Fri Nov 4 19:27:22 2022 -0400
+
+    Finished inventory report
+
+commit ebfb67674b37184d2063b7a3d392bc44a25acbf3
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Fri Nov 4 18:17:51 2022 -0400
+
+    Added generate report popup for stores
+
+commit 10bf05d76c066cc30674bcaebcdcfd4e36101034
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Fri Nov 4 17:50:53 2022 -0400
+
+    Changed appearance of assign item location dialog
+
+commit 13c76d07b96dc74e74fa4699431c688f5425c0d9
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Fri Nov 4 17:35:29 2022 -0400
+
+    Added the ability to assign an item to a location
+
+commit de5251e8ca05ce3d540019aeada19e4ce375d010
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Fri Nov 4 16:48:07 2022 -0400
+
+    Added item table and start of item location assignment dialog
+
+commit 6a90a20a4a5ac0f29a98c983c9f24a19d0e50db4
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Thu Nov 3 22:37:42 2022 +0000
+
+    remove store completed
+
+commit 7bd0181bfd1a04a8b4d31cb7ba1e1e3c6a6c74a6
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Wed Nov 2 18:39:01 2022 +0000
+
+    updated use case
+
+commit 456f954128c8707916c826e2d0681058676ec1dc
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Wed Nov 2 18:31:32 2022 +0000
+
+    generate overstock works
+
+commit a886e4dfc075506b349ed6b4c5aac65aaf4ef24a
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Wed Nov 2 18:24:54 2022 +0000
+
+    generate inverntory report works
+
+commit ee8567bcb6445e960729336b54135f9dc3e378be
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Wed Nov 2 17:47:27 2022 +0000
+
+    list all items work
+
+commit f5f8f57a043efcf51750844f9971bad7884688ff
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Wed Nov 2 16:43:06 2022 +0000
+
+    process shipment works
+
+commit eda9a95733118f0c5d924f548e9a90c9200ad813
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Wed Nov 2 00:41:41 2022 -0400
+
+    Added ability to create an item
+
+commit b21c8805519858a852316d8bb43aa18ab33d86cb
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 23:59:19 2022 -0400
+
+    Added ability to create a store
+
+commit 2cd6f0a3c0d2c03113a5e0cce1f5660e2a2814d6
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 23:36:35 2022 -0400
+
+    Added Create Item and Create Store Dialogs
+
+commit 09868fffc07a55b8939f57200ebe3dde8d8bb282
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 22:57:56 2022 -0400
+
+    Added corporate page and ability to delete stores
+
+commit 67896dde96a96a8824262ae2acdcc99b760197eb
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 20:06:50 2022 -0400
+
+    Fixed styling on top bar
+
+commit 3990c529983a07b6a9e7a941dfc96ec7031b8ee4
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 19:33:45 2022 -0400
+
+    Integrated pages into menu bar
+
+commit a81f0d7fce385b9c5d53c0631abc896767ce8e37
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 19:25:23 2022 -0400
+
+    Added pages folder
+
+commit e2912b181b99994df4c18209ccc4aad365c72b39
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 18:30:26 2022 -0400
+
+    Added basic state
+
+commit 146c660ca15572b8589c5fb093356b8ca091bd32
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 18:23:11 2022 -0400
+
+    Fixed git
+
+commit 1100ad2a6a56b7adbb0df0b21d6dd6685b6405b2
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Nov 1 18:22:43 2022 -0400
+
+    Added copy functions to types to prepare for use in React state
+
+commit f0b6a296d87944f41889c08f1cb8035989eb46c2
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Tue Nov 1 22:11:36 2022 +0000
+
+    Added sam-application for manager
+
+commit b55acdf3a2b94c52374b78fc7692e719e431e5cc
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Sun Oct 30 18:47:29 2022 +0000
+
+    list all stores based on distance works
+
+commit ec0ac25880786b8192e9d6565cabf43ea77f8177
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Fri Oct 28 19:32:43 2022 +0000
+
+    assign item works
+
+commit 611e41cf1974dd6f6a30861f30ec95c78ac63276
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Fri Oct 28 17:59:36 2022 +0000
+
+    token commit
+
+commit cd97f2f967ec12255a3dac006acf7464419aaaee
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Fri Oct 28 17:59:02 2022 +0000
+
+    token commit
+
+commit 8e1a7c225b492ca030bba84a344f13745cae0ab8
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Thu Oct 27 20:19:24 2022 -0400
+
+    Added imports and exports and tested TS types
+
+commit d0f2aa84baa12f225eea3fcdc521a29dfed8b7b0
+Author: nicoleburgess1 <nburgess1113@gmail.com>
+Date:   Thu Oct 27 15:22:15 2022 -0400
+
+    added all the types and their constructors
+
+commit 4af8feb5a6f9786528369f0bfda0e483e9d8f949
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Thu Oct 27 14:53:26 2022 -0400
+
+    Added item class
+
+commit 102fd195ef6cc12b97fb0ad9efe9255cc52e07cb
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Thu Oct 27 14:39:07 2022 -0400
+
+    Added type files
+
+commit 2878f6844987089ea118e5580d534637eb67cc60
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Thu Oct 27 14:18:11 2022 -0400
+
+    Changed menu bar
+
+commit da50128a6b706310bf417fd557c1899e40c78dba
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Thu Oct 27 17:37:04 2022 +0000
+
+    add and remove works with all stores returned in response
+
+commit bef04ae52af32d60d47fccefeee962a53df92dcd
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Thu Oct 27 16:25:45 2022 +0000
+
+    add and remove store working, need to add stores to response
+
+commit 816daad3b7b7a731dd1e4f1e0ef5dbe5f48eb02d
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Oct 25 20:55:16 2022 -0400
+
+    Initial TS
+
+commit 6d2d7c862dba9d1ff52f35cb39930653a6340d5f
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Oct 25 20:35:27 2022 -0400
+
+    Initial stuff
+
+commit 0abaab8a2e722aa635421c9b6b5b786de37889a2
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Tue Oct 25 23:46:15 2022 +0000
+
+    create store works locally but not in aws
+
+commit 9c7e4d705d2f114e6db832a6cab15f726bd84124
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Oct 25 19:23:01 2022 -0400
+
+    Actual react folder
+
+commit 76a9fa9cb911cf4f9128de1b7cefc91ef2b51a0f
+Author: MargaretEarnest <34314628+MargaretEarnest@users.noreply.github.com>
+Date:   Tue Oct 25 19:19:34 2022 -0400
+
+    Initial TS
+
+commit 03457bb0d2da861b6d1d6468cb6c0a302ac288d2
+Author: EC2 Default User <ec2-user@ip-172-31-33-192.us-east-2.compute.internal>
+Date:   Tue Oct 25 22:22:30 2022 +0000
+
+    added create/remove store
+
+commit f8c0f99fff7c8e0d47d9f5de299edd5bf182ac52
+Author: EC2 Default User <ec2-user@ip-172-31-47-210.us-east-2.compute.internal>
+Date:   Mon Oct 24 18:57:40 2022 +0000
+
+    added readme
+
+commit 37931c37682bf991ce807912fb263921a627e644
+Author: EC2 Default User <ec2-user@ip-172-31-47-210.us-east-2.compute.internal>
+Date:   Wed Oct 12 00:11:37 2022 +0000
+
+    updated payload request and response
+
+commit 5d1a2603cd9f69e0c5a25f26425796deb625129e
+Author: EC2 Default User <ec2-user@ip-172-31-47-210.us-east-2.compute.internal>
+Date:   Tue Oct 11 23:13:10 2022 +0000
+
+    added token file
+
+commit 4d2cae9136b965639451d0080da3c15dba7eae43
+Author: EC2 Default User <ec2-user@ip-172-31-47-210.us-east-2.compute.internal>
+Date:   Tue Oct 11 23:09:28 2022 +0000
+
+    usecase json for request and response
+
+commit 0fd455cdaa2990f09b78a73742ff63d5899b3bd9
+Author: Cather-Zhang <cather0215@gmail.com>
+Date:   Thu Sep 29 17:43:21 2022 -0400
+
+    Initial commit

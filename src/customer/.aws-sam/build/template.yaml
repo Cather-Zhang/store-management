@@ -46,3 +46,51 @@ Resources:
             Method: post
     Metadata:
       SamResourceId: login
+  listItems:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: listItems
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - arm64
+      Events:
+        listItems:
+          Type: Api
+          Properties:
+            Path: /listItems
+            Method: post
+    Metadata:
+      SamResourceId: listItems
+  findItem:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: findItem
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - arm64
+      Events:
+        findItem:
+          Type: Api
+          Properties:
+            Path: /findItem
+            Method: post
+    Metadata:
+      SamResourceId: findItem
+  buyItem:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: buyItem
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - arm64
+      Events:
+        buyItem:
+          Type: Api
+          Properties:
+            Path: /buyItem
+            Method: post
+    Metadata:
+      SamResourceId: buyItem
