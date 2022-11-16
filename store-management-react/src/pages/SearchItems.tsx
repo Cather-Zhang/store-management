@@ -1,61 +1,21 @@
 import React, {useState} from "react";
-import {Button, FormControl, InputLabel, Select} from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
+import {ItemSearch} from "../components/ItemSearch";
+import {ItemLocation} from "../types/ItemLocation";
+import {Item} from "../types/Item";
 
 function SearchItems() {
-    const [searchType, setSearchType] = useState("Name");
+    const [searchResult, setSearchResult] = useState<{ item: Item, quantity: number, location: ItemLocation }[]>([]);
 
     return (
         <div className={"page"}>
             <h1>Search Stores for Item</h1>
-            <div className="searchInputs">
-                <FormControl size="small" style={{minWidth: 200, paddingRight: "5px"}}>
-                    <InputLabel id="selectedItemLabel">Search By</InputLabel>
-                    <Select
-                        labelId="selectedItemLabel"
-                        id="selectedItem"
-                        label="Search By"
-                        value="Name"
-                        onChange={(v) => setSearchType(v.target.value as string)}
-                    >
-                        {["Name", "SKU", "Description", "Location"].map(n => (<MenuItem value={n}>{n}</MenuItem>))}
-                    </Select>
-                </FormControl>
-                {searchType === "Location" ?
-                    <>
-                        <TextField
-                            id="aisle"
-                            label="Aisle"
-                            type="number"
-                            variant="standard"
-                            size="small"
-                            className="searchInput"
-                            style={{width: "100px"}}
-                        />
-                        <TextField
-                            id="shelf"
-                            label="Shelf"
-                            type="number"
-                            variant="standard"
-                            size="small"
-                            className="searchInput"
-                            style={{marginRight: "20px", width: "100px"}}
-                        />
-                    </>
-                    :
-                    <TextField
-                        id="searchValue"
-                        label={searchType}
-                        type="text"
-                        variant="standard"
-                        size="small"
-                        className="searchInput"
-                        style={{marginRight: "20px"}}
-                    />
-                }
-                <Button variant="contained">Search</Button>
-            </div>
+            <ItemSearch setSearchResult={setSearchResult} includeLocation={false}/>
+            {searchResult.length > 0 ?
+                <></>
+                :
+                <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, Description, or Aisle and
+                    Shelf</p>
+            }
         </div>
     );
 }
