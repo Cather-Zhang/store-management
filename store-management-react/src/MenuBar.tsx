@@ -14,7 +14,6 @@ import AddLocationTwoToneIcon from '@mui/icons-material/AddLocationTwoTone';
 import AssignmentTwoToneIcon from '@mui/icons-material/AssignmentTwoTone';
 import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
-import {Link} from "react-router-dom";
 import LoginDialog from "./components/dialogs/LoginDialog";
 
 function MenuBar(props: { currentUser: string, setCurrentUser: any, username: string, setUsername: any }) {

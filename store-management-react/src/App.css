@@ -153,3 +153,15 @@ p {
   color: gray;
   font-size: 20px;
 }
+
+.searchInputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+
+.searchInput {
+  margin-left: 10px !important;
+  margin-bottom: 5px !important;
+}
