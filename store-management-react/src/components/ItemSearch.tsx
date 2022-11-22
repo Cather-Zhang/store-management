@@ -1,12 +1,11 @@
-import React, {useState} from "react";
-import {Button, FormControl, getButtonBaseUtilityClass, InputLabel, Select} from "@mui/material";
+import React from "react";
+import {Button, FormControl, InputLabel, Select} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import {getById} from "../Utilities";
+import {Item} from "../types/Item";
+import {ItemLocation} from "../types/ItemLocation";
 
-export function ItemSearch(props: {setSearchResult: any, includeLocation: boolean}) {
-    const [searchType, setSearchType] = useState("Name");
-
+export function ItemSearch(props: {setSearchResult: any, includeLocation: boolean, searchType: string, setSearchType: any}) {
     return (
         <div className="searchInputs">
             <FormControl size="small" style={{minWidth: 200, paddingRight: "5px"}}>
@@ -15,13 +14,13 @@ export function ItemSearch(props: {setSearchResult: any, includeLocation: boolea
                     labelId="searchTypeLabel"
                     id="searchType"
                     label="Search By"
-                    defaultValue={searchType}
-                    onChange={(v) => setSearchType(v.target.value as string)}
+                    defaultValue={props.searchType}
+                    onChange={(v) => props.setSearchType(v.target.value as string)}
                 >
                     {["Name", "SKU", "Description"].concat(props.includeLocation ? ["Location"] : []).map(n => (<MenuItem value={n}>{n}</MenuItem>))}
                 </Select>
             </FormControl>
-            {searchType === "Location" ?
+            {props.searchType === "Location" ?
                 <>
                     <TextField
                         id="aisle"
@@ -45,7 +44,7 @@ export function ItemSearch(props: {setSearchResult: any, includeLocation: boolea
                 :
                 <TextField
                     id="searchValue"
-                    label={searchType}
+                    label={props.searchType}
                     type="text"
                     variant="standard"
                     size="small"
@@ -55,9 +54,7 @@ export function ItemSearch(props: {setSearchResult: any, includeLocation: boolea
             }
             <Button variant="contained" onClick={() => {
                 // make call to backend here and get search result once that's a thing
-                console.log(searchType)
-                console.log(getById("searchValue"))
-                props.setSearchResult([]);
+                props.setSearchResult([{storeId: 0, item: new Item("LUUHLFLJ", "Soap", "This is soap", 10, 2), quantity: 5, location: new ItemLocation(2, 9)}, {storeId: 1, item: new Item("LIHLKJHFSF", "Bananas", "Monkeys really like eating bananas and these ones are fresh!", 5, 100), quantity: 3, location: new ItemLocation(1, 1)}]);
             }}>Search</Button>
         </div>
     );

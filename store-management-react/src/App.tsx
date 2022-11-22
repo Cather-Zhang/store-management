@@ -10,6 +10,7 @@ import './App.css';
 import InventoryReport from "./pages/reports/InventoryReport";
 import {APINamespace, sendRequest} from "./Utilities";
 import {updateStateController} from "./Controllers";
+import IndividualStore from "./pages/IndividualStore";
 
 function App() {
     const [corporate, setCorporate] = useState(new Corporate([], []));
@@ -49,6 +50,7 @@ function App() {
                     <Route path="/search" element={<SearchItems/>}/>
                     <Route path="/stores" element={<StoresNearMe/>}/>
                     <Route path="/inventoryReport" element={<InventoryReport corporate={corporate}/>}/>
+                    <Route path="/store" element={<IndividualStore corporate={corporate}/>}/>
                 </Routes>
             </div>
         </Router>

@@ -9,7 +9,7 @@ import ItemInOverstockTable from "../../components/tables/ItemInOverstockTable";
 
 function InventoryReport(props: { corporate: Corporate }) {
     const [searchParams] = useSearchParams();
-    searchParams.get("__firebase_request_key")
+    searchParams.get("__firebase_request_key");
     let storeId: number = parseInt(searchParams.get("id") ?? "");
     const [inventoryReport, setInventoryReport] = React.useState<any>(null);
     const [totalValue, setTotalValue] = React.useState(0);

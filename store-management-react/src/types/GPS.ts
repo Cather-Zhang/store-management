@@ -10,4 +10,8 @@ export class GPS {
     copy() {
         return new GPS(this.longitude, this.latitude);
     }
+
+    toString() {
+        return this.longitude + ", " + this.latitude;
+    }
 }
