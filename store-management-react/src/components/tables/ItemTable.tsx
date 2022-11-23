@@ -5,9 +5,6 @@ import BaseTable from "./BaseTable";
 import {Item} from "../../types/Item";
 import AssignItemLocationDialog from "../dialogs/AssignItemLocationDialog";
 import ItemInfoDialog from "../dialogs/ItemInfoDialog";
-import {APINamespace, sendRequest} from "../../Utilities";
-import {updateItemsController} from "../../Controllers";
-import {useEffect} from "react";
 
 export default function ItemTable(props: { corporate: Corporate, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [assignLocOpen, setAssignLocOpen] = React.useState(false);
@@ -42,7 +39,7 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
                                   setCorporate={props.setCorporate}/>
         <ItemInfoDialog item={infoItem} open={itemInfoOpen} handleClose={handleItemInfoClose}
                         corporate={props.corporate}
-                        setCorporate={props.setCorporate}/>
+                        setCorporate={props.setCorporate} allowBuy={false} />
         <BaseTable className={"itemTable"} headers={["Name", "Price ($)", "Max", "Locations", ""]}
                    data={props.corporate.items.map((item: Item, i: number) => {
                        return {

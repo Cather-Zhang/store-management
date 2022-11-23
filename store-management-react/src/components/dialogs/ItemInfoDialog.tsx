@@ -12,6 +12,7 @@ export default function ItemInfoDialog(props: {
     item: Item | null,
     open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
+    allowBuy: boolean
 }) {
     return (
         <Dialog open={props.open} fullWidth maxWidth="xs" onClose={props.handleClose}>
@@ -20,7 +21,7 @@ export default function ItemInfoDialog(props: {
             </DialogActions>
             <DialogTitle paddingBottom={"10px !important"} fontSize={"30px !important"}
                          align={"center"}>{props.item?.name}</DialogTitle>
-        <DialogContentText align={"left"} margin={"0 75px !important"}>
+            <DialogContentText align={"left"} margin={"0 75px !important"}>
                 <b>SKU</b>: {props.item?.sku}
                 <br/>
                 <b>Cost</b>: {props.item?.price}
@@ -28,6 +29,7 @@ export default function ItemInfoDialog(props: {
                 <b>Locations</b>: {props.item?.getLocationString()}
                 <br/>
                 <b>Description</b>: {props.item?.description}
+                {props.allowBuy && <Button>Buy</Button>}
             </DialogContentText>
             <br/>
             <br/>
