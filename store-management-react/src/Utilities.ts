@@ -1,6 +1,6 @@
 import {Item} from "./types/Item";
 import {ItemLocation} from "./types/ItemLocation";
-import {useSearchParams} from "react-router-dom";
+import {Store} from "./types/Store";
 
 let baseURLs = ["https://vek78vup05.execute-api.us-east-2.amazonaws.com/Prod", "https://243g1cmra7.execute-api.us-east-2.amazonaws.com/Prod", "https://errouju1tk.execute-api.us-east-2.amazonaws.com/Prod"];
 
@@ -47,6 +47,13 @@ export function itemJSONToTS(items: any) {
             item.assignLocations(i.locations.map((l: { aisle: number, shelf: number }) => new ItemLocation(l.aisle, l.shelf)));
         }
         return item;
+    });
+}
+
+export function storeJSONtoTS(stores: any) {
+    return stores.store.map((i: any) => {
+        let store = new Store(i.number, i.name, i.aisle, i.manager, i.overstock, i.gps);
+        return store;
     });
 }
 

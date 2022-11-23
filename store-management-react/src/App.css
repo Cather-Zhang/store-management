@@ -66,6 +66,12 @@ h3 {
   font-size: 30px;
 }
 
+h5 {
+  text-align: center;
+  font-size: 10px;
+  font-weight: lighter;
+}
+
 .totalValueLabel {
   text-align: center;
   font-size: 30px;
