@@ -11,6 +11,38 @@ var pool = mysql.createPool({
     database: config.database
 });
 
+class Item {
+    constructor(sku, name, description, price, max) {
+        this.sku = sku;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.max = max;
+    }
+}
+
+class Stock {
+    constructor(item, location, quantity) {
+        this.item = item;
+        this.location = location;
+        this.quantity = quantity;
+    }
+}
+
+class Location {
+    constructor(aisle, shelf) {
+        this.aisle = aisle;
+        this.shelf = shelf;
+    }
+}
+
+class Inventory {
+    constructor(location, quantity) {
+        this.location = location;
+        this.quantity = quantity;
+    }
+}
+
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
@@ -56,73 +88,81 @@ exports.lambdaHandler = async (event, context, callback) => {
     let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
     
-    function hash(string) {
-        //set variable hash as 0
-        var hash = 0;
-        // if the length of the string is 0, return 0
-        if (string.length == 0) return hash;
-        for (let i = 0 ;i<string.length ; i++)
-        {
-        let ch = string.charCodeAt(i);
-        hash = ((hash << 5) - hash) + ch;
-        hash = hash & hash;
-        }
-        return hash;
+    //list all items
+    let listAllItems = () => {
+        return new Promise((resolve, reject) => {
+                pool.query("SELECT * FROM Items", [], (error, rows) => {
+                    if (error) { return reject(error); }
+                    if (rows) {
+                        let items = [];
+                        for (let r of rows) {
+                            let sku = r.sku;
+                            let name = r.name;
+                            let price = r.price;
+                            let max = r.max;
+                            let description = r.description;
+                            let newItem = new Item(sku, name, description, price, max);
+
+                            items.push(newItem);
+                        }
+
+                        return resolve(items);
+                    } else {
+                        return resolve(false);
+                    }
+                });
+            });
     }
     
-    let password_hashed = hash(info.password)
-    
-    // check corporate, if yes return true, else return false
-    let isCorporate = (username, password) => {
+    let listItemsOnShelf = (idStore, sku, aisle, shelf) => {
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Users WHERE username=? AND password=?", [username, password], (error, rows) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND aisle=? AND shelf=? AND onShelf=true AND quantity>0", [idStore, sku, aisle, shelf], (error, rows) => {
                 if (error) { return reject(error); }
-                if ((rows) && (rows.length == 1)) {
-                    return resolve(true);
+                let inventories = [];
+                if (rows.length > 0) {
+                    for (let r of rows) {
+                        let newInventory = new Inventory(new Location(r.aisle, r.shelf), r.quantity)
+                        inventories.push(newInventory);
+                    }
+                    return resolve(inventories);
                 } else {
                     return resolve(false);
                 }
             });
         });
     }
-    
-    // check manager, if is return store id, if not return false
-    let isManager = (username, password) => {
-        return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stores WHERE manager=? AND password=?", [username, password], (error, rows) => {
-                if (error) { return reject(error); }
-                if ((rows) && (rows.length == 1)) {
-                    return resolve(rows[0].idStores);
-                } else {
-                    return resolve(false);
-                }
-            });
-        });
-    }
-    
     
     try {
+        const idStore = parseInt(info.storeId);
+        const checkType = JSON.Parse(info.type);
+        const aisle = parseInt(info.aisle);
+        const shelf = parseInt(info.shelf);
         
-        const isCorporateReturn = await isCorporate(info.username, password_hashed);
-        // const ret = await axios(url);
-        if (isCorporateReturn == true) {
+        if(!(checkType == "location")){
+            response.status = 400;
+            response.error = "no location input";
+        }
+        
+        const items = await listAllItems();
+        if (!(items == false)) {
+            let stocks = [];
+            for (let item of items) {
+                let itemsOnShelf = await listItemsOnShelf(idStore, item.sku, aisle, shelf);
+                if (!(itemsOnShelf == false)) {
+                    for (let i of itemsOnShelf) {
+                        let stock = new Stock(item, i.location, i.quantity);
+                        stocks.push(stock);
+                    }
+                }
+            }
             response.status = 200;
-            response.role = "corporate";
-
+            response.stocks = JSON.parse(JSON.stringify(stocks));
         }
         else {
-            const isManagerReturn = await isManager(info.username, password_hashed);
-            if (isManagerReturn == false) {
-                response.status = 400;
-                response.error = "invalid username and password"
-                
-            }
-            else {
-                response.status = 200;
-                response.role = "manager";
-                response.storeId = isManagerReturn;
-            }
+            response.status = 400;
+            response.error = "can not list items for a location";
         }
+
 
     } catch (error) {
         console.log("ERROR: " + error);
