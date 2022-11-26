@@ -114,6 +114,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             });
     }
     
+    // list all items given location (aisle, shelf)
     let listItemsOnShelf = (idStore, sku, aisle, shelf) => {
         let item_aisle = parseInt(aisle);
         let item_shelf = parseInt(shelf);

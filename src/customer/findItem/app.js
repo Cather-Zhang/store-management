@@ -21,6 +21,32 @@ class Store {
     }
 }
 
+class Item {
+    constructor(sku, name, description, price, max) {
+        this.sku = sku;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.max = max;
+    }
+}
+
+class Inventory() {
+    constructor(id, item, location, quantity) {
+        this.idStores = id;
+        this.item = item;
+        this.location = location;
+        this.quantity = quantity;
+    }
+}
+
+class Location {
+    constructor(aisle, shelf) {
+        this.aisle = aisle;
+        this.shelf = shelf;
+    }
+}
+
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
         //console.log("connecting to db"); 
@@ -89,6 +115,32 @@ exports.lambdaHandler = async (event, context, callback) => {
         return distance;
 
     }
+    
+    //list all items
+    let listAllItems = () => {
+        return new Promise((resolve, reject) => {
+                pool.query("SELECT * FROM Items", [], (error, rows) => {
+                    if (error) { return reject(error); }
+                    if (rows) {
+                        let items = [];
+                        for (let r of rows) {
+                            let sku = r.sku;
+                            let name = r.name;
+                            let price = r.price;
+                            let max = r.max;
+                            let description = r.description;
+                            let newItem = new Item(sku, name, description, price, max);
+
+                            items.push(newItem);
+                        }
+
+                        return resolve(items);
+                    } else {
+                        return resolve(false);
+                    }
+                });
+            });
+    }
                         
     //list stores from closest to fartest
     let listAllStores = (latitude, longitude) => {
@@ -124,21 +176,104 @@ exports.lambdaHandler = async (event, context, callback) => {
             });
     }
     
+    // find item(s) given the type (sku, name, or description) within a store
+    let findItem = (idStore, type, value) => {
+        let searchType = JSON.Parse(type);
+        let searchQuery = JSON.Parse(value);
+        if (isNaN(searchType) || isNaN(searchQuery)) {
+            return new Promise((reject) => { return reject("invalid search type or query")});
+        }
+        
+        switch(searchType) {
+            case "sku":
+                return new Promise((resolve, reject) => {
+                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I" + 
+                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true AND quantity>0) S ON I.sku = S.sku", [idStore, searchQuery], (error, rows) => {
+                        if (error) { return reject(error); }
+                        let inventories = [];
+                        if (rows.length > 0) {
+                            for (let r of rows) {
+                                let newItem = new Item(r.sku, r.name, r.description, r.price, r.max);
+                                let newInventory = new Inventory(r.idStores, newItem, new Location(r.aisle, r.shelf), r.quantity)
+                                inventories.push(newInventory);
+                            }
+                            return resolve(inventories);
+                        } else {
+                            return resolve(false);
+                        }
+                    });
+                });
+                
+            case "name":
+                let sQuery = ''.concat('%',searchQuery,'%')
+                return new Promise((resolve, reject) => {
+                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I" + 
+                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S" +
+                                "ON I.sku=S.sku WHERE I.name LIKE ?", [idStore, sQuery], (error, rows) => {
+                        if (error) { return reject(error); }
+                        let inventories = [];
+                        if (rows.length > 0) {
+                            for (let r of rows) {
+                                let newItem = new Item(r.sku, r.name, r.description, r.price, r.max);
+                                let newInventory = new Inventory(r.idStores, newItem, new Location(r.aisle, r.shelf), r.quantity)
+                                inventories.push(newInventory);
+                            }
+                            return resolve(inventories);
+                        } else {
+                            return resolve(false);
+                        }
+                    });
+                });
+                
+            case "description":
+                let sQuery = ''.concat('%',searchQuery,'%')
+                return new Promise((resolve, reject) => {
+                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I" + 
+                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S" +
+                                "ON I.sku=S.sku WHERE I.description LIKE ?", [idStore, sQuery], (error, rows) => {
+                        if (error) { return reject(error); }
+                        let inventories = [];
+                        if (rows.length > 0) {
+                            for (let r of rows) {
+                                let newItem = new Item(r.sku, r.name, r.description, r.price, r.max);
+                                let newInventory = new Inventory(r.idStores, newItem, new Location(r.aisle, r.shelf), r.quantity)
+                                inventories.push(newInventory);
+                            }
+                            return resolve(inventories);
+                        } else {
+                            return resolve(false);
+                        }
+                    });
+                });
+            default:
+                return new Promise((reject) => { return reject("invalid search type")});
+            
+        }
+    }
+    
 
     
     try {
             //returns the list of all stores in order
         const stores = await listAllStores(info.latitude, info.longitude);
+        
         if (stores) {
+            let storeInventories = [];
+            for (let store of stores){
+                let inventory = await findItem(store.idStores, info.type, info.value);
+                if(!(inventory == false)){
+                    storeInventories.push(inventory);
+                }
+            }
             response.status = 200;
-            response.stores = JSON.parse(JSON.stringify(stores));
+            response.stocks = JSON.parse(JSON.stringify(storeInventories));
         }
         else {
             response.status = 400;
             response.error = "can not list all stores";
         }
-
-
+        
+        
     } catch (error) {
         console.log("ERROR: " + error);
         response.status = 400;
