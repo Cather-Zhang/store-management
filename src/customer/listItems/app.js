@@ -62,11 +62,11 @@ function query(conx, sql, params) {
 
 // Take in as input a payload.
 //
-// {  body: '{    "username" : "SomeName", "password": "12345678"}'
+// {  body: '{"storeId" : "4", "type": "location", "aisle": "1", "shelf": "2"}'
 //
 // }
 //
-// ===>  { "role": "manager", "storeId": "2"}
+// ===>  [{ "item": "name", "location": ["aisle": "1", "shelf": "2"], "quantity": "3"}
 //
 
 
@@ -115,8 +115,14 @@ exports.lambdaHandler = async (event, context, callback) => {
     }
     
     let listItemsOnShelf = (idStore, sku, aisle, shelf) => {
+        let item_aisle = parseInt(aisle);
+        let item_shelf = parseInt(shelf);
+        if (isNaN(item_aisle) || isNaN(item_shelf)) {
+            return new Promise((reject) => { return reject("invalid item's location input")});
+        }
+        
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND aisle=? AND shelf=? AND onShelf=true AND quantity>0", [idStore, sku, aisle, shelf], (error, rows) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND aisle=? AND shelf=? AND onShelf=true AND quantity>0", [idStore, sku, item_aisle, item_shelf], (error, rows) => {
                 if (error) { return reject(error); }
                 let inventories = [];
                 if (rows.length > 0) {
@@ -135,19 +141,16 @@ exports.lambdaHandler = async (event, context, callback) => {
     try {
         const idStore = parseInt(info.storeId);
         const checkType = JSON.Parse(info.type);
-        const aisle = parseInt(info.aisle);
-        const shelf = parseInt(info.shelf);
-        
         if(!(checkType == "location")){
             response.status = 400;
-            response.error = "no location input";
+            response.error = "can not fetch location";
         }
         
         const items = await listAllItems();
         if (!(items == false)) {
             let stocks = [];
             for (let item of items) {
-                let itemsOnShelf = await listItemsOnShelf(idStore, item.sku, aisle, shelf);
+                let itemsOnShelf = await listItemsOnShelf(idStore, item.sku, info.aisle, info.shelf);
                 if (!(itemsOnShelf == false)) {
                     for (let i of itemsOnShelf) {
                         let stock = new Stock(item, i.location, i.quantity);
