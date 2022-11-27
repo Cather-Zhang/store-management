@@ -31,7 +31,7 @@ class Item {
     }
 }
 
-class Inventory() {
+class Inventory {
     constructor(id, item, location, quantity) {
         this.idStores = id;
         this.item = item;
@@ -151,15 +151,16 @@ exports.lambdaHandler = async (event, context, callback) => {
     }
     
     // find item(s) given the type (sku, name, or description) within a store
-    let findItem = (idStore, type, value) => {
-        if (isNaN(searchType) || isNaN(searchQuery)) {
-            return new Promise((reject) => { return reject("invalid search type or query")});
-        }
+    let findItem = (idStore, searchType, searchQuery) => {
+        // let searchType = JSON.stringify(type);
+        // let searchQuery = JSON.stringify(value);
+        // console.log(searchType)
         
         switch(searchType) {
             case "sku":
+                console.log("SKU pls")
                 return new Promise((resolve, reject) => {
-                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I" + 
+                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I " + 
                                 "JOIN (SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true AND quantity>0) S ON I.sku = S.sku", [idStore, searchQuery], (error, rows) => {
                         if (error) { return reject(error); }
                         let inventories = [];
@@ -177,11 +178,12 @@ exports.lambdaHandler = async (event, context, callback) => {
                 });
                 
             case "name":
-                let sQuery = ''.concat('%',searchQuery,'%')
+                let name = ''.concat('%',searchQuery,'%');
+                console.log("Name pls")
                 return new Promise((resolve, reject) => {
-                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I" + 
-                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S" +
-                                "ON I.sku=S.sku WHERE I.name LIKE ?", [idStore, sQuery], (error, rows) => {
+                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I " + 
+                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S " +
+                                "ON I.sku=S.sku WHERE I.name LIKE ?", [idStore, name], (error, rows) => {
                         if (error) { return reject(error); }
                         let inventories = [];
                         if (rows.length > 0) {
@@ -198,11 +200,12 @@ exports.lambdaHandler = async (event, context, callback) => {
                 });
                 
             case "description":
-                let sQuery = ''.concat('%',searchQuery,'%')
+                let desc = ''.concat('%',searchQuery,'%');
+                console.log("Desc pls")
                 return new Promise((resolve, reject) => {
-                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I" + 
-                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S" +
-                                "ON I.sku=S.sku WHERE I.description LIKE ?", [idStore, sQuery], (error, rows) => {
+                    pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I " + 
+                                "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S " +
+                                "ON I.sku=S.sku WHERE I.description LIKE ?", [idStore, desc], (error, rows) => {
                         if (error) { return reject(error); }
                         let inventories = [];
                         if (rows.length > 0) {
@@ -218,8 +221,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                     });
                 });
             default:
-                return new Promise((reject) => { return reject("invalid search type")});
-            
+                return new Promise((reject) => { return reject(false)});
         }
     }
     

@@ -129,10 +129,6 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     try {
         const idStore = parseInt(info.storeId);
-        if(!(info.type == "buy")){
-            response.status = 400;
-            response.error = "can not fetch purchase";
-        }
      
         const items = await checkItemAvailability(idStore, info.sku, info.aisle, info.shelf, info.quantity);
         if (!(items == false)) {
