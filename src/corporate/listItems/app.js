@@ -35,13 +35,13 @@ function assignLocations(item, locations) {
 
 function query(conx, sql, params) {
     return new Promise((resolve, reject) => {
-        //console.log("connecting to db"); 
+        //console.log("connecting to db");
         conx.query(sql, params, function(err, rows) {
             if (err) {
                 // reject because there was an error
                 reject(err);
             } else {
-                //console.log("rows resolved"); 
+                //console.log("rows resolved");
                 // resolve because we have result(s) from the query. it may be an empty rowset or contain multiple values
                 resolve(rows);
             }
@@ -60,7 +60,7 @@ function query(conx, sql, params) {
 
 
 exports.lambdaHandler = async (event, context, callback) => {
-    
+
     context.callbackWaitsForEmptyEventLoop = false;
 
    // ready to go for CORS. To make this a completed HTTP response, you only need to add a statusCode and a body.
@@ -71,8 +71,8 @@ exports.lambdaHandler = async (event, context, callback) => {
             "Access-Control-Allow-Methods": "GET" // Allow GET request
         }
     }; // response
-    
-                        
+
+
     //list all items
     let listAllItems = () => {
         return new Promise((resolve, reject) => {
@@ -98,8 +98,8 @@ exports.lambdaHandler = async (event, context, callback) => {
                 });
             });
     }
-    
-        
+
+
     // return the locations of an item
     let getLocations = (sku) => {
         return new Promise((resolve, reject) => {
@@ -122,7 +122,7 @@ exports.lambdaHandler = async (event, context, callback) => {
             });
         });
     }
-    
+
     try {
             //returns the list of all stores
         const items = await listAllItems();

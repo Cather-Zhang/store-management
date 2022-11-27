@@ -65,11 +65,11 @@ function query(conx, sql, params) {
 
 // Take in as input a payload.
 //
-// {  body: '{    "username" : "SomeName", "password": "12345678"}'
+// {  body: '{    "latitude" : "12.1",   "longitude" : "81.2",  "type": "sku",  "value": "2"    }'
 //
 // }
 //
-// ===>  { "role": "manager", "storeId": "2"}
+// ===>  { "stores": [{"storeId": "4", "item": [...], "location": ["aisle": "1", "shelf": "2"], quantity": "30" ...] }
 //
 
 
@@ -114,32 +114,6 @@ exports.lambdaHandler = async (event, context, callback) => {
         let distance = R * c
         return distance;
 
-    }
-    
-    //list all items
-    let listAllItems = () => {
-        return new Promise((resolve, reject) => {
-                pool.query("SELECT * FROM Items", [], (error, rows) => {
-                    if (error) { return reject(error); }
-                    if (rows) {
-                        let items = [];
-                        for (let r of rows) {
-                            let sku = r.sku;
-                            let name = r.name;
-                            let price = r.price;
-                            let max = r.max;
-                            let description = r.description;
-                            let newItem = new Item(sku, name, description, price, max);
-
-                            items.push(newItem);
-                        }
-
-                        return resolve(items);
-                    } else {
-                        return resolve(false);
-                    }
-                });
-            });
     }
                         
     //list stores from closest to fartest
