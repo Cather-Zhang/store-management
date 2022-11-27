@@ -141,8 +141,7 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     try {
         const idStore = parseInt(info.storeId);
-        const checkType = JSON.parse(info.type);
-        if(!(checkType == "location")){
+        if(!(info.type == "location")){
             response.status = 400;
             response.error = "can not fetch location";
         }
