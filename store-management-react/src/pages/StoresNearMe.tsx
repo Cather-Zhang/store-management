@@ -8,16 +8,10 @@ import {ItemLocation} from "../types/ItemLocation";
 import ShipmentItem from "../components/ShipmentItem";
 import StoresNearMeTable from "../components/tables/StoresNearMeTable";
 import {Store} from "../types/Store";
+import {GPS} from "../types/GPS";
 
 function StoresNearMe() {
     const [stores, setStores] = useState<{store: Store, distance: number}[]>([]);
-    useEffect(() => {
-        const loadCorporateState = async () => {
-            let storeResponse = await sendRequest(APINamespace.Customer, "/listStores", null);
-            setStores(storeJSONtoTS(storeResponse));
-        }
-        loadCorporateState().then();
-    }, []);
 
     return (
         <div className={"page"}>
@@ -46,9 +40,14 @@ function StoresNearMe() {
 
                 <Button variant="contained" onClick={() => {
                     sendRequest(APINamespace.Customer, "/listStores", {
-                        "latitude": 0, "longitude": 0}).then(r => console.log(r));
-                        //"latitude": getById("latitude"),
-                        //"longitude": getById("longitude")}).then(() => setStores([]));
+                        "latitude": getById("latitude"), "longitude": getById("longitude")}).then(r => {
+                            if(r.status ===  200){
+                                console.log(r.stores)
+                                setStores(r.stores.map((s: any) => {
+                                    return {store: new Store(s.idStores, s.name, [], s.manager, [], new GPS(s.latitude, s.longitude)), distance: parseFloat(s.distance)};
+                                }))
+                            }
+                        });
                 }}>Submit</Button>
             </div>
             <p style={{marginTop: "30px"}} className="subtitle">Enter your location to see nearby stores</p>
