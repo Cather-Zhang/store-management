@@ -152,8 +152,6 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     // find item(s) given the type (sku, name, or description) within a store
     let findItem = (idStore, type, value) => {
-        let searchType = JSON.Parse(type);
-        let searchQuery = JSON.Parse(value);
         if (isNaN(searchType) || isNaN(searchQuery)) {
             return new Promise((reject) => { return reject("invalid search type or query")});
         }

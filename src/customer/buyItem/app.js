@@ -88,10 +88,11 @@ exports.lambdaHandler = async (event, context, callback) => {
         let item_shelf = parseInt(shelf);
         let item_quantity = parseInt(quantity);
         if (isNaN(item_aisle) || isNaN(item_shelf) ||  isNaN(item_quantity)) {
-            return new Promise((reject) => { return reject("invalid item's purchase input")});
+            return new Promise((reject) => { return reject(false)});
         }
+        
         if(item_quantity <=0){
-            return new Promise((reject) => { return reject("invalid quantity")});
+            return new Promise((reject) => { return reject(false)});
         }
         
         return new Promise((resolve, reject) => {
@@ -102,10 +103,12 @@ exports.lambdaHandler = async (event, context, callback) => {
                     for (let r of rows) {
                         let remaining = r.quantity - item_quantity;
                         let cart = new Shopping(r.sku, new Location(r.aisle, r.shelf), remaining);
+                        console.log(r.sku);
                         shopping.push(cart);
                     }
                     return resolve(shopping);
                 } else {
+                    console.log("Out here?");
                     return resolve(false);
                 }
             });
@@ -130,9 +133,10 @@ exports.lambdaHandler = async (event, context, callback) => {
             response.status = 400;
             response.error = "can not fetch purchase";
         }
-        
+     
         const items = await checkItemAvailability(idStore, info.sku, info.aisle, info.shelf, info.quantity);
         if (!(items == false)) {
+            console.log("Item in!")
             for (let item of items) {
                 let update = await updateAvailability(idStore, item.sku, item.location, item.remain);
                 if(update){

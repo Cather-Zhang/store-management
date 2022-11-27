@@ -84,29 +84,31 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     // check availability of an item given storeID, sku, aisle and shelf
     let checkItemAvailability = (idStore, sku, aisle, shelf, quantity) => {
-        let item_sku = JSON.Parse(sku);
         let item_aisle = parseInt(aisle);
         let item_shelf = parseInt(shelf);
         let item_quantity = parseInt(quantity);
-        if (isNaN(item_sku) || isNaN(item_aisle) || isNaN(item_shelf) ||  isNaN(item_quantity)) {
-            return new Promise((reject) => { return reject("invalid item's purchase input")});
+        if (isNaN(item_aisle) || isNaN(item_shelf) ||  isNaN(item_quantity)) {
+            return new Promise((reject) => { return reject(false)});
         }
+        
         if(item_quantity <=0){
-            return new Promise((reject) => { return reject("invalid quantity")});
+            return new Promise((reject) => { return reject(false)});
         }
         
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND aisle=? AND shelf=? AND quantity>=? AND onShelf=true", [idStore, item_sku, item_aisle, item_shelf, item_quantity], (error, rows) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND aisle=? AND shelf=? AND quantity>=? AND onShelf=true", [idStore, sku, item_aisle, item_shelf, item_quantity], (error, rows) => {
                 if (error) { return reject(error); }
                 let shopping = [];
                 if (rows.length > 0) {
                     for (let r of rows) {
                         let remaining = r.quantity - item_quantity;
                         let cart = new Shopping(r.sku, new Location(r.aisle, r.shelf), remaining);
+                        console.log(r.sku);
                         shopping.push(cart);
                     }
                     return resolve(shopping);
                 } else {
+                    console.log("Out here?");
                     return resolve(false);
                 }
             });
@@ -127,14 +129,14 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     try {
         const idStore = parseInt(info.storeId);
-        const checkType = JSON.Parse(info.type);
-        if(!(checkType == "buy")){
+        if(!(info.type == "buy")){
             response.status = 400;
             response.error = "can not fetch purchase";
         }
-        
+     
         const items = await checkItemAvailability(idStore, info.sku, info.aisle, info.shelf, info.quantity);
         if (!(items == false)) {
+            console.log("Item in!")
             for (let item of items) {
                 let update = await updateAvailability(idStore, item.sku, item.location, item.remain);
                 if(update){
