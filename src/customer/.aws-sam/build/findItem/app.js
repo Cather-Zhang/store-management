@@ -137,7 +137,7 @@ exports.lambdaHandler = async (event, context, callback) => {
                             let store = new Store(id, name, store_latitude, store_longitude, manager);
                             let distance = getDistance(store_latitude, user_latitude, store_longitude, user_longitude);
                             //console.log(distance);
-                            store.distance = distance.toFixed(2);
+                            store.distance = Math.round( distance * 1e2 ) / 1e2;
                             stores.push(store);
                         }
 
