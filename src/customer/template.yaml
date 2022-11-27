@@ -24,7 +24,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-        - arm64
+        - x86_64
       Events:
         listStores:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -39,7 +39,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-        - arm64
+        - x86_64
       Events:
         login:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -54,7 +54,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-        - arm64
+        - x86_64
       Events:
         listItems:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -69,7 +69,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-        - arm64
+        - x86_64
       Events:
         findItem:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -84,7 +84,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-        - arm64
+        - x86_64
       Events:
         buyItem:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

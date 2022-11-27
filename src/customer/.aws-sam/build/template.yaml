@@ -21,7 +21,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-      - arm64
+      - x86_64
       Events:
         listStores:
           Type: Api
@@ -37,7 +37,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-      - arm64
+      - x86_64
       Events:
         login:
           Type: Api
@@ -53,7 +53,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-      - arm64
+      - x86_64
       Events:
         listItems:
           Type: Api
@@ -69,7 +69,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-      - arm64
+      - x86_64
       Events:
         findItem:
           Type: Api
@@ -85,7 +85,7 @@ Resources:
       Handler: app.lambdaHandler
       Runtime: nodejs14.x
       Architectures:
-      - arm64
+      - x86_64
       Events:
         buyItem:
           Type: Api
