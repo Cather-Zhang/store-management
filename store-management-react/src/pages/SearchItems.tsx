@@ -15,7 +15,7 @@ function SearchItems(props: {corporate: Corporate, setCorporate: any}) {
             <ItemSearch storeId={null} setSearchResult={setSearchResult} individualStore={false} searchType={searchType} setSearchType={setSearchType}/>
             {searchResult.length > 0 ?
                 <SearchResultTable corporate={props.corporate} setCorporate={props.setCorporate} stockWithLocation={searchResult}
-                                   hasStore={true} searchType={searchType} setSearchResult={setSearchResult}/>
+                                   hasStore={true} searchType={searchType} setSearchResult={setSearchResult} setAllItems={null}/>
                 :
                 <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
             }

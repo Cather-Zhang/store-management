@@ -38,7 +38,6 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
 
     const handleBuyItemClickOpen = (item: Item) => {
         return function () {
-            console.log("buying")
             setBuyItem(item);
             setBuyItemOpen(true);
         };
@@ -54,7 +53,7 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
         <ItemInfoDialog item={infoItem} open={itemInfoOpen} handleClose={handleItemInfoClose}
                         handleBuyItemClickOpen={handleBuyItemClickOpen}
                         corporate={props.corporate}
-                        setCorporate={props.setCorporate} allowBuy={false} />
+                        setCorporate={props.setCorporate} allowBuy={false}  quantity={0}/>
         <BaseTable className={"itemTable"} headers={["Name", "Price ($)", "Max", "Locations", ""]}
                    data={props.corporate.items.map((item: Item, i: number) => {
                        return {

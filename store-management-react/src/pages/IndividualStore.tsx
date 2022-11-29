@@ -37,7 +37,8 @@ function IndividualStore(props: { corporate: Corporate, setCorporate: any }) {
                         setSearchType={setSearchType}/>
             <br/>
             {searchResult.length > 0 ?
-                <SearchResultTable setSearchResult={setSearchResult} corporate={props.corporate} setCorporate={props.setCorporate} stockWithLocation={searchResult} hasStore={false} searchType={searchType}/>
+                <SearchResultTable setSearchResult={setSearchResult} corporate={props.corporate} setCorporate={props.setCorporate}
+                                   stockWithLocation={searchResult} hasStore={false} searchType={searchType} setAllItems={setAllItems}/>
                 :
                 <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
             }
@@ -48,7 +49,7 @@ function IndividualStore(props: { corporate: Corporate, setCorporate: any }) {
                     location: location,
                     stock: new Stock(new Item(s.item.sku, s.item.name, s.item.description, s.item.price, s.item.max, location), s.quantity)
                 };
-            })} corporate={props.corporate} setCorporate={props.setCorporate} storeId={storeId} searchType={searchType}/>
+            })} corporate={props.corporate} setCorporate={props.setCorporate} storeId={storeId} searchType={searchType} setAllItems={setAllItems}/>
             <br/>
         </div>
     );

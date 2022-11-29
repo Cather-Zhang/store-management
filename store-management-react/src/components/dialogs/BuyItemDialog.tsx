@@ -13,7 +13,7 @@ import {ItemLocation} from "../../types/ItemLocation";
 import {buyItemsController} from "../../Controllers";
 
 export default function BuyItemDialog(props: {
-    item: Item | null, storeId: number | null, location: ItemLocation | null, setSearchResult: any,
+    item: Item | null, storeId: number | null, location: ItemLocation | null, setSearchResult: any, setAllItems: any,
     open: boolean, handleClose: () => void, corporate: Corporate, availableQuantity: number | null,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>, individualStore: boolean, searchType: string
 }) {
@@ -52,6 +52,13 @@ export default function BuyItemDialog(props: {
                                 props.setCorporate(buyItemsController(props.corporate, props.storeId, props.location,
                                     props.item?.sku ?? null, parseInt(getById("quantity")) ?? null));
                                 if (!props.individualStore) {
+                                    sendRequest(APINamespace.Customer, "/listStoreItems", {"storeId": props.storeId}).then(
+                                        r => {
+                                            if (r.status === 200) {
+                                                props.setAllItems(r.stocks);
+                                            }
+                                        }
+                                    );
                                     sendRequest(APINamespace.Customer, "/findStoreItem", {
                                         latitude: 0,
                                         longitude: 0,

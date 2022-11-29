@@ -7,11 +7,13 @@ import {Corporate} from "../../types/Corporate";
 import {DialogContentText} from "@mui/material";
 import {Item} from "../../types/Item";
 import CloseIcon from "@mui/icons-material/Close";
+import {Stock} from "../../types/Stock";
 
 export default function ItemInfoDialog(props: {
     item: Item | null,
     open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
+    quantity: number,
     allowBuy: boolean,
     handleBuyItemClickOpen: any
 }) {
@@ -28,13 +30,12 @@ export default function ItemInfoDialog(props: {
                     <br/>
                     <b>Cost</b>: {props.item?.price}
                     <br/>
-                    <b>Location</b>: {props.item?.getLocationString()}
+                    <b>Found at aisle {props.item?.location?.aisle}, shelf {props.item?.location?.shelf}</b>
                     <br/>
                     <b>Description</b>: {props.item?.description}
-                    {props.allowBuy && <div style={{display: "flex", marginTop: "10px", alignItems: "center", flexDirection: "column"}}>
-                        <br/>
-                        <Button variant="contained" style={{width: "170px"}} onClick={props.handleBuyItemClickOpen(props.item)}>Buy</Button>
-                    </div>}
+                    {props.allowBuy && <><br/>
+                        <b>Available Quantity</b>: {props.quantity}
+                    </>}
                 </>
             </DialogContentText>
             <br/>

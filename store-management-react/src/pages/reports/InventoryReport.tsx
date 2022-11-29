@@ -6,6 +6,7 @@ import ItemInStoreTable from "../../components/tables/ItemInStoreTable";
 import {ItemLocation} from "../../types/ItemLocation";
 import {Stock} from "../../types/Stock";
 import ItemInOverstockTable from "../../components/tables/ItemInOverstockTable";
+import InventoryTable from "../../components/tables/InventoryTable";
 
 function InventoryReport(props: { corporate: Corporate }) {
     const [searchParams] = useSearchParams();
@@ -30,7 +31,7 @@ function InventoryReport(props: { corporate: Corporate }) {
             <h1>Inventory Report</h1>
             <p className={"subtitle"}>Store #{storeId}</p>
             <h3>On Shelves</h3>
-            <ItemInStoreTable setSearchResult={null} stockWithLocation={(inventoryReport?.stocks ?? []).map((s: any) => {
+            <InventoryTable stockWithLocation={(inventoryReport?.stocks ?? []).map((s: any) => {
                 return {
                     location: new ItemLocation(s.location.aisle, s.location.shelf),
                     stock: new Stock(s.item, s.quantity)
