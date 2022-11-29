@@ -8,10 +8,11 @@ import ItemInfoDialog from "../dialogs/ItemInfoDialog";
 import {Corporate} from "../../types/Corporate";
 import BuyItemDialog from "../dialogs/BuyItemDialog";
 import {APINamespace, sendRequest} from "../../Utilities";
+import {GPS} from "../../types/GPS";
 
 export default function ItemInStoreTable(props: {
     corporate: Corporate, setCorporate: any, setSearchResult: any, stockWithLocation:
-        { location: ItemLocation, stock: Stock }[], storeId: number, searchType: string, setAllItems: any
+        { location: ItemLocation, stock: Stock }[], storeId: number, searchType: string, setAllItems: any, gps: GPS
 }) {
     const [itemInfoOpen, setItemInfoOpen] = React.useState(false);
 
@@ -46,7 +47,7 @@ export default function ItemInStoreTable(props: {
         <BuyItemDialog item={modalItem?.stock.item ?? null} open={buyItemOpen} handleClose={handleBuyItemClose}
                        corporate={props.corporate} availableQuantity={modalItem?.stock.quantity ?? null}
                        setCorporate={props.setCorporate} location={modalItem?.location ?? null} storeId={props.storeId}
-                       setSearchResult={props.setSearchResult} individualStore={false} searchType={props.searchType} setAllItems={props.setAllItems}/>
+                       setSearchResult={props.setSearchResult} individualStore={false} searchType={props.searchType} setAllItems={props.setAllItems} gps={props.gps}/>
         <BaseTable className={"itemInStoreTable"} headers={["Name", "Aisle", "Shelf", "Price ($)", "Quantity", ""]}
                    data={props.stockWithLocation.map((swl: { location: ItemLocation, stock: Stock }, i) => {
                        let item = swl.stock.item;

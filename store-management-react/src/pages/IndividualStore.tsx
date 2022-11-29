@@ -8,8 +8,9 @@ import SearchResultTable from "../components/tables/SearchResultTable";
 import ItemInStoreTable from "../components/tables/ItemInStoreTable";
 import {Stock} from "../types/Stock";
 import {APINamespace, sendRequest} from "../Utilities";
+import {GPS} from "../types/GPS";
 
-function IndividualStore(props: { corporate: Corporate, setCorporate: any }) {
+function IndividualStore(props: { corporate: Corporate, setCorporate: any, gps: GPS }) {
     const [searchParams] = useSearchParams();
     searchParams.get("__firebase_request_key");
     let storeId: number = parseInt(searchParams.get("id") ?? "");
@@ -34,16 +35,16 @@ function IndividualStore(props: { corporate: Corporate, setCorporate: any }) {
                 {"Located at " + props.corporate.stores.find(s => s.id === storeId)?.gps.toString()}
             </p>
             <ItemSearch storeId={storeId} setSearchResult={setSearchResult} individualStore={true} searchType={searchType}
-                        setSearchType={setSearchType}/>
+                        setSearchType={setSearchType} gps={props.gps}/>
             <br/>
             {searchResult.length > 0 ?
                 <SearchResultTable setSearchResult={setSearchResult} corporate={props.corporate} setCorporate={props.setCorporate}
-                                   stockWithLocation={searchResult} hasStore={false} searchType={searchType} setAllItems={setAllItems}/>
+                                   stockWithLocation={searchResult} hasStore={false} searchType={searchType} setAllItems={setAllItems} gps={props.gps}/>
                 :
                 <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
             }
             <h3>All Items</h3>
-            <ItemInStoreTable setSearchResult={setSearchResult} stockWithLocation={(allItems ?? []).map((s: any) => {
+            <ItemInStoreTable gps={props.gps} setSearchResult={setSearchResult} stockWithLocation={(allItems ?? []).map((s: any) => {
                 let location = new ItemLocation(s.location.aisle, s.location.shelf);
                 return {
                     location: location,

@@ -6,7 +6,7 @@ import StoresNearMeTable from "../components/tables/StoresNearMeTable";
 import {Store} from "../types/Store";
 import {GPS} from "../types/GPS";
 
-function StoresNearMe() {
+function StoresNearMe(props: {gps: GPS, setGPS: any}) {
     const [stores, setStores] = useState<{store: Store, distance: number}[]>([]);
     const [hasSearched, setHasSearched] = useState(false);
 
@@ -32,8 +32,9 @@ function StoresNearMe() {
                 />
 
                 <Button variant="contained" onClick={() => {
+                    props.setGPS(new GPS(+getById("latitude"), +getById("longitude")))
                     sendRequest(APINamespace.Customer, "/listStores", {
-                        "latitude": getById("latitude"), "longitude": getById("longitude")}).then(r => {
+                        "latitude": props.gps.latitude, "longitude": props.gps.longitude}).then(r => {
                             if(r.status ===  200){
                                 setStores(r.stores.map((s: any) => {
                                     return {store: new Store(s.idStores, s.name, [], s.manager, [], new GPS(s.latitude, s.longitude)), distance: parseFloat(s.distance)};

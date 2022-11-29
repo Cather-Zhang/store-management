@@ -13,11 +13,14 @@ import {updateStateController} from "./Controllers";
 import IndividualStore from "./pages/IndividualStore";
 import OverstockReport from "./pages/reports/OverstockReport";
 import MissingItemsReport from "./pages/reports/MissingItemsReport";
+import {GPS} from "./types/GPS";
+import set = Reflect.set;
 
 function App() {
     const [corporate, setCorporate] = useState(new Corporate([], []));
     const [currentUser, setCurrentUser] = useState<any>(JSON.parse(window.localStorage.getItem('currentUser') ?? "{}"));
     const [username, setUsername] = React.useState(window.localStorage.getItem('username') != null ? JSON.parse(window.localStorage.getItem('username') ?? "{}") : "");
+    const [gps, setGPS] = React.useState(new GPS(0, 0));
 
     useEffect(() => {
         const loadCorporateState = async () => {
@@ -35,7 +38,7 @@ function App() {
     } else if (currentUser.role === "manager") {
         homePage = <ManageStore corporate={corporate} currentUser={currentUser} setCorporate={setCorporate} />
     } else {
-        homePage = <StoresNearMe/>
+        homePage = <StoresNearMe gps={gps} setGPS={setGPS}/>
     }
 
     return (
@@ -49,10 +52,10 @@ function App() {
                            element={<ManageStore corporate={corporate} currentUser={currentUser} setCorporate={setCorporate}/>}/>
                     <Route path="/manageCorporate"
                            element={<ManageCorporate corporate={corporate} setCorporate={setCorporate}/>}/>
-                    <Route path="/search" element={<SearchItems corporate={corporate} setCorporate={setCorporate}/>}/>
-                    <Route path="/stores" element={<StoresNearMe/>}/>
+                    <Route path="/search" element={<SearchItems corporate={corporate} setCorporate={setCorporate} gps={gps}/>}/>
+                    <Route path="/stores" element={<StoresNearMe gps={gps} setGPS={setGPS}/>}/>
                     <Route path="/inventoryReport" element={<InventoryReport corporate={corporate}/>}/>
-                    <Route path="/store" element={<IndividualStore corporate={corporate} setCorporate={setCorporate}/>}/>
+                    <Route path="/store" element={<IndividualStore corporate={corporate} setCorporate={setCorporate} gps={gps}/>}/>
                     <Route path="/overstockReport" element={<OverstockReport corporate={corporate}/>}/>
                     <Route path="/missingItemsReport" element={<MissingItemsReport corporate={corporate}/>}/>
                 </Routes>

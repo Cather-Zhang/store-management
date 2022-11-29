@@ -7,10 +7,11 @@ import ItemInfoDialog from "../dialogs/ItemInfoDialog";
 import {Corporate} from "../../types/Corporate";
 import BuyItemDialog from "../dialogs/BuyItemDialog";
 import {APINamespace, getById, sendRequest} from "../../Utilities";
+import {GPS} from "../../types/GPS";
 
 export default function SearchResultTable(props: { hasStore: boolean, searchType: string, setSearchResult: any, stockWithLocation:
     { storeId: number, item: Item, quantity: number, location: ItemLocation }[], corporate: Corporate, setCorporate: any,
-    setAllItems: any}) {
+    setAllItems: any, gps: GPS}) {
     let headers = props.hasStore ? ["Store ID"] : [];
     if (props.searchType === "Location") {
         headers = headers.concat(["Name", "Aisle", "Shelf", "Price ($)", "Quantity", ""]);
@@ -115,7 +116,7 @@ export default function SearchResultTable(props: { hasStore: boolean, searchType
         <BuyItemDialog setSearchResult={props.setSearchResult} item={modalItem?.item ?? null} open={buyItemOpen} handleClose={handleBuyItemClose}
                         corporate={props.corporate} storeId={modalItem?.storeId ?? null} availableQuantity={modalItem?.quantity ?? null}
                         setCorporate={props.setCorporate} location={modalItem?.location ?? null} individualStore={props.hasStore}
-                       searchType={props.searchType} setAllItems={props.setAllItems}/>
+                       searchType={props.searchType} setAllItems={props.setAllItems} gps={props.gps}/>
         <BaseTable className={"itemInStoreTable"}
                    headers={headers}
                    data={props.stockWithLocation.map((swl: { storeId: number, item: Item, quantity: number, location: ItemLocation }, i) => {

@@ -5,8 +5,9 @@ import TextField from "@mui/material/TextField";
 import {Item} from "../types/Item";
 import {ItemLocation} from "../types/ItemLocation";
 import {APINamespace, getById, sendRequest} from "../Utilities";
+import {GPS} from "../types/GPS";
 
-export function ItemSearch(props: {storeId: number | null, setSearchResult: any, individualStore: boolean, searchType: string, setSearchType: any}) {
+export function ItemSearch(props: {storeId: number | null, setSearchResult: any, individualStore: boolean, searchType: string, setSearchType: any, gps: GPS}) {
     return (
         <div className="searchInputs">
             <FormControl size="small" style={{minWidth: 200, paddingRight: "5px"}}>
@@ -78,8 +79,8 @@ export function ItemSearch(props: {storeId: number | null, setSearchResult: any,
                     );
                 } else {
                     sendRequest(APINamespace.Customer, "/findItem", {
-                        latitude: 0,
-                        longitude: 0,
+                        latitude: props.gps.latitude,
+                        longitude: props.gps.longitude,
                         type: props.searchType.toLowerCase(),
                         value: getById("searchValue")
                     }).then(

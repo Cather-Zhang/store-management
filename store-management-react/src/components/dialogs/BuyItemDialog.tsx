@@ -11,10 +11,11 @@ import TextField from "@mui/material/TextField";
 import {APINamespace, getById, sendRequest} from "../../Utilities";
 import {ItemLocation} from "../../types/ItemLocation";
 import {buyItemsController} from "../../Controllers";
+import {GPS} from "../../types/GPS";
 
 export default function BuyItemDialog(props: {
     item: Item | null, storeId: number | null, location: ItemLocation | null, setSearchResult: any, setAllItems: any,
-    open: boolean, handleClose: () => void, corporate: Corporate, availableQuantity: number | null,
+    open: boolean, handleClose: () => void, corporate: Corporate, availableQuantity: number | null, gps: GPS,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>, individualStore: boolean, searchType: string
 }) {
     return (
@@ -82,8 +83,8 @@ export default function BuyItemDialog(props: {
                                     );
                                 } else {
                                     sendRequest(APINamespace.Customer, "/findItem", {
-                                        latitude: 0,
-                                        longitude: 0,
+                                        latitude: props.gps.latitude,
+                                        longitude: props.gps.longitude,
                                         type: props.searchType.toLowerCase(),
                                         value: getById("searchValue")
                                     }).then(
