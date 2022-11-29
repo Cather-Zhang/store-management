@@ -1,5 +1,6 @@
 import {Item} from "./types/Item";
 import {Store} from "./types/Store";
+import {ItemLocation} from "./types/ItemLocation";
 
 let baseURLs = ["https://vek78vup05.execute-api.us-east-2.amazonaws.com/Prod", "https://243g1cmra7.execute-api.us-east-2.amazonaws.com/Prod", "https://errouju1tk.execute-api.us-east-2.amazonaws.com/Prod"];
 
@@ -41,7 +42,7 @@ export async function sendRequest(namespace: APINamespace, endpoint: string, dat
 
 export function itemJSONToTS(items: any) {
     return items.items.map((i: any) => {
-        return new Item(i.sku, i.name, i.description, i.price, i.max, i.locations[0]);
+        return new Item(i.sku, i.name, i.description, i.price, i.max, i.locations[0] ? new ItemLocation(i.locations[0].aisle, i.locations[0].shelf) : null);
     });
 }
 

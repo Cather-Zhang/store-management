@@ -29,9 +29,7 @@ export default function InventoryTable(props: {
 
         return <>
         <ItemInfoDialog item={modalItem?.stock.item ?? null} open={itemInfoOpen} handleClose={handleItemInfoClose}
-                        corporate={props.corporate} quantity={modalItem?.stock.quantity ?? 0}
-                        setCorporate={props.setCorporate} allowBuy={true}
-                        handleBuyItemClickOpen={null}/>
+                        corporate={props.corporate} quantity={modalItem?.stock.quantity ?? 0} setCorporate={props.setCorporate} allowBuy={false}/>
         <BaseTable className={"itemInStoreTable"} headers={["Name", "Aisle", "Shelf", "Price ($)", "Quantity", ""]}
                    data={props.stockWithLocation.map((swl: { location: ItemLocation, stock: Stock }, i) => {
                        let item = swl.stock.item;

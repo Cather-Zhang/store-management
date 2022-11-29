@@ -33,27 +33,12 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
         setItemInfoOpen(false);
     };
 
-    const [buyItemOpen, setBuyItemOpen] = React.useState(false);
-    const [buyItem, setBuyItem] = React.useState<Item | null>(null);
-
-    const handleBuyItemClickOpen = (item: Item) => {
-        return function () {
-            setBuyItem(item);
-            setBuyItemOpen(true);
-        };
-    };
-    const handleBuyItemClose = () => {
-        setBuyItemOpen(false);
-    };
-
     return <>
         <AssignItemLocationDialog item={assignLocItem} open={assignLocOpen} handleClose={handleAssignLocClose}
                                   corporate={props.corporate}
                                   setCorporate={props.setCorporate}/>
-        <ItemInfoDialog item={infoItem} open={itemInfoOpen} handleClose={handleItemInfoClose}
-                        handleBuyItemClickOpen={handleBuyItemClickOpen}
-                        corporate={props.corporate}
-                        setCorporate={props.setCorporate} allowBuy={false}  quantity={0}/>
+        <ItemInfoDialog item={infoItem} open={itemInfoOpen} handleClose={handleItemInfoClose} corporate={props.corporate}
+                        setCorporate={props.setCorporate} quantity={0} allowBuy={false}/>
         <BaseTable className={"itemTable"} headers={["Name", "Price ($)", "Max", "Locations", ""]}
                    data={props.corporate.items.map((item: Item, i: number) => {
                        return {

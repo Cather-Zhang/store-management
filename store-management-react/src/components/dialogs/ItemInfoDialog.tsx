@@ -7,15 +7,13 @@ import {Corporate} from "../../types/Corporate";
 import {DialogContentText} from "@mui/material";
 import {Item} from "../../types/Item";
 import CloseIcon from "@mui/icons-material/Close";
-import {Stock} from "../../types/Stock";
 
 export default function ItemInfoDialog(props: {
     item: Item | null,
     open: boolean, handleClose: () => void, corporate: Corporate,
     setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
     quantity: number,
-    allowBuy: boolean,
-    handleBuyItemClickOpen: any
+    allowBuy: boolean
 }) {
     return (
         <Dialog open={props.open} fullWidth maxWidth="xs" onClose={props.handleClose}>

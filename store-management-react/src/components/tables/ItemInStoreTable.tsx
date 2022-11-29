@@ -42,8 +42,7 @@ export default function ItemInStoreTable(props: {
         return <>
         <ItemInfoDialog item={modalItem?.stock.item ?? null} open={itemInfoOpen} handleClose={handleItemInfoClose}
                         corporate={props.corporate} quantity={modalItem?.stock.quantity ?? 0}
-                        setCorporate={props.setCorporate} allowBuy={true}
-                        handleBuyItemClickOpen={handleBuyItemClickOpen}/>
+                        setCorporate={props.setCorporate} allowBuy={true}/>
         <BuyItemDialog item={modalItem?.stock.item ?? null} open={buyItemOpen} handleClose={handleBuyItemClose}
                        corporate={props.corporate} availableQuantity={modalItem?.stock.quantity ?? null}
                        setCorporate={props.setCorporate} location={modalItem?.location ?? null} storeId={props.storeId}
