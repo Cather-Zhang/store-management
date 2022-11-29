@@ -94,6 +94,22 @@ Resources:
             Method: post
     Metadata:
       SamResourceId: findItem
+  findStoreItem:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: findStoreItem
+      Handler: app.lambdaHandler
+      Runtime: nodejs14.x
+      Architectures:
+      - x86_64
+      Events:
+        findStoreItem:
+          Type: Api
+          Properties:
+            Path: /findStoreItem
+            Method: post
+    Metadata:
+      SamResourceId: findStoreItem
   buyItem:
     Type: AWS::Serverless::Function
     Properties:
