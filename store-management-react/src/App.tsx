@@ -51,6 +51,8 @@ function App() {
                     <Route path="/stores" element={<StoresNearMe/>}/>
                     <Route path="/inventoryReport" element={<InventoryReport corporate={corporate}/>}/>
                     <Route path="/store" element={<IndividualStore corporate={corporate} setCorporate={setCorporate}/>}/>
+                    <Route path="/overstockReport" element={<OverstockReport corporate={corporate}/>}/>
+                    <Route path="/missingItemsReport" element={<MissingItemsReport corporate={corporate}/>}/>
                 </Routes>
             </div>
         </Router>

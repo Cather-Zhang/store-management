@@ -9,11 +9,19 @@ import IconButton from "@mui/material/IconButton";
 import ShipmentItem from "../components/ShipmentItem";
 import {APINamespace, getById, itemJSONToTS, sendRequest} from "../Utilities";
 import {Item} from "../types/Item";
+import PickReportTypeDialog from "../components/dialogs/PickReportTypeDialog";
 
 function ManageStore(props: { corporate: Corporate, currentUser: any, setCorporate: React.Dispatch<React.SetStateAction<Corporate>> }) {
     const [assignedItems, setAssignedItems] = useState<Item[]>([]);
     const [selectItem, setSelectItem] = useState("");
     const [shipment, setShipment] = useState<{ "sku": string, quantity: number }[]>([]);
+    const [reportOpen, setReportOpen] = React.useState(false);
+    const handleReportClickOpen = () => {
+        setReportOpen(true);
+    };
+    const handleReportClose = () => {
+        setReportOpen(false);
+    };
 
     useEffect(() => {
         const loadCorporateState = async () => {
@@ -26,10 +34,13 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
 
     return (
         <div className={"page"}>
+
+            <PickReportTypeDialog store={props.corporate.stores.find(s => s.id == props.currentUser.storeId) ?? null} open={reportOpen} handleClose={handleReportClose} corporate={props.corporate}
+                              setCorporate={props.setCorporate}/>
             <h1>Manage Store #{props.currentUser.storeId}</h1>
             <div className={"buttonMenu"} style={{width: "20%", marginBottom: "10px"}}>
                 <Button variant="contained">Fill To Max</Button>
-                <Button variant="contained" href={"#/inventoryReport?id=" + props.currentUser.storeId}>Generate
+                <Button variant="contained" onClick={handleReportClickOpen}>Generate
                     Report</Button>
             </div>
             <h3>Input Shipment</h3>
