@@ -15,7 +15,9 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
     const [assignedItems, setAssignedItems] = useState<Item[]>([]);
     const [selectItem, setSelectItem] = useState("");
     const [shipment, setShipment] = useState<{ "sku": string, quantity: number }[]>([]);
-
+    console.log(props.corporate.stores);
+    console.log(props.currentUser.storeId);
+    console.log(props.corporate.stores.find(s => s.id === props.currentUser.storeId));
     const [reportOpen, setReportOpen] = React.useState(false);
     const handleReportClickOpen = () => {
         setReportOpen(true);
@@ -35,7 +37,8 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
 
     return (
         <div className={"page"}>
-            <PickReportTypeDialog store={props.currentUser.storeId} open={reportOpen} handleClose={handleReportClose} corporate={props.corporate}
+
+            <PickReportTypeDialog store={props.corporate.stores.find(s => s.id == props.currentUser.storeId) ?? null} open={reportOpen} handleClose={handleReportClose} corporate={props.corporate}
                               setCorporate={props.setCorporate}/>
             <h1>Manage Store #{props.currentUser.storeId}</h1>
             <div className={"buttonMenu"} style={{width: "20%", marginBottom: "10px"}}>

@@ -26,6 +26,7 @@ function OverstockReport(props: { corporate: Corporate }) {
     return (
         <div className={"page"}>
             <h1>Overstock Report</h1>
+            <p className={"subtitle"}>Store #{storeId}</p>
             <ItemInOverstockTable overstock={(overstockReport?.overstocks ?? []).map((s: any) => {
                 return {
                     stock: new Stock(s.item, s.quantity)
