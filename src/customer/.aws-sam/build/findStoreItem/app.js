@@ -99,7 +99,6 @@ exports.lambdaHandler = async (event, context, callback) => {
         
         switch(searchType) {
             case "sku":
-                console.log("SKU pls")
                 return new Promise((resolve, reject) => {
                     pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I " + 
                                 "JOIN (SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true AND quantity>0) S ON I.sku = S.sku", [idStore, searchQuery], (error, rows) => {
@@ -120,7 +119,6 @@ exports.lambdaHandler = async (event, context, callback) => {
                 
             case "name":
                 let name = ''.concat('%',searchQuery,'%');
-                console.log("Name pls")
                 return new Promise((resolve, reject) => {
                     pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I " + 
                                 "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S " +
@@ -142,7 +140,6 @@ exports.lambdaHandler = async (event, context, callback) => {
                 
             case "description":
                 let desc = ''.concat('%',searchQuery,'%');
-                console.log("Desc pls")
                 return new Promise((resolve, reject) => {
                     pool.query("SELECT I.*, S.idStores, S.quantity, S.aisle, S.shelf FROM Items I " + 
                                 "JOIN (SELECT * FROM Stocks WHERE idStores=? AND onShelf=true AND quantity>0) S " +
@@ -173,13 +170,12 @@ exports.lambdaHandler = async (event, context, callback) => {
         const items = await findItem(idStore, info.type, info.value);
         
         if (items) {
-            
             response.status = 200;
             response.stocks = JSON.parse(JSON.stringify(items));
         }
         else {
             response.status = 400;
-            response.error = "can not list all stores";
+            response.error = [];
         }
         
         

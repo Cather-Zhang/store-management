@@ -170,13 +170,12 @@ exports.lambdaHandler = async (event, context, callback) => {
         const items = await findItem(idStore, info.type, info.value);
         
         if (items) {
-            
             response.status = 200;
             response.stocks = JSON.parse(JSON.stringify(items));
         }
         else {
             response.status = 400;
-            response.error = "can not list all stores";
+            response.error = [];
         }
         
         
