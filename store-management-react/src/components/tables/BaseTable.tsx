@@ -13,7 +13,7 @@ export default function BaseTable(props: {
 }) {
     return <>
         {props.data.length === 0 ? <p className={"emptyMessage"}>{props.noRowsMessage}</p> :
-            <Table className={props.className} aria-label="simple table">
+            <Table className={props.className + " baseTable"} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         {props.headers.map(h => <TableCell align="left">{h}</TableCell>)}

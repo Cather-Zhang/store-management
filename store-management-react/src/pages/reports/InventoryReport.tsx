@@ -30,12 +30,12 @@ function InventoryReport(props: { corporate: Corporate }) {
             <h1>Inventory Report</h1>
             <p className={"subtitle"}>Store #{storeId}</p>
             <h3>On Shelves</h3>
-            <ItemInStoreTable stockWithLocation={(inventoryReport?.stocks ?? []).map((s: any) => {
+            <ItemInStoreTable setSearchResult={null} stockWithLocation={(inventoryReport?.stocks ?? []).map((s: any) => {
                 return {
                     location: new ItemLocation(s.location.aisle, s.location.shelf),
                     stock: new Stock(s.item, s.quantity)
                 };
-            })}/>
+            })}  corporate={props.corporate} setCorporate={null} storeId={storeId} searchType={""}/>
             <br/>
             <h3>Overstock</h3>
             <ItemInOverstockTable overstock={(inventoryReport?.overstocks ?? []).map((s: any) => {

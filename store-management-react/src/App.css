@@ -98,12 +98,16 @@ h5 {
   align-items: center;
 }
 
-.storeTable, .itemTable, .itemInStoreTable {
+.baseTable {
   margin: auto;
 }
 
 .storeTable {
   width: 60% !important;
+}
+
+.storesNearMeTable {
+  width: 40% !important;
 }
 
 .itemTable {

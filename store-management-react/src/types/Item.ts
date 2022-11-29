@@ -5,29 +5,29 @@ export class Item {
     name: string;
     description: string;
     price: number;
-    locations: ItemLocation[];
+    location: ItemLocation | null;
     max: number;
 
-    constructor(sku: string, name: string, description: string, price: number, max: number) {
+    constructor(sku: string, name: string, description: string, price: number, max: number, location: ItemLocation | null) {
        this.sku = sku;
        this.name = name;
        this.description = description;
        this.price = price;
-       this.locations = [];
+       this.location = location;
        this.max = max;
     }
 
-    assignLocations(locations: ItemLocation[]) {
-        this.locations = locations;
+    assignLocation(location: ItemLocation | null) {
+        this.location = location;
     }
 
     getLocationString() {
-        return this.locations.length > 0 ? this.locations.join("; ") : "None"
+        return this.location != null ? this.location.toString() : "None"
     }
 
     copy() {
-        let item = new Item(this.sku, this.name, this.description, this.price, this.max);
-        item.assignLocations(this.locations.map(l => l.copy()));
+        let item = new Item(this.sku, this.name, this.description, this.price, this.max, this.location);
+        item.assignLocation(this.location);
         return item;
     }
 }

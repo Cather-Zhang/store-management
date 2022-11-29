@@ -4,6 +4,9 @@ import {GPS} from "./types/GPS";
 import {Item} from "./types/Item";
 import {ItemLocation} from "./types/ItemLocation";
 import {APINamespace, itemJSONToTS, makeSKU, sendRequest} from "./Utilities";
+import {Shelf} from "./types/Shelf";
+import {Aisle} from "./types/Aisle";
+import {Stock} from "./types/Stock";
 
 export async function deleteStoreController(corporate: Corporate, id: number) {
     let c = corporate.copy();
@@ -42,7 +45,18 @@ export async function createItemController(corporate: Corporate, sku: string, na
     });
     if (response.status === 200) {
         handleClose();
-        c.items.push(new Item(sku, name, desc, price, maxQuantity));
+        c.items.push(new Item(sku, name, desc, price, maxQuantity, null));
+    }
+    return c;
+}
+
+export function buyItemsController(corporate: Corporate, storeId: number | null, location: ItemLocation | null,
+                                         sku: string | null, buyQuantity: number | null) {
+    let c = corporate.copy();
+    let item = c.stores.find((s: Store) => s.id === storeId)?.aisles.find((a: Aisle) => a.id === location?.aisle)?.
+        shelves.find((sh: Shelf) => sh.id === location?.shelf)?.stocks.find((stock: Stock) => stock.item.sku === sku);
+    if(item) {
+        item.quantity -= buyQuantity ?? 0;
     }
     return c;
 }
@@ -64,7 +78,7 @@ export async function assignItemLocationController(corporate: Corporate, sku: st
     });
     if (response.status === 200) {
         handleClose();
-        c.items[itemIndex].assignLocations(parsedLocations);
+        c.items[itemIndex].assignLocation(parsedLocations[0]);
     }
 
     return c;

@@ -4,8 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import {Item} from "../types/Item";
 import {ItemLocation} from "../types/ItemLocation";
+import {APINamespace, getById, sendRequest} from "../Utilities";
 
-export function ItemSearch(props: {setSearchResult: any, includeLocation: boolean, searchType: string, setSearchType: any}) {
+export function ItemSearch(props: {storeId: number | null, setSearchResult: any, individualStore: boolean, searchType: string, setSearchType: any}) {
     return (
         <div className="searchInputs">
             <FormControl size="small" style={{minWidth: 200, paddingRight: "5px"}}>
@@ -17,7 +18,7 @@ export function ItemSearch(props: {setSearchResult: any, includeLocation: boolea
                     defaultValue={props.searchType}
                     onChange={(v) => props.setSearchType(v.target.value as string)}
                 >
-                    {["Name", "SKU", "Description"].concat(props.includeLocation ? ["Location"] : []).map(n => (<MenuItem value={n}>{n}</MenuItem>))}
+                    {["Name", "SKU", "Description"].map(n => (<MenuItem value={n}>{n}</MenuItem>))}
                 </Select>
             </FormControl>
             {props.searchType === "Location" ?
@@ -53,8 +54,51 @@ export function ItemSearch(props: {setSearchResult: any, includeLocation: boolea
                 />
             }
             <Button variant="contained" onClick={() => {
-                // make call to backend here and get search result once that's a thing
-                props.setSearchResult([{storeId: 0, item: new Item("LUUHLFLJ", "Soap", "This is soap", 10, 2), quantity: 5, location: new ItemLocation(2, 9)}, {storeId: 1, item: new Item("LIHLKJHFSF", "Bananas", "Monkeys really like eating bananas and these ones are fresh!", 5, 100), quantity: 3, location: new ItemLocation(1, 1)}]);
+                if (props.individualStore) {
+                    sendRequest(APINamespace.Customer, "/findStoreItem", {
+                        latitude: 0,
+                        longitude: 0,
+                        storeId: props.storeId,
+                        type: props.searchType.toLowerCase(),
+                        value: getById("searchValue")
+                    }).then(
+                        r => {
+                            if (r.status === 200) {
+                                props.setSearchResult(r.stocks.map((s: any) => {
+                                    let location = new ItemLocation(s.location.aisle, s.location.shelf);
+                                    return {
+                                        storeId: s.idStores,
+                                        item: new Item(s.item.sku, s.item.name, s.item.description, s.item.price, s.item.max, location),
+                                        location: location,
+                                        quantity: s.quantity
+                                    };
+                                }));
+                            }
+                        }
+                    );
+                } else {
+                    sendRequest(APINamespace.Customer, "/findItem", {
+                        latitude: 0,
+                        longitude: 0,
+                        type: props.searchType.toLowerCase(),
+                        value: getById("searchValue")
+                    }).then(
+                        r => {
+                            if (r.status === 200) {
+                                props.setSearchResult(r.stocks.map((input: any) => {
+                                    let s = input[0];
+                                    let location = new ItemLocation(s.location.aisle, s.location.shelf);
+                                    return {
+                                        storeId: s.idStores,
+                                        item: new Item(s.item.sku, s.item.name, s.item.description, s.item.price, s.item.max, location),
+                                        location: location,
+                                        quantity: s.quantity
+                                    };
+                                }));
+                            }
+                        }
+                    );
+                }
             }}>Search</Button>
         </div>
     );

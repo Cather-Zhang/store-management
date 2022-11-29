@@ -10,8 +10,8 @@ export class Store {
     gps: GPS;
     name: string;
 
-    constructor(number: number, name: string, aisles: Aisle[], manager: string, overstock: Stock[], gps: GPS) {
-        this.id = number;
+    constructor(id: number, name: string, aisles: Aisle[], manager: string, overstock: Stock[], gps: GPS) {
+        this.id = id;
         this.aisles = aisles;
         this.manager = manager;
         this.overstock = overstock;

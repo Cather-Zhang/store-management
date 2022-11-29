@@ -9,7 +9,7 @@ import ItemInStoreTable from "../components/tables/ItemInStoreTable";
 import {Stock} from "../types/Stock";
 import {APINamespace, sendRequest} from "../Utilities";
 
-function IndividualStore(props: { corporate: Corporate }) {
+function IndividualStore(props: { corporate: Corporate, setCorporate: any }) {
     const [searchParams] = useSearchParams();
     searchParams.get("__firebase_request_key");
     let storeId: number = parseInt(searchParams.get("id") ?? "");
@@ -18,10 +18,10 @@ function IndividualStore(props: { corporate: Corporate }) {
     const [allItems, setAllItems] = React.useState<{ stocks: Stock[], location: ItemLocation }[]>([]);
 
     useEffect(() => {
-        sendRequest(APINamespace.Customer, "/listItems", {"storeId": storeId}).then(
+        sendRequest(APINamespace.Customer, "/listStoreItems", {"storeId": storeId}).then(
             r => {
                 if (r.status === 200) {
-                    setAllItems(r);
+                    setAllItems(r.stocks);
                 }
             }
         );
@@ -33,21 +33,23 @@ function IndividualStore(props: { corporate: Corporate }) {
             <p className={"subtitle"}>
                 {"Located at " + props.corporate.stores.find(s => s.id === storeId)?.gps.toString()}
             </p>
-            <ItemSearch setSearchResult={setSearchResult} includeLocation={true} searchType={searchType}
+            <ItemSearch storeId={storeId} setSearchResult={setSearchResult} individualStore={true} searchType={searchType}
                         setSearchType={setSearchType}/>
             <br/>
             {searchResult.length > 0 ?
-                <SearchResultTable stockWithLocation={searchResult} hasStore={false} searchType={searchType}/>
+                <SearchResultTable setSearchResult={setSearchResult} corporate={props.corporate} setCorporate={props.setCorporate} stockWithLocation={searchResult} hasStore={false} searchType={searchType}/>
                 :
                 <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
             }
             <h3>All Items</h3>
-            <ItemInStoreTable stockWithLocation={(allItems ?? []).map((s: any) => {
+            <ItemInStoreTable setSearchResult={setSearchResult} stockWithLocation={(allItems ?? []).map((s: any) => {
+                let location = new ItemLocation(s.location.aisle, s.location.shelf);
                 return {
-                    location: new ItemLocation(s.location.aisle, s.location.shelf),
-                    stock: new Stock(s.item, s.quantity)
+                    location: location,
+                    stock: new Stock(new Item(s.item.sku, s.item.name, s.item.description, s.item.price, s.item.max, location), s.quantity)
                 };
-            })}/>
+            })} corporate={props.corporate} setCorporate={props.setCorporate} storeId={storeId} searchType={searchType}/>
+            <br/>
         </div>
     );
 }
