@@ -15,9 +15,6 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
     const [assignedItems, setAssignedItems] = useState<Item[]>([]);
     const [selectItem, setSelectItem] = useState("");
     const [shipment, setShipment] = useState<{ "sku": string, quantity: number }[]>([]);
-    console.log(props.corporate.stores);
-    console.log(props.currentUser.storeId);
-    console.log(props.corporate.stores.find(s => s.id === props.currentUser.storeId));
     const [reportOpen, setReportOpen] = React.useState(false);
     const handleReportClickOpen = () => {
         setReportOpen(true);
