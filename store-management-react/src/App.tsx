@@ -11,6 +11,8 @@ import InventoryReport from "./pages/reports/InventoryReport";
 import {APINamespace, sendRequest} from "./Utilities";
 import {updateStateController} from "./Controllers";
 import IndividualStore from "./pages/IndividualStore";
+import OverstockReport from "./pages/reports/OverstockReport";
+import MissingItemsReport from "./pages/reports/MissingItemsReport";
 
 function App() {
     const [corporate, setCorporate] = useState(new Corporate([], []));
