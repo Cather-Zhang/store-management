@@ -25,7 +25,7 @@ export default function PickReportTypeDialog(props: {
                 <br/><br/>
                 <Button size={"large"} variant="contained" href={"#/overstockReport?id=" + props.store?.id}>Overstock Report</Button>
                 <br/><br/>
-                <Button size={"large"} variant="contained">Missing Items Report</Button>
+                <Button size={"large"} variant="contained" href={"#/missingItemsReport?id=" + props.store?.id}>Missing Items Report</Button>
             </DialogContent>
             <br/>
         </Dialog>
