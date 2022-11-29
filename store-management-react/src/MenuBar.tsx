@@ -15,6 +15,7 @@ import AssignmentTwoToneIcon from '@mui/icons-material/AssignmentTwoTone';
 import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import LoginDialog from "./components/dialogs/LoginDialog";
+import {useNavigate} from 'react-router-dom';
 
 function MenuBar(props: { currentUser: string, setCurrentUser: any, username: string, setUsername: any }) {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -199,6 +200,7 @@ function MenuBar(props: { currentUser: string, setCurrentUser: any, username: st
                                 <MenuItem key={"logout"} onClick={() => {
                                     props.setCurrentUser({});
                                     window.localStorage.clear();
+                                    window.location.href = 'index.html#/stores';
                                     handleCloseUserMenu();
                                 }}>
                                     <Typography textAlign="center">Logout</Typography>

@@ -28,7 +28,8 @@ export default function ItemInfoDialog(props: {
                     <br/>
                     <b>Cost</b>: {props.item?.price}
                     <br/>
-                    <b>Found at aisle {props.item?.location?.aisle}, shelf {props.item?.location?.shelf}</b>
+                    {props.item?.location ? <b>Found at aisle {props.item?.location?.aisle}, shelf {props.item?.location?.shelf}</b>
+                        : <b>Not assigned a location</b>}
                     <br/>
                     <b>Description</b>: {props.item?.description}
                     {props.allowBuy && <><br/>

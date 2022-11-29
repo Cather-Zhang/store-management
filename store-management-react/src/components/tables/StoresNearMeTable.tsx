@@ -5,12 +5,12 @@ import BaseTable from "./BaseTable";
 
 export default function StoresNearMeTable(props: { stores: { store: Store, distance: number }[] }) {
     return <>
-        <BaseTable className={"storesNearMeTable"} headers={["Store ID", "Location", "Distance", ""]}
+        <BaseTable className={"storesNearMeTable"} headers={["Store ID", "Store Name", "Location", "Distance", ""]}
                    data={props.stores.map((storeWithDistance: { store: Store, distance: number }, i: number) => {
                        let store = storeWithDistance.store;
                        return {
                            id: i,
-                           columns: [store.id, store.gps.latitude + ", " + store.gps.longitude, storeWithDistance.distance + " miles",
+                           columns: [store.id, store.name, store.gps.latitude + ", " + store.gps.longitude, storeWithDistance.distance + " miles",
                                <>
                                    <Button style={{marginLeft: 20}} color="secondary" variant="contained"
                                            href={"#/store?id=" + store?.id}>Browse
@@ -19,5 +19,6 @@ export default function StoresNearMeTable(props: { stores: { store: Store, dista
                            ]
                        };
                    })} noRowsMessage={"No stores"}/>
+                   <br/>
     </>;
 }
