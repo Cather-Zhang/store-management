@@ -1,3 +1,123 @@
+commit ec1668224cd78166dac0a1cf106c3bbc52107909
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Tue Nov 29 02:43:10 2022 +0000
+
+    fix failure cond for find items
+
+commit 7702cc5622b6dc5a415cc6eaf5589d60f0ff1a0a
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Tue Nov 29 01:43:27 2022 +0000
+
+    Fix customer functions
+
+commit c0ffaff996901c4759f82f73ed9855224c60daae
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 23:18:41 2022 +0000
+
+    Fix and test findItems
+
+commit 027552b9d4ac2c552d729cbc03954d6b85b0c20b
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 22:13:40 2022 +0000
+
+    Fix and test buy/list/listStore-Item(s)
+
+commit 881bbb7beb07c22eb3178e61f3f71c2af09e653b
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 21:37:33 2022 +0000
+
+    Add local testcases
+
+commit 745f02bb0da4801f1801aa1369ffbe73e0dba536
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 21:21:27 2022 +0000
+
+    modify parse
+
+commit b85298977ee009c8451076d4fd3fa5b0909a0588
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 21:19:04 2022 +0000
+
+    Add testing for list Stores
+
+commit 5ba837f60ebd930e4f500d137d981270b650f3ef
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Sun Nov 27 21:17:17 2022 +0000
+
+    attempt to fix module runtime
+
+commit 67a7897051da05fa4a4ff8e1fd60f0c7426e4b7d
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 20:34:26 2022 +0000
+
+    Implement list all items in 1 store
+
+commit 92c5ea4866c5bd7fa1354129df547389b2f010c0
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 19:32:24 2022 +0000
+
+    Fix store distance rounding
+
+commit 20ae733d98fcab92a3260bc3bc524839b9f22afe
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Sun Nov 27 19:17:50 2022 +0000
+
+    correct architecture for customer functions
+
+commit b162ea300c4da5d4523c17adab3e352834be15c6
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 19:12:25 2022 +0000
+
+    Move module
+
+commit 5110739a06dc3ae6e4efab65c90edbd83627adaa
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 18:40:05 2022 +0000
+
+    Fix APIs
+
+commit 819bf645151bd432fba7f88e7a3527c47c2909a3
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sun Nov 27 00:08:30 2022 +0000
+
+    Implement buyItems
+
+commit 4fa884678b7e9747a7a6ea7ad6aa67eea5e37b72
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sat Nov 26 22:55:44 2022 +0000
+
+    Implement findItem
+
+commit 98f96d407162dc35a3f7231584abbf2880b2dbf3
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sat Nov 26 04:23:12 2022 +0000
+
+    Fix listItems
+
+commit 09101bd81831f473e4d470a5a7d09c954cfd6c61
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sat Nov 26 03:15:10 2022 +0000
+
+    Implemented listItems
+
+commit 8a09eab82d35b633c8bc7fea46d2dc5dffbc7185
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Wed Nov 16 00:01:31 2022 +0000
+
+    remaining use cases for customer
+
+commit 2e36068b785796842597352485d8675512603c78
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Tue Nov 15 23:47:36 2022 +0000
+
+    changed show missing
+
+commit aee3fe227a824b2a645557d62e8d0547b2a3f124
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Fri Nov 11 19:54:00 2022 +0000
+
+    corporate use cases done, i think
+
 commit b62ddd539b6aa888effe34bcba3886b47bf3d3f3
 Author: Bao Huynh <bdhuynh@wpi.edu>
 Date:   Wed Nov 9 00:49:03 2022 +0000
