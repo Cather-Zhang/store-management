@@ -31,7 +31,7 @@ function ManageCorporate(props: { corporate: Corporate, setCorporate: React.Disp
                                setCorporate={props.setCorporate}/>
             <h1>Manage Stores and Items</h1>
             <div className={"buttonMenu"}>
-                <Button variant="contained">Generate Report</Button>
+                <Button variant="contained" href={"#/totalReport"}>Generate Total Report</Button>
                 <Button variant="contained" onClick={handleItemClickOpen}>Create Item</Button>
                 <Button variant="contained" onClick={handleStoreClickOpen}>Create Store</Button>
             </div>

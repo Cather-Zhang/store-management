@@ -39,7 +39,7 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                               setCorporate={props.setCorporate}/>
             <h1>Manage Store #{props.currentUser.storeId}</h1>
             <div className={"buttonMenu"} style={{width: "20%", marginBottom: "10px"}}>
-                <Button variant="contained">Fill To Max</Button>
+                <Button variant="contained" >Fill To Max</Button>
                 <Button variant="contained" onClick={handleReportClickOpen}>Generate
                     Report</Button>
             </div>

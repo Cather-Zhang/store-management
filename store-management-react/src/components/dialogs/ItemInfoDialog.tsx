@@ -11,7 +11,6 @@ import CloseIcon from "@mui/icons-material/Close";
 export default function ItemInfoDialog(props: {
     item: Item | null,
     open: boolean, handleClose: () => void, corporate: Corporate,
-    setCorporate: React.Dispatch<React.SetStateAction<Corporate>>
     quantity: number,
     allowBuy: boolean
 }) {

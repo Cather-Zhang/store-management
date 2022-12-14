@@ -15,6 +15,7 @@ import OverstockReport from "./pages/reports/OverstockReport";
 import MissingItemsReport from "./pages/reports/MissingItemsReport";
 import {GPS} from "./types/GPS";
 import set = Reflect.set;
+import TotalReport from "./pages/reports/TotalReport";
 
 function App() {
     const [corporate, setCorporate] = useState(new Corporate([], []));
@@ -58,6 +59,7 @@ function App() {
                     <Route path="/store" element={<IndividualStore corporate={corporate} setCorporate={setCorporate} gps={gps}/>}/>
                     <Route path="/overstockReport" element={<OverstockReport corporate={corporate}/>}/>
                     <Route path="/missingItemsReport" element={<MissingItemsReport corporate={corporate}/>}/>
+                    <Route path="/totalReport" element={<TotalReport corporate={corporate}/>}/>
                 </Routes>
             </div>
         </Router>

@@ -112,7 +112,7 @@ export default function SearchResultTable(props: { hasStore: boolean, searchType
     return <>
         <ItemInfoDialog item={modalItem?.item ?? null} open={itemInfoOpen} handleClose={handleItemInfoClose}
                         corporate={props.corporate}
-                        setCorporate={props.setCorporate} quantity={modalItem?.quantity ?? 0} allowBuy={true}/>
+                        /*setCorporate={props.setCorporate}*/ quantity={modalItem?.quantity ?? 0} allowBuy={true}/>
         <BuyItemDialog setSearchResult={props.setSearchResult} item={modalItem?.item ?? null} open={buyItemOpen} handleClose={handleBuyItemClose}
                         corporate={props.corporate} storeId={modalItem?.storeId ?? null} availableQuantity={modalItem?.quantity ?? null}
                         setCorporate={props.setCorporate} location={modalItem?.location ?? null} individualStore={props.hasStore}

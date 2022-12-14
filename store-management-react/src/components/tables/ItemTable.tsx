@@ -38,7 +38,7 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
                                   corporate={props.corporate}
                                   setCorporate={props.setCorporate}/>
         <ItemInfoDialog item={infoItem} open={itemInfoOpen} handleClose={handleItemInfoClose} corporate={props.corporate}
-                        setCorporate={props.setCorporate} quantity={0} allowBuy={false}/>
+                        /*setCorporate={props.setCorporate}*/ quantity={0} allowBuy={false}/>
         <BaseTable className={"itemTable"} headers={["Name", "Price ($)", "Max", "Locations", ""]}
                    data={props.corporate.items.map((item: Item, i: number) => {
                        return {
@@ -46,7 +46,7 @@ export default function ItemTable(props: { corporate: Corporate, setCorporate: R
                            columns: [<Link color="primary" underline="hover"
                                            onClick={handleItemInfoClickOpen(item)}>{item.name}</Link>, item.price, item.max, item.getLocationString(),
                                <div style={{display: "flex", justifyContent: "center"}}>
-                                   <Button color="secondary" variant="contained" disabled={item.location == null}
+                                   <Button color="secondary" variant="contained" disabled={item.location !== null}
                                            onClick={handleAssignLocClickOpen(item)}>Assign Locations</Button>
                                </div>
                            ]

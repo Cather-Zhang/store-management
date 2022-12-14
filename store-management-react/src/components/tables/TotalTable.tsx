@@ -9,7 +9,7 @@ import {Corporate} from "../../types/Corporate";
 import BuyItemDialog from "../dialogs/BuyItemDialog";
 import {APINamespace, sendRequest} from "../../Utilities";
 
-export default function InventoryTable(props: {
+export default function TotalTable(props: {
     corporate: Corporate, setCorporate: any, stockWithLocation: { location: ItemLocation, stock: Stock }[],
     storeId: number, searchType: string
 }) {
@@ -27,10 +27,10 @@ export default function InventoryTable(props: {
 
     const [modalItem, setModalItem] = React.useState<{ location: ItemLocation, stock: Stock } | null>(null);
 
-        return <>
+    return <>
         <ItemInfoDialog item={modalItem?.stock.item ?? null} open={itemInfoOpen} handleClose={handleItemInfoClose}
                         corporate={props.corporate} quantity={modalItem?.stock.quantity ?? 0} /*setCorporate={props.setCorporate}*/ allowBuy={false}/>
-        <BaseTable className={"itemInStoreTable"} headers={["Name", "Aisle", "Shelf", "Price ($)", "Quantity", ""]}
+        <BaseTable className={"itemInStoreTable"} headers={["Store ID", "Location", "Total Value", ""]}
                    data={props.stockWithLocation.map((swl: { location: ItemLocation, stock: Stock }, i) => {
                        let item = swl.stock.item;
                        return {
@@ -39,6 +39,6 @@ export default function InventoryTable(props: {
                                            onClick={handleItemInfoClickOpen(swl)}>{item.name}</Link>,
                                swl.location.aisle, swl.location.shelf, item.price, swl.stock.quantity]
                        }
-                   })} noRowsMessage={"No items on shelves"}/>
+                   })} noRowsMessage={"No Stores"}/>
     </>
 }
