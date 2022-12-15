@@ -154,14 +154,17 @@ exports.lambdaHandler = async (event, context, callback) => {
         const stores = await listAllStores();
         if (!(stores == false)) {
             let allStores = [];
+            let totalVal = 0;
             
             for (let store of stores) {
-                let totalValue = await getTotalStocksValue(store.idStores);
-                let storeInv = new StoreInventory(store.idStores, store.name, store.latitude, store.longitude, totalValue);
+                let storeValue = await getTotalStocksValue(store.idStores);
+                let storeInv = new StoreInventory(store.idStores, store.name, store.latitude, store.longitude, storeValue);
+                totalVal = totalVal + storeValue
                 allStores.push(storeInv);
             }
             response.status = 200;
             response.stocks = JSON.parse(JSON.stringify(allStores));
+            response.totalValue = totalVal;
         }
         else {
             response.status = 400;
