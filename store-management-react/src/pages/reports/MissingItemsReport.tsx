@@ -6,6 +6,7 @@ import {Stock} from "../../types/Stock";
 import ItemInOverstockTable from "../../components/tables/ItemInOverstockTable";
 import ItemInMissingItemsTable from "../../components/tables/ItemInMissingItemsTable";
 import {ItemLocation} from "../../types/ItemLocation";
+import {Item} from "../../types/Item";
 
 function MissingItemsReport(props: { corporate: Corporate }) {
     const [searchParams] = useSearchParams();
@@ -27,11 +28,8 @@ function MissingItemsReport(props: { corporate: Corporate }) {
         <div className={"page"}>
             <h1>Missing Items Report</h1>
             <p className={"subtitle"}>Store #{storeId}</p>
-            <ItemInMissingItemsTable missingItems={(missingItemsReport?.stocks ?? []).map((s: any) => {
-                return {
-                    location: new ItemLocation(s.location.aisle, s.location.shelf),
-                    stock: new Stock(s.item, s.quantity)
-                };
+            <ItemInMissingItemsTable missingItems={(missingItemsReport?.missingItems ?? []).map((s: any) => {
+                return new Item(s.sku, s.name, s.description, s.price, s.max, new ItemLocation(s.locations[0].aisle, s.locations[0].shelf));
             })}/>
         </div>
     );
