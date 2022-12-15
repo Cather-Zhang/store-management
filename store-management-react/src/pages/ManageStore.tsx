@@ -24,7 +24,7 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
     };
 
     const handleFillShelves = () => {
-        sendRequest(APINamespace.Manager, "/fillShelves", null).then();
+        sendRequest(APINamespace.Manager, "/fillShelves", {storeId: props.currentUser.storeId}).then();
     };
 
     useEffect(() => {
