@@ -7,25 +7,30 @@ import {ItemLocation} from "../../types/ItemLocation";
 import {Stock} from "../../types/Stock";
 import ItemInOverstockTable from "../../components/tables/ItemInOverstockTable";
 import TotalTable from "../../components/tables/TotalTable";
+import {Store} from "../../types/Store";
+import {GPS} from "../../types/GPS";
 
 function TotalReport(props: { corporate: Corporate }) {
     const [searchParams] = useSearchParams();
     searchParams.get("__firebase_request_key");
     let storeId: number = parseInt(searchParams.get("id") ?? "");
-    const [inventoryReport, setInventoryReport] = React.useState<any>(null);
+    const [totalReport, setTotalReport] = React.useState<any>(null);
     const [totalValue, setTotalValue] = React.useState(0);
 
     useEffect(() => {
-        sendRequest(APINamespace.Manager, "/generateInventoryReport", null);
-    });
+        sendRequest(APINamespace.Corporate, "/generateTotalReport", null).then(r => {
+            setTotalValue(r.totalValue);
+            setTotalReport(r);
+        });
+    }, []);
 
     return (
         <div className={"page"}>
             <h1>Total Inventory Report</h1>
-            <TotalTable stockWithLocation={(inventoryReport?.stocks ?? []).map((s: any) => {
+            <TotalTable storeWithValue={(totalReport?.stocks ?? []).map((s: any) => {
                 return {
-                    location: new ItemLocation(s.location.aisle, s.location.shelf),
-                    stock: new Stock(s.item, s.quantity)
+                    store: new Store(s.idStores, s.name, [], "", [], new GPS(s.longitude, s.latitude)),
+                    totalValue: s.totalValue
                 };
             })}  corporate={props.corporate} setCorporate={null} storeId={storeId} searchType={""}/>
             <br/>

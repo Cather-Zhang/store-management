@@ -8,9 +8,10 @@ import ItemInfoDialog from "../dialogs/ItemInfoDialog";
 import {Corporate} from "../../types/Corporate";
 import BuyItemDialog from "../dialogs/BuyItemDialog";
 import {APINamespace, sendRequest} from "../../Utilities";
+import {Store} from "../../types/Store";
 
 export default function TotalTable(props: {
-    corporate: Corporate, setCorporate: any, stockWithLocation: { location: ItemLocation, stock: Stock }[],
+    corporate: Corporate, setCorporate: any, storeWithValue: { store: Store, totalValue: number }[],
     storeId: number, searchType: string
 }) {
     const [itemInfoOpen, setItemInfoOpen] = React.useState(false);
@@ -29,15 +30,12 @@ export default function TotalTable(props: {
 
     return <>
         <ItemInfoDialog item={modalItem?.stock.item ?? null} open={itemInfoOpen} handleClose={handleItemInfoClose}
-                        corporate={props.corporate} quantity={modalItem?.stock.quantity ?? 0} /*setCorporate={props.setCorporate}*/ allowBuy={false}/>
-        <BaseTable className={"itemInStoreTable"} headers={["Store ID", "Location", "Total Value", ""]}
-                   data={props.stockWithLocation.map((swl: { location: ItemLocation, stock: Stock }, i) => {
-                       let item = swl.stock.item;
+                        corporate={props.corporate} quantity={modalItem?.stock.quantity ?? 0} allowBuy={false}/>
+        <BaseTable className={"itemInStoreTable"} headers={["Store ID", "Store Name", "Location", "Total Value"]}
+                   data={props.storeWithValue.map((swv, i) => {
                        return {
                            id: i,
-                           columns: [<Link color="primary" underline="hover"
-                                           onClick={handleItemInfoClickOpen(swl)}>{item.name}</Link>,
-                               swl.location.aisle, swl.location.shelf, item.price, swl.stock.quantity]
+                           columns: [swv.store.id, swv.store.name, swv.store.gps.toString(), swv.totalValue]
                        }
                    })} noRowsMessage={"No Stores"}/>
     </>
