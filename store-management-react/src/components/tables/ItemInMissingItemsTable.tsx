@@ -2,14 +2,15 @@ import * as React from 'react';
 import BaseTable from "./BaseTable";
 import {Stock} from "../../types/Stock";
 import {ItemLocation} from "../../types/ItemLocation";
+import {Item} from "../../types/Item";
 
-export default function ItemInMissingItemsTable(props: { missingItems: {stock: Stock, location: ItemLocation}[] }) {
+export default function ItemInMissingItemsTable(props: { missingItems: {item: Item, location: ItemLocation[]}[] }) {
+
     return <BaseTable className={"itemInStoreTable"} headers={["Name", "Price ($)", "Aisle", "Shelf"]}
-                      data={props.missingItems.map((swl: {location: ItemLocation, stock: Stock }, i) => {
-                          let item = swl.stock.item;
+                      data={props.missingItems.map((swl: {location: ItemLocation[], item: Item }, i) => {
                           return {
                               id: i,
-                              columns: [item.name, item.price, swl.location.aisle, swl.location.shelf]
+                              columns: [swl.item.name, swl.item.price, swl.location[0].aisle, swl.location[0].shelf]
                           };
                       })} noRowsMessage={"No Missing Items"}/>
 }
