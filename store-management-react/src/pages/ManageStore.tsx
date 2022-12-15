@@ -23,10 +23,6 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
         setReportOpen(false);
     };
 
-    const handleFillShelves = () => {
-        sendRequest(APINamespace.Manager, "/fillShelves", null).then();
-    };
-
     useEffect(() => {
         const loadCorporateState = async () => {
             let storeResponse = await sendRequest(APINamespace.Manager, "/listAssignedItems", null);
@@ -43,7 +39,9 @@ function ManageStore(props: { corporate: Corporate, currentUser: any, setCorpora
                               setCorporate={props.setCorporate}/>
             <h1>Manage Store #{props.currentUser.storeId}</h1>
             <div className={"buttonMenu"} style={{width: "20%", marginBottom: "10px"}}>
-                <Button variant="contained" onClick={handleFillShelves}>Fill To Max</Button>
+                <Button variant="contained" onClick={() => {
+                    sendRequest(APINamespace.Manager, "/fillShelves", {
+                        "storeId": props.currentUser.storeId}).then()}}>Fill To Max</Button>
                 <Button variant="contained" onClick={handleReportClickOpen}>Generate
                     Report</Button>
             </div>
