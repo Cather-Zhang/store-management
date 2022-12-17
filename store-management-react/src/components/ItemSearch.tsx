@@ -7,7 +7,7 @@ import {ItemLocation} from "../types/ItemLocation";
 import {APINamespace, getById, sendRequest} from "../Utilities";
 import {GPS} from "../types/GPS";
 
-export function ItemSearch(props: {storeId: number | null, setSearchResult: any, individualStore: boolean, searchType: string, setSearchType: any, gps: GPS}) {
+export function ItemSearch(props: {storeId: number | null, setHasSearched: any, setSearchResult: any, individualStore: boolean, searchType: string, setSearchType: any, gps: GPS}) {
     return (
         <div className="searchInputs">
             <FormControl size="small" style={{minWidth: 200, paddingRight: "5px"}}>
@@ -74,6 +74,7 @@ export function ItemSearch(props: {storeId: number | null, setSearchResult: any,
                                         quantity: s.quantity
                                     };
                                 }));
+                                props.setHasSearched(true);
                             }
                         }
                     );

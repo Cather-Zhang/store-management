@@ -17,6 +17,7 @@ function IndividualStore(props: { corporate: Corporate, setCorporate: any, gps: 
     const [searchResult, setSearchResult] = useState<{ storeId: number, item: Item, quantity: number, location: ItemLocation }[]>([]);
     const [searchType, setSearchType] = useState("Name");
     const [allItems, setAllItems] = React.useState<{ stocks: Stock[], location: ItemLocation }[]>([]);
+    const [hasSearched, setHasSearched] = React.useState(false);
 
     useEffect(() => {
         sendRequest(APINamespace.Customer, "/listStoreItems", {"storeId": storeId}).then(
@@ -34,14 +35,18 @@ function IndividualStore(props: { corporate: Corporate, setCorporate: any, gps: 
             <p className={"subtitle"}>
                 {"Located at " + props.corporate.stores.find(s => s.id === storeId)?.gps.toString()}
             </p>
-            <ItemSearch storeId={storeId} setSearchResult={setSearchResult} individualStore={true} searchType={searchType}
+            <ItemSearch storeId={storeId} setHasSearched={setHasSearched} setSearchResult={setSearchResult} individualStore={true} searchType={searchType}
                         setSearchType={setSearchType} gps={props.gps}/>
             <br/>
-            {searchResult.length > 0 ?
-                <SearchResultTable setSearchResult={setSearchResult} corporate={props.corporate} setCorporate={props.setCorporate}
-                                   stockWithLocation={searchResult} hasStore={false} searchType={searchType} setAllItems={setAllItems} gps={props.gps}/>
-                :
-                <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
+            {hasSearched ?
+                (searchResult.length > 0 ?
+                        <SearchResultTable setSearchResult={setSearchResult} corporate={props.corporate}
+                                           setCorporate={props.setCorporate}
+                                           stockWithLocation={searchResult} hasStore={false} searchType={searchType}
+                                           setAllItems={setAllItems} gps={props.gps}/>
+                        :
+                        <p style={{marginTop: "30px"}} className="subtitle">No results</p>
+                ) : <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
             }
             <h3>All Items</h3>
             <ItemInStoreTable gps={props.gps} setSearchResult={setSearchResult} stockWithLocation={(allItems ?? []).map((s: any) => {

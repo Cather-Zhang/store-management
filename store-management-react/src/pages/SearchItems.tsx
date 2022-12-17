@@ -9,15 +9,19 @@ import {GPS} from "../types/GPS";
 function SearchItems(props: {corporate: Corporate, setCorporate: any, gps: GPS}) {
     const [searchResult, setSearchResult] = useState<{ storeId: number, item: Item, quantity: number, location: ItemLocation }[]>([]);
     const [searchType, setSearchType] = useState("Name");
+    const [hasSearched, setHasSearched] = React.useState(false);
 
     return (
         <div className={"page"}>
             <h1>Search Stores for Item</h1>
-            <ItemSearch storeId={null} setSearchResult={setSearchResult} individualStore={false} searchType={searchType} setSearchType={setSearchType} gps={props.gps}/>
-            {searchResult.length > 0 ?
-                <SearchResultTable corporate={props.corporate} setCorporate={props.setCorporate} stockWithLocation={searchResult}
-                                   hasStore={true} searchType={searchType} setSearchResult={setSearchResult} setAllItems={null} gps={props.gps}/>
+            <ItemSearch setHasSearched={setHasSearched} storeId={null} setSearchResult={setSearchResult} individualStore={false} searchType={searchType} setSearchType={setSearchType} gps={props.gps}/>
+            {hasSearched ? (searchResult.length > 0 ?
+                <SearchResultTable corporate={props.corporate} setCorporate={props.setCorporate}
+                                   stockWithLocation={searchResult}
+                                   hasStore={true} searchType={searchType} setSearchResult={setSearchResult}
+                                   setAllItems={null} gps={props.gps}/>
                 :
+                <p style={{marginTop: "30px"}} className="subtitle">No results</p>) :
                 <p style={{marginTop: "30px"}} className="subtitle">Search by item SKU, Name, or Description</p>
             }
         </div>
