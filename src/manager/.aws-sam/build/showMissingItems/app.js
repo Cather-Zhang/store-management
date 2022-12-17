@@ -129,9 +129,9 @@ exports.lambdaHandler = async (event, context, callback) => {
     
     
     //find if items are in store
-    let findItemInStore = (idStore, sku) => {
+    let findMissingItemInStore = (idStore, sku) => {
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true", [idStore, sku], (error, rows) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND quantity=0 AND onShelf=true", [idStore, sku], (error, rows) => {
                 if (error) { return reject(error); }
                 if (rows.length > 0) {
                     return resolve(true);
@@ -151,9 +151,11 @@ exports.lambdaHandler = async (event, context, callback) => {
         if (!(allItems == false)) {
             let exist;
             let missingItemsReturn = [];
+            //console.log(allItems);
             for (let item of allItems) {
-                exist = await findItemInStore(idStore, item.sku);
-                if (exist == false) {
+                //console.log(item);
+                exist = await findMissingItemInStore(idStore, item.sku);
+                if (exist) {
                     let locations = await getLocations(item.sku);
                     if (locations.length > 0) {
                         item.assignLocations(locations);
