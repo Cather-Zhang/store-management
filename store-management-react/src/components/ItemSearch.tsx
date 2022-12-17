@@ -55,6 +55,7 @@ export function ItemSearch(props: {storeId: number | null, setHasSearched: any, 
                 />
             }
             <Button variant="contained" onClick={() => {
+                props.setHasSearched(true);
                 if (props.individualStore) {
                     sendRequest(APINamespace.Customer, "/findStoreItem", {
                         latitude: 0,
@@ -74,7 +75,6 @@ export function ItemSearch(props: {storeId: number | null, setHasSearched: any, 
                                         quantity: s.quantity
                                     };
                                 }));
-                                props.setHasSearched(true);
                             }
                         }
                     );
