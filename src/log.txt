@@ -1,3 +1,21 @@
+commit fb58e83b49c49e4cce8d90122965ba0cf276a06a
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Thu Dec 15 05:14:06 2022 +0000
+
+    Add total value for total report
+
+commit defc5a28607a1ffcce061e29f4d7ca1c9d57a1db
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Thu Dec 15 04:59:04 2022 +0000
+
+    Fix generate total report - corporate
+
+commit 8932ade5f5573ea3b557dd55be9433ce0608384e
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Wed Dec 14 22:49:31 2022 +0000
+
+    update log
+
 commit ec1668224cd78166dac0a1cf106c3bbc52107909
 Author: Bao Huynh <bdhuynh@wpi.edu>
 Date:   Tue Nov 29 02:43:10 2022 +0000
