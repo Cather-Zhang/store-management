@@ -19,7 +19,7 @@ export default function AssignItemLocationDialog(props: {
     return (
         <Dialog open={props.open} fullWidth maxWidth="xs" onClose={props.handleClose}>
             <DialogTitle paddingBottom={"0px !important"} fontSize={"30px !important"} align={"center"}>Assign Item
-                Locations</DialogTitle>
+                Location</DialogTitle>
             <DialogContent style={{textAlign: "center"}}>
                 <TextField
                     id="locations"
@@ -28,10 +28,8 @@ export default function AssignItemLocationDialog(props: {
                     variant="standard"
                 />
             </DialogContent>
-            <DialogContentText align={"center"}>Once you assign an item's locations you cannot reassign them, so choose
-                wisely!
-                Separate aisle and row with a comma (ex. 3,4). To add multiple aisle / shelf pairs, add a semicolon
-                between entries (ex. 3,4;5,6)</DialogContentText>
+            <DialogContentText align={"center"}>Once you assign an item's location you cannot reassign them, so choose
+                wisely! Separate aisle and row with a comma (ex. 3,4).</DialogContentText>
             <br/>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
@@ -41,7 +39,7 @@ export default function AssignItemLocationDialog(props: {
                             props.handleClose).then(c => props.setCorporate(c))
                     }
                 }}>
-                    Assign Item Locations
+                    Assign Item Location
                 </Button>
             </DialogActions>
         </Dialog>
