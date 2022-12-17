@@ -1,3 +1,27 @@
+commit 3c435ec16095463012eb5e479ae3f36aedf7d953
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sat Dec 17 04:48:22 2022 +0000
+
+    Fix shipment overwrite
+
+commit 54fe007fac43bcb901ceb416d5bc1a7b469f2e3f
+Author: Bao Huynh <bdhuynh@wpi.edu>
+Date:   Sat Dec 17 03:16:37 2022 +0000
+
+    Update log for final iteration
+
+commit 7aea0c857d91fce9ad877990f8e590a31237221c
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Sat Dec 17 01:29:46 2022 +0000
+
+    fixed process shipment
+
+commit 22911c5e0aa3c274b58e6cd28e39d3940b7a2360
+Author: Cather-Zhang <czhang10@wpi.edu>
+Date:   Sat Dec 17 00:29:35 2022 +0000
+
+    fixed show missing item bug
+
 commit fb58e83b49c49e4cce8d90122965ba0cf276a06a
 Author: Bao Huynh <bdhuynh@wpi.edu>
 Date:   Thu Dec 15 05:14:06 2022 +0000
