@@ -212,7 +212,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         const idStore = info.storeId;
 
         
-        for (let shipment of shipments) {
+        for (let shipment of JSON.parse(shipments)) {
             //console.log(shipment);
             let newQuantity = parseInt(shipment.quantity)
             //console.log(newQuantity);

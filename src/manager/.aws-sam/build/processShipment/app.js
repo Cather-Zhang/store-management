@@ -71,12 +71,15 @@ exports.lambdaHandler = async (event, context, callback) => {
     let actual_event = event.body;
     let info = JSON.parse(actual_event);
     console.log("info:" + JSON.stringify(info)); 
+    let shipments = info.shipments;
+    console.log("shipments:" + JSON.stringify(shipments)); 
     
     let doesItemExist = (sku) => {
         return new Promise((resolve, reject) => {
             pool.query("SELECT * FROM Items WHERE sku=?", [sku], (error, rows) => {
                 if (error) { return reject(error); }
                 if ((rows) && (rows.length == 1)) {
+                    //console.log(rows[0]);
                     return resolve(rows[0].max);
                 } else {
                     return reject("item does not exist, please create it first");
@@ -90,30 +93,27 @@ exports.lambdaHandler = async (event, context, callback) => {
         return new Promise((resolve, reject) => {
             pool.query("SELECT * FROM Locations WHERE sku=?", [sku], (error, rows) => {
                 if (error) { return reject(error); }
-                let locations = [];
+                let location;
                 if (rows) {
-                    for (let r of rows) {
-                        let shelf = r.shelf;
-                        let aisle = r.aisle;
-                        let location = new Location (aisle, shelf);
-                        locations.push(location);
-                    }
-                    return resolve(locations);
+                    let shelf = rows[0].shelf;
+                    let aisle = rows[0].aisle;
+                    location = new Location (aisle, shelf);
+                    
+                    
+                    return resolve(location);
                 } else {
-                    //console.log("item has not yet been assigned to locations");
-                    return resolve(locations);
+                    console.log("item has not yet been assigned to locations");
+                    return false;
                 }
             });
         });
     }
     
     //find if items are already stored on shelf
-    let findStockShelf = (idStore, sku, location) => {
+    let findStockShelf = (idStore, sku) => {
         
-        let aisle = location.aisle;
-        let shelf = location.shelf;
         return new Promise((resolve, reject) => {
-            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND shelf=? AND aisle=?", [idStore, sku, shelf, aisle], (error, rows) => {
+            pool.query("SELECT * FROM Stocks WHERE idStores=? AND sku=? AND onShelf=true", [idStore, sku], (error, rows) => {
                 if (error) { return reject(error); }
                 if (rows.length > 0) {
                     return resolve(rows[0].quantity);
@@ -125,12 +125,9 @@ exports.lambdaHandler = async (event, context, callback) => {
     }
     
     //find if items are already stored on shelf
-    let updateStockShelf = (idStore, sku, location, quantity) => {
-        //console.log("update shelf stock for " + sku);
-        let aisle = location.aisle;
-        let shelf = location.shelf;
+    let updateStockShelf = (idStore, sku, quantity) => {
         return new Promise((resolve, reject) => {
-            pool.query("UPDATE Stocks SET quantity=? WHERE aisle=? AND shelf=? AND idStores=? AND sku=?", [quantity, aisle, shelf, idStore, sku], (error, rows) => {
+            pool.query("UPDATE Stocks SET quantity=? WHERE onShelf=true AND idStores=? AND sku=?", [quantity, idStore, sku], (error, rows) => {
                 if (error) { 
                     return reject(error); }
                 else {
@@ -213,98 +210,71 @@ exports.lambdaHandler = async (event, context, callback) => {
         //first check if all sku are valid
         let exist;
         const idStore = info.storeId;
-        for (let shipment of JSON.parse(info.shipments)) {
-            exist = await doesItemExist(shipment.sku);
-            if (isNaN(exist)) {
-                response.status = 400;
-                response.error = "Item " + shipment.sku + "does not exist"
-                return response;
-            } 
-        }
+
         
-        
-        for (let shipment of JSON.parse(info.shipments)) {
+        for (let shipment of JSON.parse(shipments)) {
+            //console.log(shipment);
             let newQuantity = parseInt(shipment.quantity)
-            let max = await doesItemExist(shipment.sku);
+            //console.log(newQuantity);
             let sku = shipment.sku;
-            let locations = await getLocations(sku);
+            let max = await doesItemExist(sku);
+            //console.log(max);
+            let location = await getLocations(sku);
+            //console.log(location);
             //console.log("process shipment "+ sku);
             
-            //When item is not assigned a location
-            if (locations.length == 0) {
-                //console.log(sku + " is not assigned to a location");
+            console.log("item max on shelf is: " + max);
+            let remainingQuantity = newQuantity;
+
+            console.log("on location aisle "+ location.aisle + " shelf " + location.shelf);
+            let stock = await findStockShelf(idStore, sku, location);
+            let addQuantity;
+            //item has never been on the shelf
+            if (stock == false) {
+                if (remainingQuantity > max) addQuantity = max;
+                else addQuantity = remainingQuantity;
+                let insertStockShelfSuccess = await insertStockShelf(sku, addQuantity, location, idStore);
+                remainingQuantity = remainingQuantity - max;
+                
+            }
+            
+            //add to existing stock 
+            else {
+                if (stock < max){
+                    if (remainingQuantity > (max - stock)) addQuantity = max;
+                    else addQuantity = stock + remainingQuantity;
+                    let updateStockShelfSuccess = await updateStockShelf(idStore, sku, location, addQuantity);
+                    remainingQuantity = remainingQuantity - (max - stock);
+                }
+            }
+            console.log("remaining quantity is: " + remainingQuantity);
+                
+                
+            
+            //it can't fit on shelf, need to store in overstock
+            if (remainingQuantity > 0) {
+                console.log("going to overstock")
                 let overstock = await findOverstock(idStore, sku);
+                
                 if (overstock == false) {
-                    let insertOverstockSuccess = await insertOverstock(idStore, sku, newQuantity);
-                    if (insertOverstockSuccess == true) {
-                        response.status = 200;
-                    }
-                    else {
+                    console.log("insert new overstock");
+                    let insertOverstockSuccess = await insertOverstock(idStore, sku, remainingQuantity);
+                    if (!(insertOverstockSuccess == true)) {
                         response.status = 400;
                         response.error = "unable to insert overstock"
                     }
                 }
                 else {
-                    let updateOverstockSuccess = await updateOverstock(idStore, sku, overstock+newQuantity);
-                    if (updateOverstockSuccess == true) {
-                        response.status = 200;
-                    }
-                    else {
+                    console.log("update overstock");
+                    let updateOverstockSuccess = await updateOverstock(idStore, sku, overstock+remainingQuantity);
+                    if (!(updateOverstockSuccess == true)) {
                         response.status = 400;
                         response.error = "unable to update overstock"
                     }
                 }
             }
+            response.status = 200;
             
-            //When item is already assigned to a location
-            else {
-                //console.log(sku + " is assigned to a location");
-                //console.log("item max on shelf is: " + max);
-                let remainingQuantity = newQuantity;
-                for (let location of locations) {
-                    if (remainingQuantity > 0) {
-                        //console.log("on location aisle "+ location.aisle + " shelf " + location.shelf);
-                        let stock = await findStockShelf(idStore, sku, location);
-                        let addQuantity;
-                        if (stock == false) {
-                            if (remainingQuantity > max) addQuantity = max;
-                            else addQuantity = remainingQuantity;
-                            let insertStockShelfSuccess = await insertStockShelf(sku, addQuantity, location, idStore);
-                            remainingQuantity = remainingQuantity - max;
-                            
-                        }
-                        else {
-                            if (!(max === stock)){
-                                if (remainingQuantity > (max - stock)) addQuantity = max;
-                                else addQuantity = stock + remainingQuantity;
-                                let updateStockShelfSuccess = await updateStockShelf(idStore, sku, location, addQuantity);
-                                remainingQuantity = remainingQuantity - (max - stock);
-                            }
-                        }
-                        //console.log("remaining quantity is: " + remainingQuantity);
-                    }
-                }
-                
-                //it can't fit on shelf, need to store in overstock
-                if (remainingQuantity > 0) {
-                    let overstock = await findOverstock(idStore, sku);
-                    if (overstock == false) {
-                        let insertOverstockSuccess = await insertOverstock(idStore, sku, remainingQuantity);
-                        if (!(insertOverstockSuccess == true)) {
-                            response.status = 400;
-                            response.error = "unable to insert overstock"
-                        }
-                    }
-                    else {
-                        let updateOverstockSuccess = await updateOverstock(idStore, sku, overstock+remainingQuantity);
-                        if (!(updateOverstockSuccess == true)) {
-                            response.status = 400;
-                            response.error = "unable to update overstock"
-                        }
-                    }
-                }
-                response.status = 200;
-            }
         
         }
 
